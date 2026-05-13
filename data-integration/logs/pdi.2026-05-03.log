@@ -1,0 +1,444 @@
+2026-05-03 21:37:01.920 INFO  <ModalContext> [/Transformaci?n 1.ktr]  Iniciado despacho de la transformaci?n [/Transformaci?n 1]
+2026-05-03 21:37:02.079 INFO  </Transformaci?n 1 - Inicio> [/Transformaci?n 1.ktr]  Procesamiento finalizado (I=0, O=0, R=0, W=1, U=0, E=0)
+2026-05-03 21:37:02.107 INFO  </Transformaci?n 1 - dummy> [/Transformaci?n 1.ktr]  Procesamiento finalizado (I=0, O=0, R=1, W=1, U=0, E=0)
+2026-05-03 21:41:07.309 INFO  <main> [Transformaci?n 1.ktr]  Iniciado despacho de la transformaci?n [Transformaci?n 1]
+2026-05-03 21:41:07.470 INFO  <Transformaci?n 1 - Inicio> [Transformaci?n 1.ktr]  Procesamiento finalizado (I=0, O=0, R=0, W=1, U=0, E=0)
+2026-05-03 21:41:09.265 ERROR <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Because of an error, this step can't continue: 
+Can not result from [url_base]
+java.lang.IllegalArgumentException: Host name may not be null
+
+2026-05-03 21:41:09.271 ERROR <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  org.pentaho.di.core.exception.KettleException: 
+Can not result from [url_base]
+java.lang.IllegalArgumentException: Host name may not be null
+
+	at org.pentaho.di.trans.steps.rest.Rest.callRest(Rest.java:277)
+	at org.pentaho.di.trans.steps.rest.Rest.processRow(Rest.java:474)
+	at org.pentaho.di.trans.step.RunThread.run(RunThread.java:62)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: com.sun.jersey.api.client.ClientHandlerException: java.lang.IllegalArgumentException: Host name may not be null
+	at com.sun.jersey.client.apache4.ApacheHttpClient4Handler.handle(ApacheHttpClient4Handler.java:187)
+	at com.sun.jersey.api.client.Client.handle(Client.java:652)
+	at com.sun.jersey.api.client.WebResource.handle(WebResource.java:682)
+	at com.sun.jersey.api.client.WebResource.access$200(WebResource.java:74)
+	at com.sun.jersey.api.client.WebResource$Builder.get(WebResource.java:509)
+	at org.pentaho.di.trans.steps.rest.Rest.callRest(Rest.java:187)
+	... 3 more
+Caused by: java.lang.IllegalArgumentException: Host name may not be null
+	at org.apache.http.util.Args.containsNoBlanks(Args.java:81)
+	at org.apache.http.HttpHost.<init>(HttpHost.java:80)
+	at com.sun.jersey.client.apache4.ApacheHttpClient4Handler.getHost(ApacheHttpClient4Handler.java:198)
+	at com.sun.jersey.client.apache4.ApacheHttpClient4Handler.handle(ApacheHttpClient4Handler.java:173)
+	... 8 more
+
+2026-05-03 21:41:09.273 INFO  <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Procesamiento finalizado (I=0, O=0, R=1, W=0, U=0, E=1)
+2026-05-03 21:41:09.283 ERROR <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Errores detectados!
+2026-05-03 21:41:09.291 ERROR <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Errores detectados!
+2026-05-03 21:41:11.743 ERROR <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Errores detectados!
+2026-05-03 21:41:13.365 WARN  <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Transformaci?n detectada 
+2026-05-03 21:41:13.365 WARN  <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Transformaci?n est? matando los otros pasos!
+2026-05-03 21:44:55.870 INFO  <main> [Transformaci?n 1.ktr]  Iniciado despacho de la transformaci?n [Transformaci?n 1]
+2026-05-03 21:44:55.908 INFO  <Transformaci?n 1 - Inicio> [Transformaci?n 1.ktr]  Procesamiento finalizado (I=0, O=0, R=0, W=1, U=0, E=0)
+2026-05-03 21:44:55.910 ERROR <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Error desconocido
+2026-05-03 21:44:55.916 ERROR <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  org.pentaho.di.core.exception.KettleException: 
+Error finding field [User-Agent] in incoming stream!
+
+	at org.pentaho.di.trans.steps.rest.Rest.processRow(Rest.java:416)
+	at org.pentaho.di.trans.step.RunThread.run(RunThread.java:62)
+	at java.lang.Thread.run(Unknown Source)
+
+2026-05-03 21:44:55.918 INFO  <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Procesamiento finalizado (I=0, O=0, R=1, W=0, U=0, E=1)
+2026-05-03 21:44:55.928 ERROR <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Errores detectados!
+2026-05-03 21:44:55.934 ERROR <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Errores detectados!
+2026-05-03 21:44:56.309 ERROR <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Errores detectados!
+2026-05-03 21:44:56.359 WARN  <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Transformaci?n detectada 
+2026-05-03 21:44:56.359 WARN  <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Transformaci?n est? matando los otros pasos!
+2026-05-03 21:47:40.796 INFO  <main> [Transformaci?n 1.ktr]  Iniciado despacho de la transformaci?n [Transformaci?n 1]
+2026-05-03 21:47:40.828 INFO  <Transformaci?n 1 - Inicio> [Transformaci?n 1.ktr]  Procesamiento finalizado (I=0, O=0, R=0, W=1, U=0, E=0)
+2026-05-03 21:47:41.197 ERROR <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Because of an error, this step can't continue: 
+Can not result from [url_base]
+java.lang.IllegalArgumentException: Host name may not be null
+
+2026-05-03 21:47:41.199 ERROR <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  org.pentaho.di.core.exception.KettleException: 
+Can not result from [url_base]
+java.lang.IllegalArgumentException: Host name may not be null
+
+	at org.pentaho.di.trans.steps.rest.Rest.callRest(Rest.java:277)
+	at org.pentaho.di.trans.steps.rest.Rest.processRow(Rest.java:474)
+	at org.pentaho.di.trans.step.RunThread.run(RunThread.java:62)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: com.sun.jersey.api.client.ClientHandlerException: java.lang.IllegalArgumentException: Host name may not be null
+	at com.sun.jersey.client.apache4.ApacheHttpClient4Handler.handle(ApacheHttpClient4Handler.java:187)
+	at com.sun.jersey.api.client.Client.handle(Client.java:652)
+	at com.sun.jersey.api.client.WebResource.handle(WebResource.java:682)
+	at com.sun.jersey.api.client.WebResource.access$200(WebResource.java:74)
+	at com.sun.jersey.api.client.WebResource$Builder.get(WebResource.java:509)
+	at org.pentaho.di.trans.steps.rest.Rest.callRest(Rest.java:187)
+	... 3 more
+Caused by: java.lang.IllegalArgumentException: Host name may not be null
+	at org.apache.http.util.Args.containsNoBlanks(Args.java:81)
+	at org.apache.http.HttpHost.<init>(HttpHost.java:80)
+	at com.sun.jersey.client.apache4.ApacheHttpClient4Handler.getHost(ApacheHttpClient4Handler.java:198)
+	at com.sun.jersey.client.apache4.ApacheHttpClient4Handler.handle(ApacheHttpClient4Handler.java:173)
+	... 8 more
+
+2026-05-03 21:47:41.205 INFO  <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Procesamiento finalizado (I=0, O=0, R=1, W=0, U=0, E=1)
+2026-05-03 21:47:41.209 ERROR <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Errores detectados!
+2026-05-03 21:47:41.211 ERROR <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Errores detectados!
+2026-05-03 21:47:41.697 ERROR <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Errores detectados!
+2026-05-03 21:47:41.719 WARN  <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Transformaci?n detectada 
+2026-05-03 21:47:41.721 WARN  <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Transformaci?n est? matando los otros pasos!
+2026-05-03 21:51:43.591 INFO  <main> [Transformaci?n 1.ktr]  Iniciado despacho de la transformaci?n [Transformaci?n 1]
+2026-05-03 21:51:43.616 INFO  <Transformaci?n 1 - Inicio> [Transformaci?n 1.ktr]  Procesamiento finalizado (I=0, O=0, R=0, W=1, U=0, E=0)
+2026-05-03 21:51:43.870 ERROR <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Because of an error, this step can't continue: 
+Can not result from [url_base]
+java.lang.IllegalArgumentException: Host name may not be null
+
+2026-05-03 21:51:43.870 ERROR <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  org.pentaho.di.core.exception.KettleException: 
+Can not result from [url_base]
+java.lang.IllegalArgumentException: Host name may not be null
+
+	at org.pentaho.di.trans.steps.rest.Rest.callRest(Rest.java:277)
+	at org.pentaho.di.trans.steps.rest.Rest.processRow(Rest.java:474)
+	at org.pentaho.di.trans.step.RunThread.run(RunThread.java:62)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: com.sun.jersey.api.client.ClientHandlerException: java.lang.IllegalArgumentException: Host name may not be null
+	at com.sun.jersey.client.apache4.ApacheHttpClient4Handler.handle(ApacheHttpClient4Handler.java:187)
+	at com.sun.jersey.api.client.Client.handle(Client.java:652)
+	at com.sun.jersey.api.client.WebResource.handle(WebResource.java:682)
+	at com.sun.jersey.api.client.WebResource.access$200(WebResource.java:74)
+	at com.sun.jersey.api.client.WebResource$Builder.get(WebResource.java:509)
+	at org.pentaho.di.trans.steps.rest.Rest.callRest(Rest.java:187)
+	... 3 more
+Caused by: java.lang.IllegalArgumentException: Host name may not be null
+	at org.apache.http.util.Args.containsNoBlanks(Args.java:81)
+	at org.apache.http.HttpHost.<init>(HttpHost.java:80)
+	at com.sun.jersey.client.apache4.ApacheHttpClient4Handler.getHost(ApacheHttpClient4Handler.java:198)
+	at com.sun.jersey.client.apache4.ApacheHttpClient4Handler.handle(ApacheHttpClient4Handler.java:173)
+	... 8 more
+
+2026-05-03 21:51:43.872 INFO  <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Procesamiento finalizado (I=0, O=0, R=1, W=0, U=0, E=1)
+2026-05-03 21:51:43.874 ERROR <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Errores detectados!
+2026-05-03 21:51:43.876 ERROR <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Errores detectados!
+2026-05-03 21:51:44.164 ERROR <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Errores detectados!
+2026-05-03 21:51:44.220 WARN  <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Transformaci?n detectada 
+2026-05-03 21:51:44.222 WARN  <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Transformaci?n est? matando los otros pasos!
+2026-05-03 21:55:24.177 INFO  <main> [Transformaci?n 1.ktr]  Iniciado despacho de la transformaci?n [Transformaci?n 1]
+2026-05-03 21:55:24.201 INFO  <Transformaci?n 1 - Inicio> [Transformaci?n 1.ktr]  Procesamiento finalizado (I=0, O=0, R=0, W=1, U=0, E=0)
+2026-05-03 21:55:25.316 ERROR <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Because of an error, this step can't continue: 
+Can not result from [https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riatext/api/estacion/1/diaria]
+javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+
+2026-05-03 21:55:25.318 ERROR <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  org.pentaho.di.core.exception.KettleException: 
+Can not result from [https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riatext/api/estacion/1/diaria]
+javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+
+	at org.pentaho.di.trans.steps.rest.Rest.callRest(Rest.java:277)
+	at org.pentaho.di.trans.steps.rest.Rest.processRow(Rest.java:474)
+	at org.pentaho.di.trans.step.RunThread.run(RunThread.java:62)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: com.sun.jersey.api.client.ClientHandlerException: javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+	at com.sun.jersey.client.apache4.ApacheHttpClient4Handler.handle(ApacheHttpClient4Handler.java:187)
+	at com.sun.jersey.api.client.Client.handle(Client.java:652)
+	at com.sun.jersey.api.client.WebResource.handle(WebResource.java:682)
+	at com.sun.jersey.api.client.WebResource.access$200(WebResource.java:74)
+	at com.sun.jersey.api.client.WebResource$Builder.get(WebResource.java:509)
+	at org.pentaho.di.trans.steps.rest.Rest.callRest(Rest.java:187)
+	... 3 more
+Caused by: javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+	at sun.security.ssl.Alert.createSSLException(Unknown Source)
+	at sun.security.ssl.TransportContext.fatal(Unknown Source)
+	at sun.security.ssl.TransportContext.fatal(Unknown Source)
+	at sun.security.ssl.TransportContext.fatal(Unknown Source)
+	at sun.security.ssl.CertificateMessage$T13CertificateConsumer.checkServerCerts(Unknown Source)
+	at sun.security.ssl.CertificateMessage$T13CertificateConsumer.onConsumeCertificate(Unknown Source)
+	at sun.security.ssl.CertificateMessage$T13CertificateConsumer.consume(Unknown Source)
+	at sun.security.ssl.SSLHandshake.consume(Unknown Source)
+	at sun.security.ssl.HandshakeContext.dispatch(Unknown Source)
+	at sun.security.ssl.HandshakeContext.dispatch(Unknown Source)
+	at sun.security.ssl.TransportContext.dispatch(Unknown Source)
+	at sun.security.ssl.SSLTransport.decode(Unknown Source)
+	at sun.security.ssl.SSLSocketImpl.decode(Unknown Source)
+	at sun.security.ssl.SSLSocketImpl.readHandshakeRecord(Unknown Source)
+	at sun.security.ssl.SSLSocketImpl.startHandshake(Unknown Source)
+	at sun.security.ssl.SSLSocketImpl.startHandshake(Unknown Source)
+	at org.apache.http.conn.ssl.SSLSocketFactory.createLayeredSocket(SSLSocketFactory.java:570)
+	at org.apache.http.conn.ssl.SSLSocketFactory.connectSocket(SSLSocketFactory.java:554)
+	at org.apache.http.conn.ssl.SSLSocketFactory.connectSocket(SSLSocketFactory.java:415)
+	at org.apache.http.impl.conn.DefaultClientConnectionOperator.openConnection(DefaultClientConnectionOperator.java:180)
+	at org.apache.http.impl.conn.ManagedClientConnectionImpl.open(ManagedClientConnectionImpl.java:326)
+	at org.apache.http.impl.client.DefaultRequestDirector.tryConnect(DefaultRequestDirector.java:605)
+	at org.apache.http.impl.client.DefaultRequestDirector.execute(DefaultRequestDirector.java:440)
+	at org.apache.http.impl.client.AbstractHttpClient.doExecute(AbstractHttpClient.java:835)
+	at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:118)
+	at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:56)
+	at com.sun.jersey.client.apache4.ApacheHttpClient4Handler.handle(ApacheHttpClient4Handler.java:173)
+	... 8 more
+Caused by: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+	at sun.security.validator.PKIXValidator.doBuild(Unknown Source)
+	at sun.security.validator.PKIXValidator.engineValidate(Unknown Source)
+	at sun.security.validator.Validator.validate(Unknown Source)
+	at sun.security.ssl.X509TrustManagerImpl.validate(Unknown Source)
+	at sun.security.ssl.X509TrustManagerImpl.checkTrusted(Unknown Source)
+	at sun.security.ssl.X509TrustManagerImpl.checkServerTrusted(Unknown Source)
+	... 31 more
+Caused by: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+	at sun.security.provider.certpath.SunCertPathBuilder.build(Unknown Source)
+	at sun.security.provider.certpath.SunCertPathBuilder.engineBuild(Unknown Source)
+	at java.security.cert.CertPathBuilder.build(Unknown Source)
+	... 37 more
+
+2026-05-03 21:55:25.320 INFO  <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Procesamiento finalizado (I=0, O=0, R=1, W=0, U=0, E=1)
+2026-05-03 21:55:25.322 ERROR <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Errores detectados!
+2026-05-03 21:55:25.366 ERROR <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Errores detectados!
+2026-05-03 21:55:25.646 ERROR <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Errores detectados!
+2026-05-03 21:55:25.913 WARN  <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Transformaci?n detectada 
+2026-05-03 21:55:25.913 WARN  <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Transformaci?n est? matando los otros pasos!
+2026-05-03 21:58:34.816 INFO  <main> [Transformaci?n 1.ktr]  Iniciado despacho de la transformaci?n [Transformaci?n 1]
+2026-05-03 21:58:34.858 INFO  <Transformaci?n 1 - Inicio> [Transformaci?n 1.ktr]  Procesamiento finalizado (I=0, O=0, R=0, W=1, U=0, E=0)
+2026-05-03 21:58:35.739 ERROR <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Because of an error, this step can't continue: 
+Can not result from [https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riatext/api/estacion/1/diaria]
+javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+
+2026-05-03 21:58:35.741 ERROR <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  org.pentaho.di.core.exception.KettleException: 
+Can not result from [https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riatext/api/estacion/1/diaria]
+javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+
+	at org.pentaho.di.trans.steps.rest.Rest.callRest(Rest.java:277)
+	at org.pentaho.di.trans.steps.rest.Rest.processRow(Rest.java:474)
+	at org.pentaho.di.trans.step.RunThread.run(RunThread.java:62)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: com.sun.jersey.api.client.ClientHandlerException: javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+	at com.sun.jersey.client.apache4.ApacheHttpClient4Handler.handle(ApacheHttpClient4Handler.java:187)
+	at com.sun.jersey.api.client.Client.handle(Client.java:652)
+	at com.sun.jersey.api.client.WebResource.handle(WebResource.java:682)
+	at com.sun.jersey.api.client.WebResource.access$200(WebResource.java:74)
+	at com.sun.jersey.api.client.WebResource$Builder.get(WebResource.java:509)
+	at org.pentaho.di.trans.steps.rest.Rest.callRest(Rest.java:187)
+	... 3 more
+Caused by: javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+	at sun.security.ssl.Alert.createSSLException(Unknown Source)
+	at sun.security.ssl.TransportContext.fatal(Unknown Source)
+	at sun.security.ssl.TransportContext.fatal(Unknown Source)
+	at sun.security.ssl.TransportContext.fatal(Unknown Source)
+	at sun.security.ssl.CertificateMessage$T13CertificateConsumer.checkServerCerts(Unknown Source)
+	at sun.security.ssl.CertificateMessage$T13CertificateConsumer.onConsumeCertificate(Unknown Source)
+	at sun.security.ssl.CertificateMessage$T13CertificateConsumer.consume(Unknown Source)
+	at sun.security.ssl.SSLHandshake.consume(Unknown Source)
+	at sun.security.ssl.HandshakeContext.dispatch(Unknown Source)
+	at sun.security.ssl.HandshakeContext.dispatch(Unknown Source)
+	at sun.security.ssl.TransportContext.dispatch(Unknown Source)
+	at sun.security.ssl.SSLTransport.decode(Unknown Source)
+	at sun.security.ssl.SSLSocketImpl.decode(Unknown Source)
+	at sun.security.ssl.SSLSocketImpl.readHandshakeRecord(Unknown Source)
+	at sun.security.ssl.SSLSocketImpl.startHandshake(Unknown Source)
+	at sun.security.ssl.SSLSocketImpl.startHandshake(Unknown Source)
+	at org.apache.http.conn.ssl.SSLSocketFactory.createLayeredSocket(SSLSocketFactory.java:570)
+	at org.apache.http.conn.ssl.SSLSocketFactory.connectSocket(SSLSocketFactory.java:554)
+	at org.apache.http.conn.ssl.SSLSocketFactory.connectSocket(SSLSocketFactory.java:415)
+	at org.apache.http.impl.conn.DefaultClientConnectionOperator.openConnection(DefaultClientConnectionOperator.java:180)
+	at org.apache.http.impl.conn.ManagedClientConnectionImpl.open(ManagedClientConnectionImpl.java:326)
+	at org.apache.http.impl.client.DefaultRequestDirector.tryConnect(DefaultRequestDirector.java:605)
+	at org.apache.http.impl.client.DefaultRequestDirector.execute(DefaultRequestDirector.java:440)
+	at org.apache.http.impl.client.AbstractHttpClient.doExecute(AbstractHttpClient.java:835)
+	at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:118)
+	at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:56)
+	at com.sun.jersey.client.apache4.ApacheHttpClient4Handler.handle(ApacheHttpClient4Handler.java:173)
+	... 8 more
+Caused by: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+	at sun.security.validator.PKIXValidator.doBuild(Unknown Source)
+	at sun.security.validator.PKIXValidator.engineValidate(Unknown Source)
+	at sun.security.validator.Validator.validate(Unknown Source)
+	at sun.security.ssl.X509TrustManagerImpl.validate(Unknown Source)
+	at sun.security.ssl.X509TrustManagerImpl.checkTrusted(Unknown Source)
+	at sun.security.ssl.X509TrustManagerImpl.checkServerTrusted(Unknown Source)
+	... 31 more
+Caused by: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+	at sun.security.provider.certpath.SunCertPathBuilder.build(Unknown Source)
+	at sun.security.provider.certpath.SunCertPathBuilder.engineBuild(Unknown Source)
+	at java.security.cert.CertPathBuilder.build(Unknown Source)
+	... 37 more
+
+2026-05-03 21:58:35.765 INFO  <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Procesamiento finalizado (I=0, O=0, R=1, W=0, U=0, E=1)
+2026-05-03 21:58:35.765 ERROR <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Errores detectados!
+2026-05-03 21:58:35.836 ERROR <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Errores detectados!
+2026-05-03 21:58:35.897 ERROR <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Errores detectados!
+2026-05-03 21:58:35.905 WARN  <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Transformaci?n detectada 
+2026-05-03 21:58:35.905 WARN  <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Transformaci?n est? matando los otros pasos!
+2026-05-03 21:59:30.827 INFO  <main> [Transformaci?n 1.ktr]  Iniciado despacho de la transformaci?n [Transformaci?n 1]
+2026-05-03 21:59:30.835 INFO  <Transformaci?n 1 - Inicio> [Transformaci?n 1.ktr]  Procesamiento finalizado (I=0, O=0, R=0, W=1, U=0, E=0)
+2026-05-03 22:02:31.216 INFO  <main> [Transformaci?n 1.ktr]  Iniciado despacho de la transformaci?n [Transformaci?n 1]
+2026-05-03 22:02:31.370 INFO  <Transformaci?n 1 - Inicio> [Transformaci?n 1.ktr]  Procesamiento finalizado (I=0, O=0, R=0, W=1, U=0, E=0)
+2026-05-03 22:02:31.826 ERROR <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Because of an error, this step can't continue: 
+Can not result from [https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riatext/api/estacion/1/diaria]
+javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+
+2026-05-03 22:02:31.828 ERROR <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  org.pentaho.di.core.exception.KettleException: 
+Can not result from [https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riatext/api/estacion/1/diaria]
+javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+
+	at org.pentaho.di.trans.steps.rest.Rest.callRest(Rest.java:277)
+	at org.pentaho.di.trans.steps.rest.Rest.processRow(Rest.java:474)
+	at org.pentaho.di.trans.step.RunThread.run(RunThread.java:62)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: com.sun.jersey.api.client.ClientHandlerException: javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+	at com.sun.jersey.client.apache4.ApacheHttpClient4Handler.handle(ApacheHttpClient4Handler.java:187)
+	at com.sun.jersey.api.client.Client.handle(Client.java:652)
+	at com.sun.jersey.api.client.WebResource.handle(WebResource.java:682)
+	at com.sun.jersey.api.client.WebResource.access$200(WebResource.java:74)
+	at com.sun.jersey.api.client.WebResource$Builder.get(WebResource.java:509)
+	at org.pentaho.di.trans.steps.rest.Rest.callRest(Rest.java:187)
+	... 3 more
+Caused by: javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+	at sun.security.ssl.Alert.createSSLException(Unknown Source)
+	at sun.security.ssl.TransportContext.fatal(Unknown Source)
+	at sun.security.ssl.TransportContext.fatal(Unknown Source)
+	at sun.security.ssl.TransportContext.fatal(Unknown Source)
+	at sun.security.ssl.CertificateMessage$T13CertificateConsumer.checkServerCerts(Unknown Source)
+	at sun.security.ssl.CertificateMessage$T13CertificateConsumer.onConsumeCertificate(Unknown Source)
+	at sun.security.ssl.CertificateMessage$T13CertificateConsumer.consume(Unknown Source)
+	at sun.security.ssl.SSLHandshake.consume(Unknown Source)
+	at sun.security.ssl.HandshakeContext.dispatch(Unknown Source)
+	at sun.security.ssl.HandshakeContext.dispatch(Unknown Source)
+	at sun.security.ssl.TransportContext.dispatch(Unknown Source)
+	at sun.security.ssl.SSLTransport.decode(Unknown Source)
+	at sun.security.ssl.SSLSocketImpl.decode(Unknown Source)
+	at sun.security.ssl.SSLSocketImpl.readHandshakeRecord(Unknown Source)
+	at sun.security.ssl.SSLSocketImpl.startHandshake(Unknown Source)
+	at sun.security.ssl.SSLSocketImpl.startHandshake(Unknown Source)
+	at org.apache.http.conn.ssl.SSLSocketFactory.createLayeredSocket(SSLSocketFactory.java:570)
+	at org.apache.http.conn.ssl.SSLSocketFactory.connectSocket(SSLSocketFactory.java:554)
+	at org.apache.http.conn.ssl.SSLSocketFactory.connectSocket(SSLSocketFactory.java:415)
+	at org.apache.http.impl.conn.DefaultClientConnectionOperator.openConnection(DefaultClientConnectionOperator.java:180)
+	at org.apache.http.impl.conn.ManagedClientConnectionImpl.open(ManagedClientConnectionImpl.java:326)
+	at org.apache.http.impl.client.DefaultRequestDirector.tryConnect(DefaultRequestDirector.java:605)
+	at org.apache.http.impl.client.DefaultRequestDirector.execute(DefaultRequestDirector.java:440)
+	at org.apache.http.impl.client.AbstractHttpClient.doExecute(AbstractHttpClient.java:835)
+	at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:118)
+	at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:56)
+	at com.sun.jersey.client.apache4.ApacheHttpClient4Handler.handle(ApacheHttpClient4Handler.java:173)
+	... 8 more
+Caused by: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+	at sun.security.validator.PKIXValidator.doBuild(Unknown Source)
+	at sun.security.validator.PKIXValidator.engineValidate(Unknown Source)
+	at sun.security.validator.Validator.validate(Unknown Source)
+	at sun.security.ssl.X509TrustManagerImpl.validate(Unknown Source)
+	at sun.security.ssl.X509TrustManagerImpl.checkTrusted(Unknown Source)
+	at sun.security.ssl.X509TrustManagerImpl.checkServerTrusted(Unknown Source)
+	... 31 more
+Caused by: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+	at sun.security.provider.certpath.SunCertPathBuilder.build(Unknown Source)
+	at sun.security.provider.certpath.SunCertPathBuilder.engineBuild(Unknown Source)
+	at java.security.cert.CertPathBuilder.build(Unknown Source)
+	... 37 more
+
+2026-05-03 22:02:31.830 INFO  <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Procesamiento finalizado (I=0, O=0, R=1, W=0, U=0, E=1)
+2026-05-03 22:02:31.834 ERROR <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Errores detectados!
+2026-05-03 22:02:31.836 ERROR <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Errores detectados!
+2026-05-03 22:02:32.064 ERROR <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Errores detectados!
+2026-05-03 22:02:32.068 WARN  <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Transformaci?n detectada 
+2026-05-03 22:02:32.070 WARN  <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Transformaci?n est? matando los otros pasos!
+2026-05-03 22:04:52.243 INFO  <main> [Transformaci?n 1.ktr]  Iniciado despacho de la transformaci?n [Transformaci?n 1]
+2026-05-03 22:04:52.279 INFO  <Transformaci?n 1 - Inicio> [Transformaci?n 1.ktr]  Procesamiento finalizado (I=0, O=0, R=0, W=1, U=0, E=0)
+2026-05-03 22:04:53.026 ERROR <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Because of an error, this step can't continue: 
+Can not result from [http://www.juntadeandalucia.es/agriculturaypesca/ifapa/riatext/api/estacion/1/diaria]
+javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+
+2026-05-03 22:04:53.028 ERROR <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  org.pentaho.di.core.exception.KettleException: 
+Can not result from [http://www.juntadeandalucia.es/agriculturaypesca/ifapa/riatext/api/estacion/1/diaria]
+javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+
+	at org.pentaho.di.trans.steps.rest.Rest.callRest(Rest.java:277)
+	at org.pentaho.di.trans.steps.rest.Rest.processRow(Rest.java:474)
+	at org.pentaho.di.trans.step.RunThread.run(RunThread.java:62)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: com.sun.jersey.api.client.ClientHandlerException: javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+	at com.sun.jersey.client.apache4.ApacheHttpClient4Handler.handle(ApacheHttpClient4Handler.java:187)
+	at com.sun.jersey.api.client.Client.handle(Client.java:652)
+	at com.sun.jersey.api.client.WebResource.handle(WebResource.java:682)
+	at com.sun.jersey.api.client.WebResource.access$200(WebResource.java:74)
+	at com.sun.jersey.api.client.WebResource$Builder.get(WebResource.java:509)
+	at org.pentaho.di.trans.steps.rest.Rest.callRest(Rest.java:187)
+	... 3 more
+Caused by: javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+	at sun.security.ssl.Alert.createSSLException(Unknown Source)
+	at sun.security.ssl.TransportContext.fatal(Unknown Source)
+	at sun.security.ssl.TransportContext.fatal(Unknown Source)
+	at sun.security.ssl.TransportContext.fatal(Unknown Source)
+	at sun.security.ssl.CertificateMessage$T13CertificateConsumer.checkServerCerts(Unknown Source)
+	at sun.security.ssl.CertificateMessage$T13CertificateConsumer.onConsumeCertificate(Unknown Source)
+	at sun.security.ssl.CertificateMessage$T13CertificateConsumer.consume(Unknown Source)
+	at sun.security.ssl.SSLHandshake.consume(Unknown Source)
+	at sun.security.ssl.HandshakeContext.dispatch(Unknown Source)
+	at sun.security.ssl.HandshakeContext.dispatch(Unknown Source)
+	at sun.security.ssl.TransportContext.dispatch(Unknown Source)
+	at sun.security.ssl.SSLTransport.decode(Unknown Source)
+	at sun.security.ssl.SSLSocketImpl.decode(Unknown Source)
+	at sun.security.ssl.SSLSocketImpl.readHandshakeRecord(Unknown Source)
+	at sun.security.ssl.SSLSocketImpl.startHandshake(Unknown Source)
+	at sun.security.ssl.SSLSocketImpl.startHandshake(Unknown Source)
+	at org.apache.http.conn.ssl.SSLSocketFactory.createLayeredSocket(SSLSocketFactory.java:570)
+	at org.apache.http.conn.ssl.SSLSocketFactory.connectSocket(SSLSocketFactory.java:554)
+	at org.apache.http.conn.ssl.SSLSocketFactory.connectSocket(SSLSocketFactory.java:415)
+	at org.apache.http.impl.conn.DefaultClientConnectionOperator.openConnection(DefaultClientConnectionOperator.java:180)
+	at org.apache.http.impl.conn.ManagedClientConnectionImpl.open(ManagedClientConnectionImpl.java:326)
+	at org.apache.http.impl.client.DefaultRequestDirector.tryConnect(DefaultRequestDirector.java:605)
+	at org.apache.http.impl.client.DefaultRequestDirector.execute(DefaultRequestDirector.java:440)
+	at org.apache.http.impl.client.AbstractHttpClient.doExecute(AbstractHttpClient.java:835)
+	at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:118)
+	at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:56)
+	at com.sun.jersey.client.apache4.ApacheHttpClient4Handler.handle(ApacheHttpClient4Handler.java:173)
+	... 8 more
+Caused by: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+	at sun.security.validator.PKIXValidator.doBuild(Unknown Source)
+	at sun.security.validator.PKIXValidator.engineValidate(Unknown Source)
+	at sun.security.validator.Validator.validate(Unknown Source)
+	at sun.security.ssl.X509TrustManagerImpl.validate(Unknown Source)
+	at sun.security.ssl.X509TrustManagerImpl.checkTrusted(Unknown Source)
+	at sun.security.ssl.X509TrustManagerImpl.checkServerTrusted(Unknown Source)
+	... 31 more
+Caused by: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+	at sun.security.provider.certpath.SunCertPathBuilder.build(Unknown Source)
+	at sun.security.provider.certpath.SunCertPathBuilder.engineBuild(Unknown Source)
+	at java.security.cert.CertPathBuilder.build(Unknown Source)
+	... 37 more
+
+2026-05-03 22:04:53.030 INFO  <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Procesamiento finalizado (I=0, O=0, R=1, W=0, U=0, E=1)
+2026-05-03 22:04:53.034 ERROR <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Errores detectados!
+2026-05-03 22:04:53.034 ERROR <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Errores detectados!
+2026-05-03 22:04:53.159 ERROR <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Errores detectados!
+2026-05-03 22:04:53.165 WARN  <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Transformaci?n detectada 
+2026-05-03 22:04:53.165 WARN  <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Transformaci?n est? matando los otros pasos!
+2026-05-03 22:24:13.547 INFO  <ModalContext> [/Transformaci?n 1.ktr]  Iniciado despacho de la transformaci?n [/Transformaci?n 1]
+2026-05-03 22:24:13.558 INFO  </Transformaci?n 1 - Generar filas> [/Transformaci?n 1.ktr]  Procesamiento finalizado (I=0, O=0, R=0, W=1, U=0, E=0)
+2026-05-03 22:24:13.575 INFO  </Transformaci?n 1 - dummy> [/Transformaci?n 1.ktr]  Procesamiento finalizado (I=0, O=0, R=1, W=1, U=0, E=0)
+2026-05-03 23:21:59.675 INFO  <ModalContext> [/Transformaci?n 1.ktr]  Iniciado despacho de la transformaci?n [/Transformaci?n 1]
+2026-05-03 23:21:59.699 INFO  </Transformaci?n 1 - Generar filas> [/Transformaci?n 1.ktr]  Procesamiento finalizado (I=0, O=0, R=0, W=1, U=0, E=0)
+2026-05-03 23:21:59.725 INFO  </Transformaci?n 1 - dummy> [/Transformaci?n 1.ktr]  Procesamiento finalizado (I=0, O=0, R=1, W=1, U=0, E=0)
+2026-05-03 23:26:09.047 INFO  <main> [Transformaci?n 1.ktr]  Iniciado despacho de la transformaci?n [Transformaci?n 1]
+2026-05-03 23:26:09.073 INFO  <Transformaci?n 1 - Generar filas> [Transformaci?n 1.ktr]  Procesamiento finalizado (I=0, O=0, R=0, W=1, U=0, E=0)
+2026-05-03 23:26:09.077 ERROR <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Error desconocido
+2026-05-03 23:26:09.077 ERROR <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  org.pentaho.di.core.exception.KettleException: 
+Error finding field [agente] in incoming stream!
+
+	at org.pentaho.di.trans.steps.rest.Rest.processRow(Rest.java:416)
+	at org.pentaho.di.trans.step.RunThread.run(RunThread.java:62)
+	at java.lang.Thread.run(Unknown Source)
+
+2026-05-03 23:26:09.077 INFO  <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Procesamiento finalizado (I=0, O=0, R=1, W=0, U=0, E=1)
+2026-05-03 23:26:09.079 ERROR <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Errores detectados!
+2026-05-03 23:26:09.085 ERROR <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Errores detectados!
+2026-05-03 23:26:09.380 ERROR <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Errores detectados!
+2026-05-03 23:26:09.401 WARN  <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Transformaci?n detectada 
+2026-05-03 23:26:09.401 WARN  <Transformaci?n 1 - REST client> [Transformaci?n 1.ktr]  Transformaci?n est? matando los otros pasos!
+2026-05-03 23:28:49.635 INFO  <ModalContext> [/Transformaci?n 1.ktr]  Iniciado despacho de la transformaci?n [/Transformaci?n 1]
+2026-05-03 23:28:49.647 INFO  </Transformaci?n 1 - Data grid> [/Transformaci?n 1.ktr]  Procesamiento finalizado (I=0, O=0, R=0, W=1, U=0, E=0)
+2026-05-03 23:28:49.652 INFO  </Transformaci?n 1 - dummy> [/Transformaci?n 1.ktr]  Procesamiento finalizado (I=0, O=0, R=1, W=1, U=0, E=0)
+2026-05-03 23:31:19.402 INFO  <main> [Transformaci?n 1.ktr]  Iniciado despacho de la transformaci?n [Transformaci?n 1]
+2026-05-03 23:31:19.538 INFO  <Transformaci?n 1 - Data grid> [Transformaci?n 1.ktr]  Procesamiento finalizado (I=0, O=0, R=0, W=1, U=0, E=0)
+2026-05-03 23:31:19.855 INFO  <Transformaci?n 1 - JSON input> [Transformaci?n 1.ktr]  Procesamiento finalizado (I=1, O=0, R=1, W=1, U=0, E=0)
+2026-05-03 23:33:21.603 INFO  <main> [Transformaci?n 1.ktr]  Iniciado despacho de la transformaci?n [Transformaci?n 1]
+2026-05-03 23:33:21.630 INFO  <Transformaci?n 1 - Data grid> [Transformaci?n 1.ktr]  Procesamiento finalizado (I=0, O=0, R=0, W=1, U=0, E=0)
+2026-05-03 23:33:21.672 INFO  <Transformaci?n 1 - JSON input> [Transformaci?n 1.ktr]  Procesamiento finalizado (I=1, O=0, R=1, W=1, U=0, E=0)
+2026-05-03 23:36:58.664 INFO  <main> [Transformaci?n 1.ktr]  Iniciado despacho de la transformaci?n [Transformaci?n 1]
+2026-05-03 23:36:58.690 INFO  <Transformaci?n 1 - Data grid> [Transformaci?n 1.ktr]  Procesamiento finalizado (I=0, O=0, R=0, W=1, U=0, E=0)
+2026-05-03 23:36:58.722 INFO  <Transformaci?n 1 - JSON input> [Transformaci?n 1.ktr]  Procesamiento finalizado (I=1, O=0, R=1, W=1, U=0, E=0)

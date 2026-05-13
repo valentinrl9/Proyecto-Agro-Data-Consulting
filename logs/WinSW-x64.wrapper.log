@@ -1,0 +1,152 @@
+2026-05-09 23:02:38,030 DEBUG - Starting WinSW in console mode
+2026-05-09 23:02:43,618 DEBUG - Starting WinSW in console mode
+2026-05-09 23:02:43,695 INFO  - Installing service 'OpenMeteo Service (OpenMeteoService)'...
+2026-05-09 23:02:43,778 INFO  - Service 'OpenMeteo Service (OpenMeteoService)' was installed successfully.
+2026-05-09 23:02:51,192 DEBUG - Starting WinSW in console mode
+2026-05-09 23:02:54,011 DEBUG - Starting WinSW in console mode
+2026-05-09 23:02:54,113 INFO  - Starting service 'OpenMeteo Service (OpenMeteoService)'...
+2026-05-09 23:02:54,824 DEBUG - Starting WinSW in service mode
+2026-05-09 23:02:54,892 INFO  - Service 'OpenMeteo Service (OpenMeteoService)' started successfully.
+2026-05-09 23:02:55,121 INFO  - Starting run_job_openmeteo.bat 
+2026-05-09 23:02:55,177 INFO  - Started process 7700
+2026-05-09 23:02:55,196 DEBUG - Forwarding logs of the process System.Diagnostics.Process (cmd) to WinSW.RollingLogAppender
+2026-05-09 23:04:06,849 DEBUG - Starting WinSW in service mode
+2026-05-09 23:04:07,158 INFO  - Starting run_job_openmeteo.bat 
+2026-05-09 23:04:07,220 INFO  - Started process 9192
+2026-05-09 23:04:07,242 DEBUG - Forwarding logs of the process System.Diagnostics.Process (cmd) to WinSW.RollingLogAppender
+2026-05-09 23:09:25,472 DEBUG - Starting WinSW in service mode
+2026-05-09 23:09:25,767 INFO  - Starting run_job_openmeteo.bat 
+2026-05-09 23:09:25,830 INFO  - Started process 14784
+2026-05-09 23:09:25,852 DEBUG - Forwarding logs of the process System.Diagnostics.Process (cmd) to WinSW.RollingLogAppender
+2026-05-09 23:10:01,501 DEBUG - Starting WinSW in service mode
+2026-05-09 23:10:01,786 INFO  - Starting run_job_openmeteo.bat 
+2026-05-09 23:10:01,842 INFO  - Started process 15252
+2026-05-09 23:10:01,862 DEBUG - Forwarding logs of the process System.Diagnostics.Process (cmd) to WinSW.RollingLogAppender
+2026-05-09 23:31:59,858 DEBUG - Starting WinSW in console mode
+2026-05-09 23:32:03,042 DEBUG - Starting WinSW in console mode
+2026-05-09 23:32:03,157 INFO  - Stopping service 'OpenMeteo Service (OpenMeteoService)'...
+2026-05-09 23:32:03,209 INFO  - Service 'OpenMeteo Service (OpenMeteoService)' has already stopped.
+2026-05-09 23:32:09,030 DEBUG - Starting WinSW in console mode
+2026-05-09 23:32:12,794 DEBUG - Starting WinSW in console mode
+2026-05-09 23:32:12,879 INFO  - Starting service 'OpenMeteo Service (OpenMeteoService)'...
+2026-05-09 23:32:13,640 DEBUG - Starting WinSW in service mode
+2026-05-09 23:32:13,706 INFO  - Service 'OpenMeteo Service (OpenMeteoService)' started successfully.
+2026-05-09 23:32:13,954 INFO  - Starting run_job_openmeteo.bat 
+2026-05-09 23:32:14,029 INFO  - Started process 1828
+2026-05-09 23:32:14,050 DEBUG - Forwarding logs of the process System.Diagnostics.Process (cmd) to WinSW.RollingLogAppender
+2026-05-09 23:49:28,613 DEBUG - Starting WinSW in service mode
+2026-05-09 23:49:28,894 INFO  - Starting run_job_openmeteo.bat 
+2026-05-09 23:49:28,964 INFO  - Started process 3424
+2026-05-09 23:49:28,991 DEBUG - Forwarding logs of the process System.Diagnostics.Process (cmd) to WinSW.RollingLogAppender
+2026-05-10 00:09:12,879 DEBUG - Starting WinSW in service mode
+2026-05-10 00:09:13,271 INFO  - Starting run_job_openmeteo.bat 
+2026-05-10 00:09:13,364 INFO  - Started process 14944
+2026-05-10 00:09:13,391 DEBUG - Forwarding logs of the process System.Diagnostics.Process (cmd) to WinSW.RollingLogAppender
+2026-05-10 00:16:47,481 DEBUG - Starting WinSW in console mode
+2026-05-10 00:16:50,529 DEBUG - Starting WinSW in console mode
+2026-05-10 00:16:50,612 INFO  - Stopping service 'OpenMeteo Service (OpenMeteoService)'...
+2026-05-10 00:16:50,643 INFO  - Service 'OpenMeteo Service (OpenMeteoService)' has already stopped.
+2026-05-10 00:16:57,879 DEBUG - Starting WinSW in console mode
+2026-05-10 00:17:00,627 DEBUG - Starting WinSW in console mode
+2026-05-10 00:17:00,698 INFO  - Uninstalling service 'OpenMeteo Service (OpenMeteoService)'...
+2026-05-10 00:17:00,714 INFO  - Service 'OpenMeteo Service (OpenMeteoService)' was uninstalled successfully.
+2026-05-10 00:17:07,356 DEBUG - Starting WinSW in console mode
+2026-05-10 00:17:09,907 DEBUG - Starting WinSW in console mode
+2026-05-10 00:17:09,980 INFO  - Installing service 'OpenMeteo Service (OpenMeteoService)'...
+2026-05-10 00:17:10,037 INFO  - Service 'OpenMeteo Service (OpenMeteoService)' was installed successfully.
+2026-05-10 00:17:22,319 DEBUG - Starting WinSW in console mode
+2026-05-10 00:17:25,279 DEBUG - Starting WinSW in console mode
+2026-05-10 00:17:25,360 INFO  - Starting service 'OpenMeteo Service (OpenMeteoService)'...
+2026-05-10 00:17:26,145 DEBUG - Starting WinSW in service mode
+2026-05-10 00:17:26,221 INFO  - Service 'OpenMeteo Service (OpenMeteoService)' started successfully.
+2026-05-10 00:17:26,688 INFO  - Starting run_job_openmeteo.bat 
+2026-05-10 00:17:26,777 INFO  - Started process 9636
+2026-05-10 00:17:26,807 DEBUG - Forwarding logs of the process System.Diagnostics.Process (cmd) to WinSW.RollingLogAppender
+2026-05-10 00:18:26,978 DEBUG - Starting WinSW in service mode
+2026-05-10 00:18:27,293 INFO  - Starting run_job_openmeteo.bat 
+2026-05-10 00:18:27,366 INFO  - Started process 8464
+2026-05-10 00:18:27,390 DEBUG - Forwarding logs of the process System.Diagnostics.Process (cmd) to WinSW.RollingLogAppender
+2026-05-10 00:19:49,115 DEBUG - Starting WinSW in service mode
+2026-05-10 00:19:49,388 INFO  - Starting run_job_openmeteo.bat 
+2026-05-10 00:19:49,452 INFO  - Started process 10476
+2026-05-10 00:19:49,473 DEBUG - Forwarding logs of the process System.Diagnostics.Process (cmd) to WinSW.RollingLogAppender
+2026-05-10 00:20:36,004 DEBUG - Starting WinSW in service mode
+2026-05-10 00:20:36,289 INFO  - Starting run_job_openmeteo.bat 
+2026-05-10 00:20:36,355 INFO  - Started process 5500
+2026-05-10 00:20:36,374 DEBUG - Forwarding logs of the process System.Diagnostics.Process (cmd) to WinSW.RollingLogAppender
+2026-05-10 00:21:01,881 DEBUG - Starting WinSW in service mode
+2026-05-10 00:21:02,180 INFO  - Starting run_job_openmeteo.bat 
+2026-05-10 00:21:02,237 INFO  - Started process 10360
+2026-05-10 00:21:02,258 DEBUG - Forwarding logs of the process System.Diagnostics.Process (cmd) to WinSW.RollingLogAppender
+2026-05-10 00:23:24,833 DEBUG - Starting WinSW in service mode
+2026-05-10 00:23:25,221 INFO  - Starting run_job_openmeteo.bat 
+2026-05-10 00:23:25,301 INFO  - Started process 4468
+2026-05-10 00:23:25,332 DEBUG - Forwarding logs of the process System.Diagnostics.Process (cmd) to WinSW.RollingLogAppender
+2026-05-10 00:24:58,245 DEBUG - Starting WinSW in service mode
+2026-05-10 00:24:58,548 INFO  - Starting run_job_openmeteo.bat 
+2026-05-10 00:24:58,612 INFO  - Started process 12888
+2026-05-10 00:24:58,632 DEBUG - Forwarding logs of the process System.Diagnostics.Process (cmd) to WinSW.RollingLogAppender
+2026-05-10 00:30:47,686 DEBUG - Starting WinSW in console mode
+2026-05-10 00:30:53,072 DEBUG - Starting WinSW in console mode
+2026-05-10 00:30:53,237 INFO  - Stopping service 'OpenMeteo Service (OpenMeteoService)'...
+2026-05-10 00:30:53,287 INFO  - Service 'OpenMeteo Service (OpenMeteoService)' has already stopped.
+2026-05-10 00:30:56,026 DEBUG - Starting WinSW in console mode
+2026-05-10 00:30:59,750 DEBUG - Starting WinSW in console mode
+2026-05-10 00:30:59,961 INFO  - Uninstalling service 'OpenMeteo Service (OpenMeteoService)'...
+2026-05-10 00:31:00,202 INFO  - Service 'OpenMeteo Service (OpenMeteoService)' was uninstalled successfully.
+2026-05-10 00:31:05,201 DEBUG - Starting WinSW in console mode
+2026-05-10 00:31:09,228 DEBUG - Starting WinSW in console mode
+2026-05-10 00:31:09,317 INFO  - Installing service 'OpenMeteo Service (OpenMeteoService)'...
+2026-05-10 00:31:09,395 INFO  - Service 'OpenMeteo Service (OpenMeteoService)' was installed successfully.
+2026-05-10 00:31:14,021 DEBUG - Starting WinSW in console mode
+2026-05-10 00:31:17,521 DEBUG - Starting WinSW in console mode
+2026-05-10 00:31:17,651 INFO  - Starting service 'OpenMeteo Service (OpenMeteoService)'...
+2026-05-10 00:31:18,727 DEBUG - Starting WinSW in service mode
+2026-05-10 00:31:18,886 INFO  - Service 'OpenMeteo Service (OpenMeteoService)' started successfully.
+2026-05-10 00:31:19,486 INFO  - Starting run_job_openmeteo.bat 
+2026-05-10 00:31:19,724 INFO  - Started process 12116
+2026-05-10 00:31:19,745 DEBUG - Forwarding logs of the process System.Diagnostics.Process (cmd) to WinSW.RollingLogAppender
+2026-05-10 00:32:03,248 DEBUG - Starting WinSW in service mode
+2026-05-10 00:32:03,689 INFO  - Starting run_job_openmeteo.bat 
+2026-05-10 00:32:03,837 INFO  - Started process 12492
+2026-05-10 00:32:03,860 DEBUG - Forwarding logs of the process System.Diagnostics.Process (cmd) to WinSW.RollingLogAppender
+2026-05-10 00:32:41,834 DEBUG - Starting WinSW in service mode
+2026-05-10 00:32:42,212 INFO  - Starting run_job_openmeteo.bat 
+2026-05-10 00:32:42,281 INFO  - Started process 15200
+2026-05-10 00:32:42,307 DEBUG - Forwarding logs of the process System.Diagnostics.Process (cmd) to WinSW.RollingLogAppender
+2026-05-10 00:33:10,194 DEBUG - Starting WinSW in service mode
+2026-05-10 00:33:10,521 INFO  - Starting run_job_openmeteo.bat 
+2026-05-10 00:33:10,582 INFO  - Started process 9060
+2026-05-10 00:33:10,603 DEBUG - Forwarding logs of the process System.Diagnostics.Process (cmd) to WinSW.RollingLogAppender
+2026-05-10 00:38:49,383 DEBUG - Starting WinSW in console mode
+2026-05-10 00:38:52,419 DEBUG - Starting WinSW in console mode
+2026-05-10 00:38:52,494 INFO  - Stopping service 'OpenMeteo Service (OpenMeteoService)'...
+2026-05-10 00:38:52,524 INFO  - Service 'OpenMeteo Service (OpenMeteoService)' has already stopped.
+2026-05-10 00:39:13,690 DEBUG - Starting WinSW in console mode
+2026-05-10 00:39:16,717 DEBUG - Starting WinSW in console mode
+2026-05-10 00:39:16,783 INFO  - Uninstalling service 'OpenMeteo Service (OpenMeteoService)'...
+2026-05-10 00:39:16,795 INFO  - Service 'OpenMeteo Service (OpenMeteoService)' was uninstalled successfully.
+2026-05-10 00:45:35,840 DEBUG - Starting WinSW in console mode
+2026-05-10 00:45:35,922 INFO  - Installing service 'OpenMeteo Service (OpenMeteoService)'...
+2026-05-10 00:45:35,972 INFO  - Service 'OpenMeteo Service (OpenMeteoService)' was installed successfully.
+2026-05-10 00:45:43,093 DEBUG - Starting WinSW in console mode
+2026-05-10 00:45:43,169 INFO  - Starting service 'OpenMeteo Service (OpenMeteoService)'...
+2026-05-10 00:45:43,800 DEBUG - Starting WinSW in service mode
+2026-05-10 00:45:43,861 INFO  - Service 'OpenMeteo Service (OpenMeteoService)' started successfully.
+2026-05-10 00:45:44,069 INFO  - Starting run_job_openmeteo.bat 
+2026-05-10 00:45:44,142 INFO  - Started process 6992
+2026-05-10 00:45:44,160 DEBUG - Forwarding logs of the process System.Diagnostics.Process (cmd) to WinSW.RollingLogAppender
+2026-05-10 00:47:21,067 DEBUG - Starting WinSW in service mode
+2026-05-10 00:47:21,334 INFO  - Starting run_job_openmeteo.bat 
+2026-05-10 00:47:21,392 INFO  - Started process 11664
+2026-05-10 00:47:21,411 DEBUG - Forwarding logs of the process System.Diagnostics.Process (cmd) to WinSW.RollingLogAppender
+2026-05-10 01:04:36,869 DEBUG - Starting WinSW in service mode
+2026-05-10 01:04:37,171 INFO  - Starting run_job_openmeteo.bat 
+2026-05-10 01:04:37,244 INFO  - Started process 10068
+2026-05-10 01:04:37,263 DEBUG - Forwarding logs of the process System.Diagnostics.Process (cmd) to WinSW.RollingLogAppender
+2026-05-10 01:11:26,706 DEBUG - Starting WinSW in console mode
+2026-05-10 01:11:26,775 INFO  - Stopping service 'OpenMeteo Service (OpenMeteoService)'...
+2026-05-10 01:11:26,802 INFO  - Service 'OpenMeteo Service (OpenMeteoService)' has already stopped.
+2026-05-10 01:11:34,954 DEBUG - Starting WinSW in console mode
+2026-05-10 01:11:35,016 INFO  - Uninstalling service 'OpenMeteo Service (OpenMeteoService)'...
+2026-05-10 01:11:36,026 INFO  - Service 'OpenMeteo Service (OpenMeteoService)' was uninstalled successfully.

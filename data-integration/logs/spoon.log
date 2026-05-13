@@ -1,0 +1,104 @@
+Graphics2D from BufferedImage lacks BUFFERED_IMAGE hint
+Loading class `com.mysql.jdbc.Driver'. This is deprecated. The new driver class is `com.mysql.cj.jdbc.Driver'. The driver is automatically registered via the SPI and manual loading of the driver class is generally unnecessary.
+2026/05/10 16:39:06 - transform_openmeteo - Iniciado despacho de la transformaci?n [transform_openmeteo]
+2026/05/10 16:39:07 - Salida Tabla Semana.0 - Connected to database [mysql_clima] (commit=1000)
+2026/05/10 16:39:07 - Salida Tabla Diaria.0 - Connected to database [mysql_clima] (commit=1000)
+2026/05/10 16:39:07 - Salida Tabla Mes.0 - Connected to database [mysql_clima] (commit=1000)
+2026/05/10 16:39:07 - CSV file input.0 - Header row skipped in file 'C:/ProyectoIA/datos/openmeteo_dataset_final.csv'
+2026/05/10 16:39:07 - estres termico.0 - Optimization level set to 9.
+2026/05/10 16:39:07 - crea fecha.0 - Optimization level set to 9.
+2026/05/10 16:39:09 - CSV file input.0 - Line number : 50000
+2026/05/10 16:39:09 - CSV file input.0 - Procesamiento finalizado (I=55675, O=0, R=0, W=55674, U=0, E=0)
+2026/05/10 16:39:09 - estres termico.0 - N?mero de l?nea 50000
+2026/05/10 16:39:09 - estres termico.0 - Procesamiento finalizado (I=0, O=0, R=55674, W=55674, U=0, E=0)
+2026/05/10 16:39:10 - crea fecha.0 - N?mero de l?nea 50000
+2026/05/10 16:39:10 - DIARIO.0 - N?mero l?nea 50000
+2026/05/10 16:39:10 - crea fecha.0 - Procesamiento finalizado (I=0, O=0, R=55674, W=55674, U=0, E=0)
+2026/05/10 16:39:10 - crear_semana.0 - Optimization level set to 9.
+2026/05/10 16:39:10 - DIARIO.0 - Procesamiento finalizado (I=0, O=0, R=55674, W=2320, U=0, E=0)
+2026/05/10 16:39:10 - crear_mes.0 - Optimization level set to 9.
+2026/05/10 16:39:10 - crear_mes.0 - Procesamiento finalizado (I=0, O=0, R=773, W=773, U=0, E=0)
+2026/05/10 16:39:10 - MENSUAL.0 - Procesamiento finalizado (I=0, O=0, R=773, W=77, U=0, E=0)
+2026/05/10 16:39:10 - crear_semana.0 - Procesamiento finalizado (I=0, O=0, R=774, W=774, U=0, E=0)
+2026/05/10 16:39:10 - SEMANAL.0 - Procesamiento finalizado (I=0, O=0, R=774, W=328, U=0, E=0)
+2026/05/10 16:39:11 - Salida Tabla Mes.0 - Procesamiento finalizado (I=0, O=77, R=77, W=77, U=0, E=0)
+2026/05/10 16:39:11 - Salida Tabla Semana.0 - Procesamiento finalizado (I=0, O=328, R=328, W=328, U=0, E=0)
+2026/05/10 16:39:12 - Salida Tabla Diaria.0 - Procesamiento finalizado (I=0, O=773, R=773, W=773, U=0, E=0)
+2026/05/10 16:39:12 - Spoon - La transformaci?n ha finalizado!!
+2026/05/10 16:40:05 - transform_openmeteo - Iniciado despacho de la transformaci?n [transform_openmeteo]
+2026/05/10 16:40:05 - Salida Tabla Semana.0 - Connected to database [mysql_clima] (commit=1000)
+2026/05/10 16:40:05 - Salida Tabla Diaria.0 - Connected to database [mysql_clima] (commit=1000)
+2026/05/10 16:40:05 - Salida Tabla Mes.0 - Connected to database [mysql_clima] (commit=1000)
+2026/05/10 16:40:05 - CSV file input.0 - Header row skipped in file 'C:/ProyectoIA/datos/openmeteo_dataset_final.csv'
+2026/05/10 16:40:06 - estres termico.0 - Optimization level set to 9.
+2026/05/10 16:40:06 - crea fecha.0 - Optimization level set to 9.
+2026/05/10 16:40:07 - CSV file input.0 - Line number : 50000
+2026/05/10 16:40:07 - CSV file input.0 - Procesamiento finalizado (I=55675, O=0, R=0, W=55674, U=0, E=0)
+2026/05/10 16:40:07 - estres termico.0 - N?mero de l?nea 50000
+2026/05/10 16:40:07 - estres termico.0 - Procesamiento finalizado (I=0, O=0, R=55674, W=55674, U=0, E=0)
+2026/05/10 16:40:07 - crea fecha.0 - N?mero de l?nea 50000
+2026/05/10 16:40:07 - DIARIO.0 - N?mero l?nea 50000
+2026/05/10 16:40:07 - crea fecha.0 - Procesamiento finalizado (I=0, O=0, R=55674, W=55674, U=0, E=0)
+2026/05/10 16:40:07 - crear_semana.0 - Optimization level set to 9.
+2026/05/10 16:40:07 - DIARIO.0 - Procesamiento finalizado (I=0, O=0, R=55674, W=2320, U=0, E=0)
+2026/05/10 16:40:07 - crear_mes.0 - Optimization level set to 9.
+2026/05/10 16:40:07 - crear_semana.0 - Procesamiento finalizado (I=0, O=0, R=774, W=774, U=0, E=0)
+2026/05/10 16:40:07 - crear_mes.0 - Procesamiento finalizado (I=0, O=0, R=773, W=773, U=0, E=0)
+2026/05/10 16:40:07 - MENSUAL.0 - Procesamiento finalizado (I=0, O=0, R=773, W=77, U=0, E=0)
+2026/05/10 16:40:07 - SEMANAL.0 - Procesamiento finalizado (I=0, O=0, R=774, W=328, U=0, E=0)
+2026/05/10 16:40:07 - Salida Tabla Mes.0 - Procesamiento finalizado (I=0, O=77, R=77, W=77, U=0, E=0)
+2026/05/10 16:40:08 - Salida Tabla Semana.0 - Procesamiento finalizado (I=0, O=328, R=328, W=328, U=0, E=0)
+2026/05/10 16:40:08 - Salida Tabla Diaria.0 - Procesamiento finalizado (I=0, O=773, R=773, W=773, U=0, E=0)
+2026/05/10 16:40:08 - Spoon - La transformaci?n ha finalizado!!
+2026/05/10 16:40:39 - transform_openmeteo - Iniciado despacho de la transformaci?n [transform_openmeteo]
+2026/05/10 16:40:39 - Salida Tabla Diaria.0 - Connected to database [mysql_clima] (commit=1000)
+2026/05/10 16:40:39 - Salida Tabla Mes.0 - Connected to database [mysql_clima] (commit=1000)
+2026/05/10 16:40:39 - Salida Tabla Semana.0 - Connected to database [mysql_clima] (commit=1000)
+2026/05/10 16:40:39 - CSV file input.0 - Header row skipped in file 'C:/ProyectoIA/datos/openmeteo_dataset_final.csv'
+2026/05/10 16:40:39 - estres termico.0 - Optimization level set to 9.
+2026/05/10 16:40:39 - crea fecha.0 - Optimization level set to 9.
+2026/05/10 16:40:40 - CSV file input.0 - Line number : 50000
+2026/05/10 16:40:40 - CSV file input.0 - Procesamiento finalizado (I=55675, O=0, R=0, W=55674, U=0, E=0)
+2026/05/10 16:40:40 - estres termico.0 - N?mero de l?nea 50000
+2026/05/10 16:40:40 - crea fecha.0 - N?mero de l?nea 50000
+2026/05/10 16:40:40 - estres termico.0 - Procesamiento finalizado (I=0, O=0, R=55674, W=55674, U=0, E=0)
+2026/05/10 16:40:40 - crea fecha.0 - Procesamiento finalizado (I=0, O=0, R=55674, W=55674, U=0, E=0)
+2026/05/10 16:40:40 - DIARIO.0 - N?mero l?nea 50000
+2026/05/10 16:40:40 - crear_semana.0 - Optimization level set to 9.
+2026/05/10 16:40:40 - crear_mes.0 - Optimization level set to 9.
+2026/05/10 16:40:40 - DIARIO.0 - Procesamiento finalizado (I=0, O=0, R=55674, W=2320, U=0, E=0)
+2026/05/10 16:40:40 - crear_mes.0 - Procesamiento finalizado (I=0, O=0, R=773, W=773, U=0, E=0)
+2026/05/10 16:40:40 - crear_semana.0 - Procesamiento finalizado (I=0, O=0, R=774, W=774, U=0, E=0)
+2026/05/10 16:40:40 - MENSUAL.0 - Procesamiento finalizado (I=0, O=0, R=773, W=77, U=0, E=0)
+2026/05/10 16:40:40 - SEMANAL.0 - Procesamiento finalizado (I=0, O=0, R=774, W=328, U=0, E=0)
+2026/05/10 16:40:40 - Salida Tabla Mes.0 - Procesamiento finalizado (I=0, O=77, R=77, W=77, U=0, E=0)
+2026/05/10 16:40:41 - Salida Tabla Semana.0 - Procesamiento finalizado (I=0, O=328, R=328, W=328, U=0, E=0)
+2026/05/10 16:40:41 - Salida Tabla Diaria.0 - Procesamiento finalizado (I=0, O=773, R=773, W=773, U=0, E=0)
+2026/05/10 16:40:41 - Spoon - La transformaci?n ha finalizado!!
+2026/05/10 18:50:31 - transform_openmeteo - Iniciado despacho de la transformaci?n [transform_openmeteo]
+2026/05/10 18:50:31 - Salida Tabla Mes.0 - Connected to database [mysql_clima] (commit=1000)
+2026/05/10 18:50:31 - Salida Tabla Semana.0 - Connected to database [mysql_clima] (commit=1000)
+2026/05/10 18:50:31 - Salida Tabla Diaria.0 - Connected to database [mysql_clima] (commit=1000)
+2026/05/10 18:50:31 - CSV file input.0 - Header row skipped in file 'C:/ProyectoIA/datos/openmeteo_dataset_final.csv'
+2026/05/10 18:50:31 - estres termico.0 - Optimization level set to 9.
+2026/05/10 18:50:31 - crea fecha.0 - Optimization level set to 9.
+2026/05/10 18:50:32 - CSV file input.0 - Line number : 50000
+2026/05/10 18:50:33 - CSV file input.0 - Procesamiento finalizado (I=55684, O=0, R=0, W=55683, U=0, E=0)
+2026/05/10 18:50:33 - estres termico.0 - N?mero de l?nea 50000
+2026/05/10 18:50:33 - estres termico.0 - Procesamiento finalizado (I=0, O=0, R=55683, W=55683, U=0, E=0)
+2026/05/10 18:50:33 - crea fecha.0 - N?mero de l?nea 50000
+2026/05/10 18:50:33 - crea fecha.0 - Procesamiento finalizado (I=0, O=0, R=55683, W=55683, U=0, E=0)
+2026/05/10 18:50:33 - DIARIO.0 - N?mero l?nea 50000
+2026/05/10 18:50:33 - crear_semana.0 - Optimization level set to 9.
+2026/05/10 18:50:33 - crear_mes.0 - Optimization level set to 9.
+2026/05/10 18:50:33 - DIARIO.0 - Procesamiento finalizado (I=0, O=0, R=55683, W=2320, U=0, E=0)
+2026/05/10 18:50:33 - crear_mes.0 - Procesamiento finalizado (I=0, O=0, R=773, W=773, U=0, E=0)
+2026/05/10 18:50:33 - crear_semana.0 - Procesamiento finalizado (I=0, O=0, R=774, W=774, U=0, E=0)
+2026/05/10 18:50:33 - MENSUAL.0 - Procesamiento finalizado (I=0, O=0, R=773, W=77, U=0, E=0)
+2026/05/10 18:50:33 - SEMANAL.0 - Procesamiento finalizado (I=0, O=0, R=774, W=328, U=0, E=0)
+2026/05/10 18:50:34 - Salida Tabla Mes.0 - Procesamiento finalizado (I=0, O=77, R=77, W=77, U=0, E=0)
+2026/05/10 18:50:36 - Salida Tabla Semana.0 - Procesamiento finalizado (I=0, O=328, R=328, W=328, U=0, E=0)
+2026/05/10 18:50:36 - Salida Tabla Diaria.0 - Procesamiento finalizado (I=0, O=773, R=773, W=773, U=0, E=0)
+2026/05/10 18:50:36 - Spoon - La transformaci?n ha finalizado!!
+2026/05/10 19:49:33 - Spoon - Spoon  ha terminado.
+stopping

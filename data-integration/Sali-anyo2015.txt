@@ -1,0 +1,2 @@
+﻿ID_Cliente;Nombre;Ciudad;Fecha_Venta;Producto;Cantidad;Precio_Unitario;Importe;Year
+1;Ana Torres   ;Madrid   ;05/01/2015;Portátil A   ;1;850;850;2015

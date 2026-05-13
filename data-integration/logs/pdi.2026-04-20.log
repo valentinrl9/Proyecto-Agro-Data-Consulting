@@ -1,0 +1,15 @@
+2026-04-20 22:46:46.805 INFO  <Thread-37> [C:\software\Pentajo\Pentajo-Comunity\Ejercicios\Ejercicio_1\Transf-1-ktr.ktr]  Iniciado despacho de la transformaci?n [Transf-1-ktr]
+2026-04-20 22:46:46.894 INFO  <Transf-1-ktr - Entrada-CSV> [C:\software\Pentajo\Pentajo-Comunity\Ejercicios\Ejercicio_1\Transf-1-ktr.ktr]  Header row skipped in file 'C:\software\Pentajo\Pentajo-Comunity\Ejercicios\Ejercicio_1\ventas_clientes.csv'
+2026-04-20 22:46:46.900 INFO  <Transf-1-ktr - Entrada-CSV> [C:\software\Pentajo\Pentajo-Comunity\Ejercicios\Ejercicio_1\Transf-1-ktr.ktr]  Procesamiento finalizado (I=12, O=0, R=0, W=11, U=0, E=0)
+2026-04-20 22:46:46.907 INFO  <Transf-1-ktr - Year> [C:\software\Pentajo\Pentajo-Comunity\Ejercicios\Ejercicio_1\Transf-1-ktr.ktr]  Procesamiento finalizado (I=0, O=0, R=11, W=1, U=0, E=0)
+2026-04-20 22:46:46.937 INFO  <Transf-1-ktr - Transf-Simulada: Cumple la condicion> [C:\software\Pentajo\Pentajo-Comunity\Ejercicios\Ejercicio_1\Transf-1-ktr.ktr]  Procesamiento finalizado (I=0, O=0, R=1, W=1, U=0, E=0)
+2026-04-20 23:11:26.954 INFO  <Thread-64> [C:\software\Pentajo\Pentajo-Comunity\Ejercicios\Ejercicio_2\Ejer-2-KRT.ktr]  Iniciado despacho de la transformaci?n [Ejer-2-KRT]
+2026-04-20 23:11:26.984 INFO  <Ejer-2-KRT - CSV file input> [C:\software\Pentajo\Pentajo-Comunity\Ejercicios\Ejercicio_2\Ejer-2-KRT.ktr]  Header row skipped in file 'C:\software\Pentajo\Pentajo-Comunity\Ejercicios\Ejercicio_2\ventas_clientes.csv'
+2026-04-20 23:11:26.988 INFO  <Ejer-2-KRT - CSV file input> [C:\software\Pentajo\Pentajo-Comunity\Ejercicios\Ejercicio_2\Ejer-2-KRT.ktr]  Procesamiento finalizado (I=12, O=0, R=0, W=11, U=0, E=0)
+2026-04-20 23:11:27.004 INFO  <Ejer-2-KRT - Filtrar filas> [C:\software\Pentajo\Pentajo-Comunity\Ejercicios\Ejercicio_2\Ejer-2-KRT.ktr]  Procesamiento finalizado (I=0, O=0, R=11, W=1, U=0, E=0)
+2026-04-20 23:11:27.019 INFO  <Ejer-2-KRT - Transformación simulada (no hace nada)> [C:\software\Pentajo\Pentajo-Comunity\Ejercicios\Ejercicio_2\Ejer-2-KRT.ktr]  Procesamiento finalizado (I=0, O=0, R=1, W=1, U=0, E=0)
+2026-04-20 23:11:27.052 INFO  <Ejer-2-KRT - Salida-fichero> [C:\software\Pentajo\Pentajo-Comunity\Ejercicios\Ejercicio_2\Ejer-2-KRT.ktr]  Procesamiento finalizado (I=0, O=2, R=1, W=1, U=0, E=0)
+2026-04-20 23:58:01.485 INFO  <ModalContext> [/Transformaci?n 1.ktr]  Iniciado despacho de la transformaci?n [/Transformaci?n 1]
+2026-04-20 23:58:01.526 INFO  </Transformaci?n 1 - Entrada Tabla> [/Transformaci?n 1.ktr]  Finished reading query, closing connection
+2026-04-20 23:58:01.528 INFO  </Transformaci?n 1 - Entrada Tabla> [/Transformaci?n 1.ktr]  Procesamiento finalizado (I=3, O=0, R=0, W=3, U=0, E=0)
+2026-04-20 23:58:01.561 INFO  </Transformaci?n 1 - dummy> [/Transformaci?n 1.ktr]  Procesamiento finalizado (I=0, O=0, R=3, W=3, U=0, E=0)

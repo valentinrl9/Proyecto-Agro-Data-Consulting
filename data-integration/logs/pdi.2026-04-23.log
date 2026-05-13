@@ -1,0 +1,18 @@
+2026-04-21 00:08:06.263 INFO  <ModalContext> [/Transformaci?n 1.ktr]  Iniciado despacho de la transformaci?n [/Transformaci?n 1]
+2026-04-21 00:08:06.288 INFO  </Transformaci?n 1 - Entrada Tabla> [/Transformaci?n 1.ktr]  Finished reading query, closing connection
+2026-04-21 00:08:06.291 INFO  </Transformaci?n 1 - Entrada Tabla> [/Transformaci?n 1.ktr]  Procesamiento finalizado (I=2, O=0, R=0, W=2, U=0, E=0)
+2026-04-21 00:08:06.309 INFO  </Transformaci?n 1 - dummy> [/Transformaci?n 1.ktr]  Procesamiento finalizado (I=0, O=0, R=2, W=2, U=0, E=0)
+2026-04-21 00:14:32.110 INFO  <Thread-106> [C:\software\Pentajo\Pentajo-Comunity\Ejercicios\Ejercicio_3\Ejer-3-BBDD.ktr]  Iniciado despacho de la transformaci?n [Ejer-3-BBDD]
+2026-04-21 00:14:32.142 INFO  <Ejer-3-BBDD - Entrada Tabla> [C:\software\Pentajo\Pentajo-Comunity\Ejercicios\Ejercicio_3\Ejer-3-BBDD.ktr]  Finished reading query, closing connection
+2026-04-21 00:14:32.145 INFO  <Ejer-3-BBDD - Entrada Tabla> [C:\software\Pentajo\Pentajo-Comunity\Ejercicios\Ejercicio_3\Ejer-3-BBDD.ktr]  Procesamiento finalizado (I=2, O=0, R=0, W=2, U=0, E=0)
+2026-04-21 00:14:32.172 INFO  <Ejer-3-BBDD - Transformación simulada (no hace nada)> [C:\software\Pentajo\Pentajo-Comunity\Ejercicios\Ejercicio_3\Ejer-3-BBDD.ktr]  Procesamiento finalizado (I=0, O=0, R=2, W=2, U=0, E=0)
+2026-04-21 00:24:42.008 INFO  <Thread-120> [C:\software\Pentajo\Pentajo-Comunity\Ejercicios\Ejercicio_3\Ejer-3-BBDD.ktr]  Iniciado despacho de la transformaci?n [Ejer-3-BBDD]
+2026-04-21 00:24:42.049 INFO  <Ejer-3-BBDD - Entrada Tabla> [C:\software\Pentajo\Pentajo-Comunity\Ejercicios\Ejercicio_3\Ejer-3-BBDD.ktr]  Finished reading query, closing connection
+2026-04-21 00:24:42.052 INFO  <Ejer-3-BBDD - Entrada Tabla> [C:\software\Pentajo\Pentajo-Comunity\Ejercicios\Ejercicio_3\Ejer-3-BBDD.ktr]  Procesamiento finalizado (I=2, O=0, R=0, W=2, U=0, E=0)
+2026-04-21 00:24:42.079 INFO  <Ejer-3-BBDD - Transformación simulada (no hace nada)> [C:\software\Pentajo\Pentajo-Comunity\Ejercicios\Ejercicio_3\Ejer-3-BBDD.ktr]  Procesamiento finalizado (I=0, O=0, R=2, W=2, U=0, E=0)
+2026-04-21 00:24:42.947 INFO  <Ejer-3-BBDD - Microsoft Excel writer> [C:\software\Pentajo\Pentajo-Comunity\Ejercicios\Ejercicio_3\Ejer-3-BBDD.ktr]  Procesamiento finalizado (I=0, O=4, R=2, W=2, U=0, E=0)
+2026-04-21 00:25:41.909 INFO  <Thread-130> [C:\software\Pentajo\Pentajo-Comunity\Ejercicios\Ejercicio_3\Ejer-3-BBDD.ktr]  Iniciado despacho de la transformaci?n [Ejer-3-BBDD]
+2026-04-21 00:25:41.956 INFO  <Ejer-3-BBDD - Entrada Tabla> [C:\software\Pentajo\Pentajo-Comunity\Ejercicios\Ejercicio_3\Ejer-3-BBDD.ktr]  Finished reading query, closing connection
+2026-04-21 00:25:41.958 INFO  <Ejer-3-BBDD - Entrada Tabla> [C:\software\Pentajo\Pentajo-Comunity\Ejercicios\Ejercicio_3\Ejer-3-BBDD.ktr]  Procesamiento finalizado (I=2, O=0, R=0, W=2, U=0, E=0)
+2026-04-21 00:25:41.983 INFO  <Ejer-3-BBDD - Transformación simulada (no hace nada)> [C:\software\Pentajo\Pentajo-Comunity\Ejercicios\Ejercicio_3\Ejer-3-BBDD.ktr]  Procesamiento finalizado (I=0, O=0, R=2, W=2, U=0, E=0)
+2026-04-21 00:25:42.079 INFO  <Ejer-3-BBDD - Microsoft Excel writer> [C:\software\Pentajo\Pentajo-Comunity\Ejercicios\Ejercicio_3\Ejer-3-BBDD.ktr]  Procesamiento finalizado (I=0, O=3, R=2, W=2, U=0, E=0)

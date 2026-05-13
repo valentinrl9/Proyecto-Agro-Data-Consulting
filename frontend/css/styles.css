@@ -1,0 +1,481 @@
+/* ===========================
+   ESTILOS GENERALES
+=========================== */
+
+body {
+    margin: 0;
+    font-family: "Inter", Arial, sans-serif;
+    background: #0b1724;
+    color: #f5f7fb;
+}
+
+/* ===========================
+   CABECERA NUEVA
+=========================== */
+
+.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 28px;
+    background: radial-gradient(circle at top left, #1f6feb 0, #0b1724 55%, #020712 100%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.logo-img {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    object-fit: cover;
+    padding: 6px;
+    background: rgba(0, 0, 0, 0.85); /* Fondo claro para contraste */
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.35);
+}
+.logo-img {
+    border: 2px solid rgba(255, 255, 255, 0.6);
+}
+.logo-img {
+    box-shadow:
+        0 0 12px rgba(255, 255, 255, 0.35),
+        0 0 18px rgba(34, 197, 94, 0.35);
+}
+
+
+.topbar-title h1 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.topbar-title span {
+    display: block;
+    margin-top: 2px;
+    font-size: 12px;
+    color: rgba(241, 245, 249, 0.75);
+}
+
+/* ===========================
+   NAVEGACIÓN
+=========================== */
+
+.topbar-nav {
+    display: flex;
+    gap: 8px;
+}
+
+/* Contenedor de navegación */
+.nav-btn {
+    padding: 10px 18px;
+    border-radius: 8px;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.15);
+    color: #e2e8f0;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-size: 14px;
+}
+
+/* Hover premium */
+.nav-btn:hover {
+    background: rgba(255,255,255,0.08);
+    transform: translateY(-1px);
+    border-color: rgba(255,255,255,0.25);
+}
+
+/* Botón activo premium */
+.nav-btn.active {
+    background: linear-gradient(90deg, #3b82f6, #22c55e);
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 0 12px rgba(34,197,94,0.45), 0 0 18px rgba(59,130,246,0.35);
+    transform: translateY(-1px);
+}
+
+
+/* ===========================
+   SECCIONES
+=========================== */
+
+.section {
+    animation: fadeSection 0.35s ease;
+}
+
+@keyframes fadeSection {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+
+
+.section {
+    display: none;
+    padding: 20px 28px;
+}
+
+.section.visible {
+    display: block;
+}
+
+/* ===========================
+   TARJETAS Y CONTENIDO
+=========================== */
+
+#cards-container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+/* ===========================
+   TARJETAS MODERNAS
+=========================== */
+
+.card {
+    background: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04));
+    backdrop-filter: blur(12px);
+    border-radius: 16px;
+    padding: 20px;
+    width: 240px;
+    color: #f1f5f9;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+    border: 1px solid rgba(255,255,255,0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.45);
+}
+
+.card-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.card-value {
+    font-size: 26px;
+    font-weight: 700;
+    margin-top: 4px;
+}
+
+.card-icon {
+    font-size: 22px;
+}
+
+/* Colores según tipo */
+.card-et0 {
+    border-left: 4px solid #4ade80;
+}
+
+.card-estres {
+    border-left: 4px solid #f97316;
+}
+
+.card-humedad {
+    border-left: 4px solid #60a5fa;
+}
+
+/* ===========================
+   GRAFICOS
+=========================== */
+canvas {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+    margin-top: 20px;
+}
+
+.chart-wrapper {
+    width: 100%;
+    max-width: 100%;
+    margin: 20px 0;
+}
+
+canvas {
+    width: 100% !important;
+    height: 320px !important;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+}
+
+
+/* ===========================
+   RECOMENDACIONES
+=========================== */
+/* Título */
+#recomendaciones h2 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+/* Grid */
+#recs-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 14px;
+    margin-top: 10px;
+}
+
+/* Card premium */
+.recomendacion-card {
+    padding: 16px 18px;
+    border-radius: 14px;
+    background: rgba(15,23,42,0.85);
+    border: 1px solid rgba(148,163,184,0.25);
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    animation: fadeIn 0.4s ease;
+}
+
+/* Icono grande */
+.recomendacion-icono {
+    font-size: 26px;
+    margin-top: 2px;
+}
+
+/* Texto */
+.recomendacion-texto {
+    font-size: 15px;
+    line-height: 1.45;
+}
+
+/* Colores según prioridad */
+.rec-verde   { border-left: 4px solid #22c55e; background: rgba(34,197,94,0.15); }
+.rec-amarillo{ border-left: 4px solid #eab308; background: rgba(234,179,8,0.15); }
+.rec-naranja { border-left: 4px solid #f97316; background: rgba(249,115,22,0.15); }
+.rec-rojo    { border-left: 4px solid #ef4444; background: rgba(239,68,68,0.15); }
+.rec-morado  { border-left: 4px solid #a855f7; background: rgba(168,85,247,0.15); }
+
+/* Animación */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+
+
+
+/* ===========================
+   ALERTAS
+=========================== */
+
+.alertas-wrapper {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.alerta {
+    padding: 14px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.alerta-icono {
+    font-size: 20px;
+}
+
+.alerta-verde { background: rgba(34,197,94,0.25); border-left: 4px solid #22c55e; }
+.alerta-amarillo { background: rgba(234,179,8,0.25); border-left: 4px solid #eab308; }
+.alerta-naranja { background: rgba(249,115,22,0.25); border-left: 4px solid #f97316; }
+.alerta-rojo { background: rgba(239,68,68,0.25); border-left: 4px solid #ef4444; }
+.alerta-azul { background: rgba(59,130,246,0.25); border-left: 4px solid #3b82f6; }
+
+.sin-alertas {
+    opacity: 0.7;
+    font-style: italic;
+}
+
+
+/* ===========================
+   RIESGO ACUMULADO
+=========================== */
+#riesgo h2 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.subtitulo-seccion {
+    opacity: 0.8;
+    margin-bottom: 18px;
+}
+
+#riesgo-bar {
+    width: 100%;
+    height: 22px;
+    background: rgba(148,163,184,0.2);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+
+#riesgo-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #22c55e, #ef4444);
+    transition: width 0.6s ease;
+}
+
+#riesgo-bar-text {
+    font-size: 14px;
+    opacity: 0.9;
+    margin-bottom: 20px;
+}
+
+#riesgo-detalles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 14px;
+}
+
+.riesgo-card {
+    padding: 14px 16px;
+    border-radius: 12px;
+    background: rgba(15,23,42,0.85);
+    border: 1px solid rgba(148,163,184,0.25);
+    animation: fadeIn 0.4s ease;
+}
+
+.riesgo-card h3 {
+    margin-bottom: 6px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.riesgo-card p {
+    font-size: 14px;
+    opacity: 0.85;
+}
+
+
+
+
+/* ===========================
+   IFRAME INFORME
+=========================== */
+
+iframe {
+    width: 100%;
+    height: 600px;
+    border: none;
+}
+#informe-contenido {
+    background: white;
+    color: #1e293b;
+    padding: 40px;
+    border-radius: 12px;
+    width: 800px;
+    margin: auto;
+    font-family: 'Inter', sans-serif;
+}
+
+.informe-titulo {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.informe-subtitulo {
+    text-align: center;
+    font-size: 16px;
+    opacity: 0.7;
+    margin-bottom: 40px;
+}
+
+.informe-seccion {
+    margin-bottom: 30px;
+}
+
+.informe-seccion h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.informe-seccion p {
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+
+/* ===========================
+   BOTÓN PDF
+=========================== */
+
+.btn-pdf {
+    padding: 12px 26px;
+    background: linear-gradient(90deg, #3b82f6, #22c55e);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 0 12px rgba(34,197,94,0.45), 0 0 18px rgba(59,130,246,0.35);
+}
+
+.btn-pdf:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 18px rgba(34,197,94,0.55), 0 0 24px rgba(59,130,246,0.45);
+}
+
+
+.nav-btn-apagar-round {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    border: none;
+    color: white;
+    font-size: 20px;
+    font-weight: 600;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    line-height: 1;          /* evita que el icono se desplace verticalmente */
+    padding: 0;              /* elimina espacio interno que descuadra */
+    transform: translateY(1px); /* ajuste óptico fino */
+
+    transition: all 0.25s ease;
+    box-shadow: 0 0 12px rgba(239,68,68,0.45), 0 0 18px rgba(220,38,38,0.35);
+}
+
+.nav-btn-apagar-round:hover {
+    transform: translateY(-1px) scale(1.05);
+    box-shadow: 0 0 18px rgba(239,68,68,0.55), 0 0 24px rgba(220,38,38,0.45);
+}
+
+.nav-btn-apagar-round:active {
+    transform: scale(0.92);
+}

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Informe Mensual</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        h1 { color: #1e88e5; }
+        .box { padding: 15px; background: #f4f6f9; margin-bottom: 20px; border-radius: 8px; }
+    </style>
+</head>
+<body>
+
+<h1>Informe Mensual Agronómico</h1>
+
+<div id="contenido"></div>
+
+<script>
+async function cargarInforme() {
+    const res = await fetch("http://127.0.0.1:8000/informe_mensual");
+    const data = await res.json();
+
+    document.getElementById("contenido").innerHTML = `
+        <div class="box">
+            <h2>Diagnóstico</h2>
+            ${data.informe_json.diagnostico.map(i => `<p>${i}</p>`).join("")}
+        </div>
+
+        <div class="box">
+            <h2>Riesgo Mensual</h2>
+            <p>${data.informe_json.nivel_riesgo}</p>
+        </div>
+
+        <div class="box">
+            <h2>Recomendación</h2>
+            <p>${data.informe_json.recomendacion}</p>
+        </div>
+    `;
+}
+
+cargarInforme();
+</script>
+
+</body>
+</html>

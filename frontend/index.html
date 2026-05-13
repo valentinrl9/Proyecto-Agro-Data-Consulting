@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard Agronómico</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <header class="topbar">
+        <div class="topbar-left">
+            <img src="assets/logos/Logo V.png" class="logo-img" alt="Logo">
+            <div class="topbar-title">
+                <h1>Dashboard Agronómico Inteligente</h1>
+                <span>Condiciones en tiempo real · Predicción y riesgo</span>
+            </div>
+        </div>
+
+        <nav class="topbar-nav">
+            <button class="nav-btn active" data-section="inicio" onclick="mostrarVista('inicio')">Inicio</button>
+            <button class="nav-btn" data-section="recomendaciones" onclick="mostrarVista('recomendaciones')">Recomendaciones</button>
+            <button class="nav-btn" data-section="alertas" onclick="mostrarVista('alertas')">Alertas</button>
+            <button class="nav-btn" data-section="riesgo" onclick="mostrarVista('riesgo')">Riesgo Acumulado</button>
+            <button class="nav-btn" data-section="informe" onclick="mostrarVista('informe')">Informe Mensual</button>
+            <button id="btn-apagar" class="nav-btn nav-btn-apagar-round">
+                ⏻
+            </button>
+        </nav>
+    </header>
+
+
+    <main>
+
+        <!-- INICIO -->
+        <section id="inicio" class="section visible">
+            <h2>Resumen General</h2>
+            <div id="cards-container"></div>
+            <div class="chart-wrapper">
+            <canvas id="chart-et0"></canvas>
+            </div>
+
+            <div class="chart-wrapper">
+                <canvas id="chart-estres"></canvas>
+            </div>
+
+            <div class="chart-wrapper">
+                <canvas id="chart-humedad"></canvas>
+            </div>
+
+
+        </section>
+
+        <!-- RECOMENDACIONES -->
+        <section id="recomendaciones" class="section">
+            <h2>Recomendaciones Diarias</h2>
+            <div id="recs-container"></div>
+        </section>
+
+        <!-- ALERTAS -->
+        <section id="alertas" class="section">
+            <div id="alertas-container" class="alertas-wrapper"></div>
+        </section>
+
+        <!-- RIESGO ACUMULADO -->
+        <section id="riesgo" class="section" style="display:none;">
+            <h2>Riesgo Acumulado</h2>
+            <p class="subtitulo-seccion">Evaluación semanal basada en estrés térmico y humedad.</p>
+
+            <div id="riesgo-bar-container">
+                <div id="riesgo-bar">
+                    <div id="riesgo-bar-fill"></div>
+                </div>
+                <p id="riesgo-bar-text"></p>
+            </div>
+
+            <div id="riesgo-detalles"></div>
+        </section>
+
+
+        <!-- INFORME MENSUAL -->
+        <section id="informe" class="section">
+            <h2>Informe Mensual</h2>
+            <button id="btn-descargar-pdf" class="btn-pdf">Descargar PDF</button>
+            <div id="informe-contenido">
+                <!-- Aquí generaremos el informe -->
+            </div>
+        </section>
+
+
+    </main>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/pdf.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+
+</body>
+</html>
