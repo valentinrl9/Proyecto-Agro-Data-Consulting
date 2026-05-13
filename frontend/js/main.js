@@ -73,6 +73,7 @@ async function cargarDashboard() {
 
     console.log(data);
     console.log(data.diario);
+
     // ===============================
     // TARJETAS RESUMEN
     // ===============================
@@ -83,17 +84,46 @@ async function cargarDashboard() {
     cards.appendChild(crearTarjeta("Estrés térmico", limpiarValor(data.diario[0].informacion[1]), "estres"));
     cards.appendChild(crearTarjeta("Humedad", limpiarValor(data.diario[0].informacion[2]) + "%", "humedad"));
 
-    
-    mostrarRecomendaciones(data.diario[0]);
+    // ===============================
+    // IA AVANZADA
+    // ===============================
 
+    // IA: Predicción de estrés térmico
+    const estresHoy = parseFloat(data.diario[0].informacion[1]);
+    const estresManana = parseFloat(data.diario[1].informacion[1]);
+
+    document.getElementById("ia-prediccion").innerText =
+        estresManana > estresHoy
+            ? "La IA prevé un aumento del estrés térmico mañana."
+            : "La IA anticipa un descenso del estrés térmico mañana.";
+
+    // IA: Tendencia de humedad
+    const humedadHoy = parseFloat(data.diario[0].informacion[2]);
+    const humedadManana = parseFloat(data.diario[1].informacion[2]);
+
+    document.getElementById("ia-tendencia").innerText =
+        humedadManana > humedadHoy
+            ? "La humedad muestra una tendencia al alza."
+            : "La humedad está descendiendo según la IA.";
+
+    // IA: Riesgo acumulado
+    const riesgoAcumulado = Math.round(
+        data.diario.reduce((acc, d) => acc + (parseFloat(d.riesgo) || 0), 0)
+    );
+
+    document.getElementById("ia-analisis").innerText =
+        "La IA detecta un riesgo acumulado de " +
+        riesgoAcumulado +
+        " puntos esta semana.";
+
+    // ===============================
+    // RESTO DEL DASHBOARD
+    // ===============================
+    mostrarRecomendaciones(data.diario[0]);
     const alertasHoy = generarAlertas(data.diario[0]);
     mostrarAlertas(alertasHoy);
-
     mostrarRiesgo(data.diario);
-
     generarInformePDF(data);
-
-
 }
 
 
@@ -160,7 +190,10 @@ function mostrarRecomendaciones(dia) {
             prioridad = 3; color = "morado";
         }
 
-        return { icono, cuerpo, color, prioridad };
+        // NUEVO: explicaciones IA basadas SOLO en el texto
+        const explicacion = generarExplicacionIA_Texto(cuerpo);
+
+        return { icono, cuerpo, color, prioridad, ...explicacion };
     });
 
     // Ordenar por prioridad
@@ -173,12 +206,54 @@ function mostrarRecomendaciones(dia) {
 
         card.innerHTML = `
             <span class="recomendacion-icono">${r.icono}</span>
-            <p class="recomendacion-texto">${r.cuerpo}</p>
+            <div class="recomendacion-texto">
+                <strong>${r.cuerpo}</strong>
+
+                <p class="recomendacion-base">
+                    <em>Basado en:</em> ${r.basedOn}
+                </p>
+
+                <p class="recomendacion-razon">
+                    <em>Por qué:</em> ${r.reason}
+                </p>
+            </div>
         `;
 
         cont.appendChild(card);
     });
 }
+
+
+
+function generarExplicacionIA_Texto(texto) {
+
+    if (texto.includes("Estrés térmico alto")) {
+        return {
+            basedOn: "niveles elevados de temperatura y baja humedad relativa",
+            reason: "la IA detecta riesgo de sobrecalentamiento y recomienda mejorar la ventilación."
+        };
+    }
+
+    if (texto.includes("ET0 baja") && texto.includes("Estrés")) {
+        return {
+            basedOn: "una combinación de baja demanda hídrica y alta carga térmica",
+            reason: "la IA prioriza la ventilación porque el riego no es necesario en estas condiciones."
+        };
+    }
+
+    if (texto.includes("ET0 baja")) {
+        return {
+            basedOn: "una evapotranspiración reducida y humedad suficiente en el ambiente",
+            reason: "regar de más podría saturar el suelo y reducir el oxígeno radicular."
+        };
+    }
+
+    return {
+        basedOn: "las condiciones actuales del cultivo",
+        reason: "la IA considera que esta acción optimiza el estado general del cultivo."
+    };
+}
+
 
 
 

@@ -192,27 +192,50 @@ body {
 /* ===========================
    GRAFICOS
 =========================== */
-canvas {
-    background: rgba(255, 255, 255, 0.03);
-    border-radius: 14px;
-    padding: 20px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+/* GRÁFICAS EN FILA */
+.graficas-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
     margin-top: 20px;
 }
 
-.chart-wrapper {
-    width: 100%;
-    max-width: 100%;
-    margin: 20px 0;
+/* TARJETAS DE GRÁFICA */
+.grafica-card {
+    background: rgba(255,255,255,0.05);
+    padding: 20px;
+    border-radius: 18px;
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 10px 28px rgba(0,0,0,0.45);
 }
 
-canvas {
+/* CANVAS */
+.grafica-card canvas {
     width: 100% !important;
-    height: 320px !important;
-    background: rgba(255, 255, 255, 0.03);
-    border-radius: 14px;
-    padding: 20px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+    height: 260px !important;
+}
+
+/* PANEL IA */
+.panel-ia {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px;
+    margin-top: 30px;
+}
+
+.panel-ia-card {
+    background: rgba(255,255,255,0.05);
+    padding: 18px;
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 8px 22px rgba(0,0,0,0.35);
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.panel-ia-icono {
+    font-size: 32px;
 }
 
 
@@ -269,6 +292,28 @@ canvas {
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(6px); }
     to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Texto explicativo dentro de cada recomendación */
+.recomendacion-base,
+.recomendacion-razon {
+    font-size: 14px;
+    opacity: 0.85;
+    margin-top: 6px;
+    line-height: 1.4;
+}
+
+.recomendacion-base em,
+.recomendacion-razon em {
+    font-style: normal;
+    font-weight: 600;
+    color: #22c55e;
+}
+
+.recomendacion-card strong {
+    display: block;
+    font-size: 15px;
+    margin-bottom: 4px;
 }
 
 

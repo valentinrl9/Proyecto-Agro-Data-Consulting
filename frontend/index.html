@@ -33,22 +33,43 @@
 
         <!-- INICIO -->
         <section id="inicio" class="section visible">
-            <h2>Resumen General</h2>
+            <!-- TARJETAS -->
             <div id="cards-container"></div>
-            <div class="chart-wrapper">
-            <canvas id="chart-et0"></canvas>
+
+            <!-- GRÁFICAS EN FILA -->
+            <div class="graficas-grid">
+                <div class="grafica-card">
+                    <canvas id="chart-et0"></canvas>
+                </div>
+
+                <div class="grafica-card">
+                    <canvas id="chart-estres"></canvas>
+                </div>
+
+                <div class="grafica-card">
+                    <canvas id="chart-humedad"></canvas>
+                </div>
             </div>
 
-            <div class="chart-wrapper">
-                <canvas id="chart-estres"></canvas>
+            <!-- PANEL IA -->
+            <div class="panel-ia">
+                <div class="panel-ia-card">
+                    <span class="panel-ia-icono">🔮</span>
+                    <p id="ia-prediccion">Cargando predicción...</p>
+                </div>
+
+                <div class="panel-ia-card">
+                    <span class="panel-ia-icono">💧</span>
+                    <p id="ia-tendencia">Analizando humedad...</p>
+                </div>
+
+                <div class="panel-ia-card">
+                    <span class="panel-ia-icono">🧠</span>
+                    <p id="ia-analisis">Interpretando riesgo...</p>
+                </div>
             </div>
-
-            <div class="chart-wrapper">
-                <canvas id="chart-humedad"></canvas>
-            </div>
-
-
         </section>
+
 
         <!-- RECOMENDACIONES -->
         <section id="recomendaciones" class="section">
