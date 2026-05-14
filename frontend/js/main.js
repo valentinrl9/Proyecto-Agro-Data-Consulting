@@ -547,6 +547,10 @@ function generarInformePDF(data) {
 
     // INFORME PROFESIONAL
     cont.innerHTML = `
+        <div class="informe-logo">
+            <img src="assets/logos/LogoV.png" alt="Logo" />
+        </div>
+
         <div class="informe-titulo">Informe Mensual Agronómico</div>
         <div class="informe-subtitulo">Generado automáticamente por el Dashboard Agronómico Inteligente</div>
 

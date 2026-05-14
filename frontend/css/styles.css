@@ -425,55 +425,6 @@ body {
 
 
 /* ===========================
-   IFRAME INFORME
-=========================== */
-
-iframe {
-    width: 100%;
-    height: 600px;
-    border: none;
-}
-
-#informe-contenido {
-    background: white;
-    color: #1e293b;
-    padding: 40px;
-    border-radius: 12px;
-    width: 800px;
-    margin: auto;
-    font-family: 'Inter', sans-serif;
-}
-
-.informe-titulo {
-    text-align: center;
-    font-size: 28px;
-    font-weight: 700;
-    margin-bottom: 20px;
-    color: #0ea5e9; /* azul */
-}
-
-.informe-subtitulo {
-    text-align: center;
-    font-size: 16px;
-    opacity: 0.7;
-    margin-bottom: 40px;
-    color: #16a34a; /* verde */
-}
-
-.informe-seccion h3 {
-    font-size: 20px;
-    margin-bottom: 10px;
-    color: #0f3f46; /* azul verdoso */
-}
-
-.informe-seccion p {
-    font-size: 14px;
-    line-height: 1.5;
-    color: #1e293b;
-}
-
-
-/* ===========================
    BOTÓN PDF
 =========================== */
 
@@ -530,81 +481,91 @@ iframe {
 }
 
 
-/* ===========================
-   ESTILO PROFESIONAL INFORME
-=========================== */
+/* ============================================
+   ESTILO PREMIUM PARA INFORME AGRONÓMICO
+   (solo estética, no rompe nada)
+============================================ */
 
+/* Contenedor general */
 #informe-contenido {
     font-family: "Inter", "Segoe UI", sans-serif;
-    line-height: 1.55;
+    line-height: 1.6;
     color: #1f2937;
-    padding: 25px 30px;
-    background: #ffffff;
-    border-radius: 14px;
-    box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+    padding: 30px;
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    border-radius: 18px;
+    box-shadow: 0 6px 22px rgba(0,0,0,0.08);
     max-width: 900px;
     margin: 0 auto;
 }
 
 /* Título principal */
 .informe-titulo {
-    font-size: 32px;
-    font-weight: 700;
+    font-size: 34px;
+    font-weight: 800;
     text-align: center;
-    margin-bottom: 5px;
-    color: #111827;
+    margin-bottom: 6px;
+    color: #0f172a;
+    letter-spacing: -0.5px;
 }
 
 /* Subtítulo */
 .informe-subtitulo {
     text-align: center;
     font-size: 15px;
-    color: #6b7280;
-    margin-bottom: 30px;
+    color: #64748b;
+    margin-bottom: 35px;
 }
 
-/* Secciones */
+/* Tarjetas de sección */
 .informe-seccion {
-    background: #f9fafb;
-    border: 1px solid #e5e7eb;
-    padding: 18px 22px;
-    border-radius: 12px;
-    margin-bottom: 22px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    padding: 22px 26px;
+    border-radius: 14px;
+    margin-bottom: 25px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.04);
+    transition: 0.2s ease;
 }
 
-/* Títulos de sección */
+.informe-seccion:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+/* Títulos de sección con barra de color */
 .informe-seccion h3 {
     margin-top: 0;
-    margin-bottom: 12px;
+    margin-bottom: 14px;
     font-size: 20px;
-    font-weight: 600;
-    color: #111827;
-    border-left: 4px solid #3b82f6;
-    padding-left: 10px;
+    font-weight: 700;
+    color: #0f172a;
+    border-left: 5px solid #3b82f6;
+    padding-left: 12px;
 }
 
 /* Texto */
 .informe-seccion p {
     margin: 0;
     font-size: 15px;
-    color: #374151;
+    color: #334155;
 }
 
-/* Listas de alertas */
-.informe-seccion p br {
-    line-height: 1.8;
-}
-
-/* Destacar números importantes */
+/* Números importantes */
 .informe-seccion strong {
-    color: #111827;
-    font-weight: 600;
+    color: #0f172a;
+    font-weight: 700;
 }
 
 /* Riesgo mensual grande */
 .informe-seccion strong[style] {
     color: #16a34a !important;
-    font-size: 26px !important;
+    font-size: 28px !important;
+}
+
+/* Listas de alertas */
+.informe-seccion p br {
+    line-height: 1.9;
 }
 
 /* Botón PDF */
@@ -613,7 +574,7 @@ iframe {
     color: white;
     border: none;
     padding: 10px 18px;
-    border-radius: 8px;
+    border-radius: 10px;
     cursor: pointer;
     font-size: 15px;
     font-weight: 600;
@@ -623,4 +584,83 @@ iframe {
 
 .btn-pdf:hover {
     background: linear-gradient(135deg, #1d4ed8, #1e40af);
+    transform: translateY(-1px);
+}
+
+/* Iconos dentro del informe */
+.informe-seccion p::first-letter {
+    /* opcional: un toque elegante */
+}
+
+/* Logo superior del informe */
+#informe-contenido::before {
+    content: "";
+    display: block;
+    width: 110px;
+    height: 110px;
+    margin: 0 auto 20px auto;
+    background-image: url("/frontend/assets/logos/LogoV.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.95;
+    position: relative;
+    z-index: 10;
+}
+
+/* Colores suaves por sección (corregido) */
+#informe-contenido .informe-seccion:nth-of-type(1) {
+    background: #f0f9ff;
+    border-left: 5px solid #38bdf8;
+}
+
+#informe-contenido .informe-seccion:nth-of-type(2) {
+    background: #fefce8;
+    border-left: 5px solid #facc15;
+}
+
+#informe-contenido .informe-seccion:nth-of-type(3) {
+    background: #f0fdf4;
+    border-left: 5px solid #4ade80;
+}
+
+#informe-contenido .informe-seccion:nth-of-type(4) {
+    background: #fef2f2;
+    border-left: 5px solid #f87171;
+}
+
+#informe-contenido .informe-seccion:nth-of-type(5) {
+    background: #f5f3ff;
+    border-left: 5px solid #a78bfa;
+}
+
+#informe-contenido .informe-seccion:nth-of-type(6) {
+    background: #ecfdf5;
+    border-left: 5px solid #34d399;
+}
+
+#informe-contenido .informe-seccion:nth-of-type(7) {
+    background: #fff7ed;
+    border-left: 5px solid #fb923c;
+}
+
+#informe-contenido .informe-seccion:nth-of-type(8) {
+    background: #ecfdf5;
+    border-left: 5px solid #34d399;
+}
+
+#informe-contenido .informe-seccion:nth-of-type(9) {
+    background: #fff7ed;
+    border-left: 5px solid #fb923c;
+}
+
+.informe-logo {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.informe-logo img {
+    width: 110px;
+    height: auto;
+    opacity: 0.95;
 }

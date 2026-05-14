@@ -4276,3 +4276,198 @@
 2026-05-14 16:27:06.567 INFO  <main> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Los procesos DIARIO.0 han finalizado correctamente, se han procesado 55951 l?neas. ( 13987 l?neas)
 2026-05-14 16:27:06.567 INFO  <main> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Los procesos duplicar_filas.0 han finalizado correctamente, se han procesado 6972 l?neas. ( 1743 l?neas)
 2026-05-14 16:27:06.569 INFO  <main> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Los procesos Salida Tabla Diaria.0 han finalizado correctamente, se han procesado 2324 l?neas. ( 581 l?neas)
+2026-05-14 16:41:05.965 WARN  <Thread-8> [C:\ProyectoIA\job_openmeteo.kjb]  Start of job execution
+2026-05-14 16:41:06.109 INFO  <Thread-8> [C:\ProyectoIA\job_openmeteo.kjb]  Starting entry [descargar_historico]
+2026-05-14 16:41:06.115 INFO  <Thread-8> [C:\ProyectoIA\job_openmeteo.kjb]  Running on platform : Windows 11
+2026-05-14 16:41:06.151 INFO  <Thread-8> [C:\ProyectoIA\job_openmeteo.kjb]  Executing command : cmd.exe /C "C:\Users\VALENT~1\AppData\Local\Temp\kettle_f05eb202-4fa2-11f1-89a2-336b8b7f866bshell.bat"
+2026-05-14 16:41:06.274 INFO  <Thread-10> [C:\ProyectoIA\job_openmeteo.kjb]  (stdout) 
+2026-05-14 16:41:06.275 INFO  <Thread-10> [C:\ProyectoIA\job_openmeteo.kjb]  (stdout) C:\ProyectoIA\data-integration>python C:\ProyectoIA\scripts\openmeteo_historico.py 
+2026-05-14 16:41:08.100 INFO  <Thread-10> [C:\ProyectoIA\job_openmeteo.kjb]  (stdout) El histórico ya existe. No se descarga de nuevo.
+2026-05-14 16:41:08.253 INFO  <Thread-8> [C:\ProyectoIA\job_openmeteo.kjb]  Starting entry [descargar_realtime]
+2026-05-14 16:41:08.257 INFO  <Thread-8> [C:\ProyectoIA\job_openmeteo.kjb]  Running on platform : Windows 11
+2026-05-14 16:41:08.267 INFO  <Thread-8> [C:\ProyectoIA\job_openmeteo.kjb]  Executing command : cmd.exe /C "C:\Users\VALENT~1\AppData\Local\Temp\kettle_f1a45163-4fa2-11f1-89a2-336b8b7f866bshell.bat"
+2026-05-14 16:41:08.362 INFO  <Thread-12> [C:\ProyectoIA\job_openmeteo.kjb]  (stdout) 
+2026-05-14 16:41:08.362 INFO  <Thread-12> [C:\ProyectoIA\job_openmeteo.kjb]  (stdout) C:\ProyectoIA\data-integration>python C:\ProyectoIA\scripts\openmeteo_realtime.py 
+2026-05-14 16:41:10.903 INFO  <Thread-12> [C:\ProyectoIA\job_openmeteo.kjb]  (stdout) Obteniendo datos actuales de Open-Meteo...
+2026-05-14 16:41:10.903 INFO  <Thread-12> [C:\ProyectoIA\job_openmeteo.kjb]  (stdout) Datos actuales limpios guardados en C:/ProyectoIA/datos/openmeteo_realtime.csv
+2026-05-14 16:41:11.048 INFO  <Thread-8> [C:\ProyectoIA\job_openmeteo.kjb]  Starting entry [unificar_dataset]
+2026-05-14 16:41:11.052 INFO  <Thread-8> [C:\ProyectoIA\job_openmeteo.kjb]  Running on platform : Windows 11
+2026-05-14 16:41:11.058 INFO  <Thread-8> [C:\ProyectoIA\job_openmeteo.kjb]  Executing command : cmd.exe /C "C:\Users\VALENT~1\AppData\Local\Temp\kettle_f34f1b34-4fa2-11f1-89a2-336b8b7f866bshell.bat"
+2026-05-14 16:41:11.149 INFO  <Thread-14> [C:\ProyectoIA\job_openmeteo.kjb]  (stdout) 
+2026-05-14 16:41:11.151 INFO  <Thread-14> [C:\ProyectoIA\job_openmeteo.kjb]  (stdout) C:\ProyectoIA\data-integration>python C:\ProyectoIA\scripts\openmeteo_unificar.py 
+2026-05-14 16:41:13.501 INFO  <Thread-14> [C:\ProyectoIA\job_openmeteo.kjb]  (stdout) Cargando histórico acumulado...
+2026-05-14 16:41:13.501 INFO  <Thread-14> [C:\ProyectoIA\job_openmeteo.kjb]  (stdout) Cargando datos actuales...
+2026-05-14 16:41:13.501 INFO  <Thread-14> [C:\ProyectoIA\job_openmeteo.kjb]  (stdout) Histórico actualizado y dataset final generados correctamente.
+2026-05-14 16:41:13.501 INFO  <Thread-14> [C:\ProyectoIA\job_openmeteo.kjb]  (stdout) Total de filas: 55952
+2026-05-14 16:41:13.634 INFO  <Thread-8> [C:\ProyectoIA\job_openmeteo.kjb]  Finished job entry [unificar_dataset] (result=[true])
+2026-05-14 16:41:13.636 INFO  <Thread-8> [C:\ProyectoIA\job_openmeteo.kjb]  Finished job entry [descargar_realtime] (result=[true])
+2026-05-14 16:41:13.636 INFO  <Thread-8> [C:\ProyectoIA\job_openmeteo.kjb]  Finished job entry [descargar_historico] (result=[true])
+2026-05-14 16:41:13.638 WARN  <Thread-8> [C:\ProyectoIA\job_openmeteo.kjb]  Job execution finished
+2026-05-14 16:41:58.392 INFO  <main> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Iniciado despacho de la transformaci?n [transform_openmeteo]
+2026-05-14 16:41:59.011 INFO  <init of Salida Tabla Mes.0 (Thread-13)> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Connected to database [mysql_clima] (commit=1000)
+2026-05-14 16:41:59.011 INFO  <init of Salida Tabla Diaria.0 (Thread-19)> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Connected to database [mysql_clima] (commit=1000)
+2026-05-14 16:41:59.013 INFO  <init of Salida Tabla Semana.0 (Thread-16)> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Connected to database [mysql_clima] (commit=1000)
+2026-05-14 16:41:59.094 INFO  <transform_openmeteo - CSV file input> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Header row skipped in file 'C:/ProyectoIA/datos/openmeteo_dataset_final.csv'
+2026-05-14 16:41:59.271 INFO  <transform_openmeteo - estres termico> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Optimization level set to 9.
+2026-05-14 16:41:59.522 INFO  <transform_openmeteo - crea fecha> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Optimization level set to 9.
+2026-05-14 16:42:00.608 INFO  <transform_openmeteo - CSV file input> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Line number : 50000
+2026-05-14 16:42:00.742 INFO  <transform_openmeteo - CSV file input> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Procesamiento finalizado (I=55953, O=0, R=0, W=55952, U=0, E=0)
+2026-05-14 16:42:00.791 INFO  <transform_openmeteo - estres termico> [C:\ProyectoIA\etl_openmeteo_final.ktr]  N?mero de l?nea 50000
+2026-05-14 16:42:00.878 INFO  <transform_openmeteo - crea fecha> [C:\ProyectoIA\etl_openmeteo_final.ktr]  N?mero de l?nea 50000
+2026-05-14 16:42:00.950 INFO  <transform_openmeteo - estres termico> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Procesamiento finalizado (I=0, O=0, R=55952, W=55952, U=0, E=0)
+2026-05-14 16:42:00.973 INFO  <transform_openmeteo - DIARIO> [C:\ProyectoIA\etl_openmeteo_final.ktr]  N?mero l?nea 50000
+2026-05-14 16:42:01.001 INFO  <transform_openmeteo - crea fecha> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Procesamiento finalizado (I=0, O=0, R=55952, W=55952, U=0, E=0)
+2026-05-14 16:42:01.114 INFO  <transform_openmeteo - crear_semana> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Optimization level set to 9.
+2026-05-14 16:42:01.124 INFO  <transform_openmeteo - crear_mes> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Optimization level set to 9.
+2026-05-14 16:42:01.229 INFO  <transform_openmeteo - DIARIO> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Procesamiento finalizado (I=0, O=0, R=55952, W=2324, U=0, E=0)
+2026-05-14 16:42:01.247 INFO  <transform_openmeteo - duplicar_filas> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Procesamiento finalizado (I=0, O=0, R=2324, W=6972, U=0, E=0)
+2026-05-14 16:42:01.334 INFO  <transform_openmeteo - crear_mes> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Procesamiento finalizado (I=0, O=0, R=2324, W=2324, U=0, E=0)
+2026-05-14 16:42:01.422 INFO  <transform_openmeteo - MENSUAL> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Procesamiento finalizado (I=0, O=0, R=2324, W=77, U=0, E=0)
+2026-05-14 16:42:01.819 INFO  <transform_openmeteo - Salida Tabla Mes> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Procesamiento finalizado (I=0, O=77, R=77, W=77, U=0, E=0)
+2026-05-14 16:42:02.231 INFO  <transform_openmeteo - crear_semana> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Procesamiento finalizado (I=0, O=0, R=2324, W=2324, U=0, E=0)
+2026-05-14 16:42:02.348 INFO  <transform_openmeteo - SEMANAL> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Procesamiento finalizado (I=0, O=0, R=2324, W=334, U=0, E=0)
+2026-05-14 16:42:02.645 INFO  <transform_openmeteo - Salida Tabla Semana> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Procesamiento finalizado (I=0, O=334, R=334, W=334, U=0, E=0)
+2026-05-14 16:42:03.359 INFO  <transform_openmeteo - Salida Tabla Diaria> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Procesamiento finalizado (I=0, O=2324, R=2324, W=2324, U=0, E=0)
+2026-05-14 16:42:03.385 INFO  <main> [C:\ProyectoIA\etl_openmeteo_final.ktr]   
+2026-05-14 16:42:03.385 INFO  <main> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Los procesos CSV file input.0 han finalizado correctamente, se han procesado 55952 l?neas. ( 13988 l?neas)
+2026-05-14 16:42:03.385 INFO  <main> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Los procesos estres termico.0 han finalizado correctamente, se han procesado 55952 l?neas. ( 13988 l?neas)
+2026-05-14 16:42:03.385 INFO  <main> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Los procesos crea fecha.0 han finalizado correctamente, se han procesado 55952 l?neas. ( 13988 l?neas)
+2026-05-14 16:42:03.387 INFO  <main> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Los procesos crear_mes.0 han finalizado correctamente, se han procesado 2324 l?neas. ( 581 l?neas)
+2026-05-14 16:42:03.387 INFO  <main> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Los procesos MENSUAL.0 han finalizado correctamente, se han procesado 2324 l?neas. ( 581 l?neas)
+2026-05-14 16:42:03.387 INFO  <main> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Los procesos Salida Tabla Mes.0 han finalizado correctamente, se han procesado 77 l?neas. ( 19 l?neas)
+2026-05-14 16:42:03.387 INFO  <main> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Los procesos crear_semana.0 han finalizado correctamente, se han procesado 2324 l?neas. ( 581 l?neas)
+2026-05-14 16:42:03.389 INFO  <main> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Los procesos SEMANAL.0 han finalizado correctamente, se han procesado 2324 l?neas. ( 581 l?neas)
+2026-05-14 16:42:03.389 INFO  <main> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Los procesos Salida Tabla Semana.0 han finalizado correctamente, se han procesado 334 l?neas. ( 83 l?neas)
+2026-05-14 16:42:03.389 INFO  <main> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Los procesos DIARIO.0 han finalizado correctamente, se han procesado 55952 l?neas. ( 13988 l?neas)
+2026-05-14 16:42:03.389 INFO  <main> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Los procesos duplicar_filas.0 han finalizado correctamente, se han procesado 6972 l?neas. ( 1743 l?neas)
+2026-05-14 16:42:03.389 INFO  <main> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Los procesos Salida Tabla Diaria.0 han finalizado correctamente, se han procesado 2324 l?neas. ( 581 l?neas)
+2026-05-14 16:56:02.007 WARN  <Thread-8> [C:\ProyectoIA\job_openmeteo.kjb]  Start of job execution
+2026-05-14 16:56:02.115 INFO  <Thread-8> [C:\ProyectoIA\job_openmeteo.kjb]  Starting entry [descargar_historico]
+2026-05-14 16:56:02.122 INFO  <Thread-8> [C:\ProyectoIA\job_openmeteo.kjb]  Running on platform : Windows 11
+2026-05-14 16:56:02.137 INFO  <Thread-8> [C:\ProyectoIA\job_openmeteo.kjb]  Executing command : cmd.exe /C "C:\Users\VALENT~1\AppData\Local\Temp\kettle_066e35b3-4fa5-11f1-bbb5-33c849e6f53dshell.bat"
+2026-05-14 16:56:02.226 INFO  <Thread-10> [C:\ProyectoIA\job_openmeteo.kjb]  (stdout) 
+2026-05-14 16:56:02.229 INFO  <Thread-10> [C:\ProyectoIA\job_openmeteo.kjb]  (stdout) C:\ProyectoIA\data-integration>python C:\ProyectoIA\scripts\openmeteo_historico.py 
+2026-05-14 16:56:08.010 INFO  <Thread-10> [C:\ProyectoIA\job_openmeteo.kjb]  (stdout) El histórico ya existe. No se descarga de nuevo.
+2026-05-14 16:56:08.244 INFO  <Thread-8> [C:\ProyectoIA\job_openmeteo.kjb]  Starting entry [descargar_realtime]
+2026-05-14 16:56:08.248 INFO  <Thread-8> [C:\ProyectoIA\job_openmeteo.kjb]  Running on platform : Windows 11
+2026-05-14 16:56:08.254 INFO  <Thread-8> [C:\ProyectoIA\job_openmeteo.kjb]  Executing command : cmd.exe /C "C:\Users\VALENT~1\AppData\Local\Temp\kettle_0a143344-4fa5-11f1-bbb5-33c849e6f53dshell.bat"
+2026-05-14 16:56:08.344 INFO  <Thread-12> [C:\ProyectoIA\job_openmeteo.kjb]  (stdout) 
+2026-05-14 16:56:08.345 INFO  <Thread-12> [C:\ProyectoIA\job_openmeteo.kjb]  (stdout) C:\ProyectoIA\data-integration>python C:\ProyectoIA\scripts\openmeteo_realtime.py 
+2026-05-14 16:56:12.371 INFO  <Thread-12> [C:\ProyectoIA\job_openmeteo.kjb]  (stdout) Obteniendo datos actuales de Open-Meteo...
+2026-05-14 16:56:12.372 INFO  <Thread-12> [C:\ProyectoIA\job_openmeteo.kjb]  (stdout) Datos actuales limpios guardados en C:/ProyectoIA/datos/openmeteo_realtime.csv
+2026-05-14 16:56:12.532 INFO  <Thread-8> [C:\ProyectoIA\job_openmeteo.kjb]  Starting entry [unificar_dataset]
+2026-05-14 16:56:12.536 INFO  <Thread-8> [C:\ProyectoIA\job_openmeteo.kjb]  Running on platform : Windows 11
+2026-05-14 16:56:12.540 INFO  <Thread-8> [C:\ProyectoIA\job_openmeteo.kjb]  Executing command : cmd.exe /C "C:\Users\VALENT~1\AppData\Local\Temp\kettle_0ca25835-4fa5-11f1-bbb5-33c849e6f53dshell.bat"
+2026-05-14 16:56:12.642 INFO  <Thread-14> [C:\ProyectoIA\job_openmeteo.kjb]  (stdout) 
+2026-05-14 16:56:12.644 INFO  <Thread-14> [C:\ProyectoIA\job_openmeteo.kjb]  (stdout) C:\ProyectoIA\data-integration>python C:\ProyectoIA\scripts\openmeteo_unificar.py 
+2026-05-14 16:56:14.915 INFO  <Thread-14> [C:\ProyectoIA\job_openmeteo.kjb]  (stdout) Cargando histórico acumulado...
+2026-05-14 16:56:14.915 INFO  <Thread-14> [C:\ProyectoIA\job_openmeteo.kjb]  (stdout) Cargando datos actuales...
+2026-05-14 16:56:14.915 INFO  <Thread-14> [C:\ProyectoIA\job_openmeteo.kjb]  (stdout) Histórico actualizado y dataset final generados correctamente.
+2026-05-14 16:56:14.917 INFO  <Thread-14> [C:\ProyectoIA\job_openmeteo.kjb]  (stdout) Total de filas: 55953
+2026-05-14 16:56:15.169 INFO  <Thread-8> [C:\ProyectoIA\job_openmeteo.kjb]  Finished job entry [unificar_dataset] (result=[true])
+2026-05-14 16:56:15.204 INFO  <Thread-8> [C:\ProyectoIA\job_openmeteo.kjb]  Finished job entry [descargar_realtime] (result=[true])
+2026-05-14 16:56:15.253 INFO  <Thread-8> [C:\ProyectoIA\job_openmeteo.kjb]  Finished job entry [descargar_historico] (result=[true])
+2026-05-14 16:56:15.271 WARN  <Thread-8> [C:\ProyectoIA\job_openmeteo.kjb]  Job execution finished
+2026-05-14 16:57:19.456 INFO  <main> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Iniciado despacho de la transformaci?n [transform_openmeteo]
+2026-05-14 16:57:21.736 INFO  <init of Salida Tabla Diaria.0 (Thread-19)> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Connected to database [mysql_clima] (commit=1000)
+2026-05-14 16:57:21.738 INFO  <init of Salida Tabla Mes.0 (Thread-13)> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Connected to database [mysql_clima] (commit=1000)
+2026-05-14 16:57:21.741 INFO  <init of Salida Tabla Semana.0 (Thread-16)> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Connected to database [mysql_clima] (commit=1000)
+2026-05-14 16:57:21.915 INFO  <transform_openmeteo - CSV file input> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Header row skipped in file 'C:/ProyectoIA/datos/openmeteo_dataset_final.csv'
+2026-05-14 16:57:22.552 INFO  <transform_openmeteo - estres termico> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Optimization level set to 9.
+2026-05-14 16:57:23.431 INFO  <transform_openmeteo - crea fecha> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Optimization level set to 9.
+2026-05-14 16:57:26.457 INFO  <transform_openmeteo - CSV file input> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Line number : 50000
+2026-05-14 16:57:26.668 INFO  <transform_openmeteo - CSV file input> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Procesamiento finalizado (I=55954, O=0, R=0, W=55953, U=0, E=0)
+2026-05-14 16:57:26.738 INFO  <transform_openmeteo - estres termico> [C:\ProyectoIA\etl_openmeteo_final.ktr]  N?mero de l?nea 50000
+2026-05-14 16:57:26.894 INFO  <transform_openmeteo - estres termico> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Procesamiento finalizado (I=0, O=0, R=55953, W=55953, U=0, E=0)
+2026-05-14 16:57:26.958 INFO  <transform_openmeteo - crea fecha> [C:\ProyectoIA\etl_openmeteo_final.ktr]  N?mero de l?nea 50000
+2026-05-14 16:57:27.073 INFO  <transform_openmeteo - crea fecha> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Procesamiento finalizado (I=0, O=0, R=55953, W=55953, U=0, E=0)
+2026-05-14 16:57:27.074 INFO  <transform_openmeteo - DIARIO> [C:\ProyectoIA\etl_openmeteo_final.ktr]  N?mero l?nea 50000
+2026-05-14 16:57:27.335 INFO  <transform_openmeteo - crear_semana> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Optimization level set to 9.
+2026-05-14 16:57:27.533 INFO  <transform_openmeteo - crear_mes> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Optimization level set to 9.
+2026-05-14 16:57:27.816 INFO  <transform_openmeteo - DIARIO> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Procesamiento finalizado (I=0, O=0, R=55953, W=2324, U=0, E=0)
+2026-05-14 16:57:27.937 INFO  <transform_openmeteo - duplicar_filas> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Procesamiento finalizado (I=0, O=0, R=2324, W=6972, U=0, E=0)
+2026-05-14 16:57:27.949 INFO  <transform_openmeteo - crear_mes> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Procesamiento finalizado (I=0, O=0, R=2324, W=2324, U=0, E=0)
+2026-05-14 16:57:28.098 INFO  <transform_openmeteo - MENSUAL> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Procesamiento finalizado (I=0, O=0, R=2324, W=77, U=0, E=0)
+2026-05-14 16:57:29.135 INFO  <transform_openmeteo - Salida Tabla Mes> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Procesamiento finalizado (I=0, O=77, R=77, W=77, U=0, E=0)
+2026-05-14 16:57:29.886 INFO  <transform_openmeteo - crear_semana> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Procesamiento finalizado (I=0, O=0, R=2324, W=2324, U=0, E=0)
+2026-05-14 16:57:29.970 INFO  <transform_openmeteo - SEMANAL> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Procesamiento finalizado (I=0, O=0, R=2324, W=334, U=0, E=0)
+2026-05-14 16:57:30.485 INFO  <transform_openmeteo - Salida Tabla Semana> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Procesamiento finalizado (I=0, O=334, R=334, W=334, U=0, E=0)
+2026-05-14 16:57:32.025 INFO  <transform_openmeteo - Salida Tabla Diaria> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Procesamiento finalizado (I=0, O=2324, R=2324, W=2324, U=0, E=0)
+2026-05-14 16:57:32.072 INFO  <main> [C:\ProyectoIA\etl_openmeteo_final.ktr]   
+2026-05-14 16:57:32.084 INFO  <main> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Los procesos CSV file input.0 han finalizado correctamente, se han procesado 55953 l?neas. ( 4662 l?neas)
+2026-05-14 16:57:32.094 INFO  <main> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Los procesos estres termico.0 han finalizado correctamente, se han procesado 55953 l?neas. ( 4662 l?neas)
+2026-05-14 16:57:32.100 INFO  <main> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Los procesos crea fecha.0 han finalizado correctamente, se han procesado 55953 l?neas. ( 4662 l?neas)
+2026-05-14 16:57:32.112 INFO  <main> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Los procesos crear_mes.0 han finalizado correctamente, se han procesado 2324 l?neas. ( 193 l?neas)
+2026-05-14 16:57:32.120 INFO  <main> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Los procesos MENSUAL.0 han finalizado correctamente, se han procesado 2324 l?neas. ( 193 l?neas)
+2026-05-14 16:57:32.124 INFO  <main> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Los procesos Salida Tabla Mes.0 han finalizado correctamente, se han procesado 77 l?neas. ( 6 l?neas)
+2026-05-14 16:57:32.132 INFO  <main> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Los procesos crear_semana.0 han finalizado correctamente, se han procesado 2324 l?neas. ( 193 l?neas)
+2026-05-14 16:57:32.138 INFO  <main> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Los procesos SEMANAL.0 han finalizado correctamente, se han procesado 2324 l?neas. ( 193 l?neas)
+2026-05-14 16:57:32.148 INFO  <main> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Los procesos Salida Tabla Semana.0 han finalizado correctamente, se han procesado 334 l?neas. ( 27 l?neas)
+2026-05-14 16:57:32.158 INFO  <main> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Los procesos DIARIO.0 han finalizado correctamente, se han procesado 55953 l?neas. ( 4662 l?neas)
+2026-05-14 16:57:32.162 INFO  <main> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Los procesos duplicar_filas.0 han finalizado correctamente, se han procesado 6972 l?neas. ( 581 l?neas)
+2026-05-14 16:57:32.162 INFO  <main> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Los procesos Salida Tabla Diaria.0 han finalizado correctamente, se han procesado 2324 l?neas. ( 193 l?neas)
+2026-05-14 17:10:59.987 WARN  <Thread-8> [C:\ProyectoIA\job_openmeteo.kjb]  Start of job execution
+2026-05-14 17:11:00.123 INFO  <Thread-8> [C:\ProyectoIA\job_openmeteo.kjb]  Starting entry [descargar_historico]
+2026-05-14 17:11:00.129 INFO  <Thread-8> [C:\ProyectoIA\job_openmeteo.kjb]  Running on platform : Windows 11
+2026-05-14 17:11:00.152 INFO  <Thread-8> [C:\ProyectoIA\job_openmeteo.kjb]  Executing command : cmd.exe /C "C:\Users\VALENT~1\AppData\Local\Temp\kettle_1dafd013-4fa7-11f1-b58f-83e00d39ad0ashell.bat"
+2026-05-14 17:11:00.244 INFO  <Thread-10> [C:\ProyectoIA\job_openmeteo.kjb]  (stdout) 
+2026-05-14 17:11:00.246 INFO  <Thread-10> [C:\ProyectoIA\job_openmeteo.kjb]  (stdout) C:\ProyectoIA\data-integration>python C:\ProyectoIA\scripts\openmeteo_historico.py 
+2026-05-14 17:11:02.120 INFO  <Thread-10> [C:\ProyectoIA\job_openmeteo.kjb]  (stdout) El histórico ya existe. No se descarga de nuevo.
+2026-05-14 17:11:02.260 INFO  <Thread-8> [C:\ProyectoIA\job_openmeteo.kjb]  Starting entry [descargar_realtime]
+2026-05-14 17:11:02.261 INFO  <Thread-8> [C:\ProyectoIA\job_openmeteo.kjb]  Running on platform : Windows 11
+2026-05-14 17:11:02.265 INFO  <Thread-8> [C:\ProyectoIA\job_openmeteo.kjb]  Executing command : cmd.exe /C "C:\Users\VALENT~1\AppData\Local\Temp\kettle_1ef3c1c4-4fa7-11f1-b58f-83e00d39ad0ashell.bat"
+2026-05-14 17:11:02.338 INFO  <Thread-12> [C:\ProyectoIA\job_openmeteo.kjb]  (stdout) 
+2026-05-14 17:11:02.338 INFO  <Thread-12> [C:\ProyectoIA\job_openmeteo.kjb]  (stdout) C:\ProyectoIA\data-integration>python C:\ProyectoIA\scripts\openmeteo_realtime.py 
+2026-05-14 17:11:04.790 INFO  <Thread-12> [C:\ProyectoIA\job_openmeteo.kjb]  (stdout) Obteniendo datos actuales de Open-Meteo...
+2026-05-14 17:11:04.791 INFO  <Thread-12> [C:\ProyectoIA\job_openmeteo.kjb]  (stdout) Datos actuales limpios guardados en C:/ProyectoIA/datos/openmeteo_realtime.csv
+2026-05-14 17:11:05.008 INFO  <Thread-8> [C:\ProyectoIA\job_openmeteo.kjb]  Starting entry [unificar_dataset]
+2026-05-14 17:11:05.014 INFO  <Thread-8> [C:\ProyectoIA\job_openmeteo.kjb]  Running on platform : Windows 11
+2026-05-14 17:11:05.024 INFO  <Thread-8> [C:\ProyectoIA\job_openmeteo.kjb]  Executing command : cmd.exe /C "C:\Users\VALENT~1\AppData\Local\Temp\kettle_20984a05-4fa7-11f1-b58f-83e00d39ad0ashell.bat"
+2026-05-14 17:11:05.117 INFO  <Thread-14> [C:\ProyectoIA\job_openmeteo.kjb]  (stdout) 
+2026-05-14 17:11:05.117 INFO  <Thread-14> [C:\ProyectoIA\job_openmeteo.kjb]  (stdout) C:\ProyectoIA\data-integration>python C:\ProyectoIA\scripts\openmeteo_unificar.py 
+2026-05-14 17:11:07.598 INFO  <Thread-14> [C:\ProyectoIA\job_openmeteo.kjb]  (stdout) Cargando histórico acumulado...
+2026-05-14 17:11:07.600 INFO  <Thread-14> [C:\ProyectoIA\job_openmeteo.kjb]  (stdout) Cargando datos actuales...
+2026-05-14 17:11:07.600 INFO  <Thread-14> [C:\ProyectoIA\job_openmeteo.kjb]  (stdout) Histórico actualizado y dataset final generados correctamente.
+2026-05-14 17:11:07.600 INFO  <Thread-14> [C:\ProyectoIA\job_openmeteo.kjb]  (stdout) Total de filas: 55954
+2026-05-14 17:11:07.719 INFO  <Thread-8> [C:\ProyectoIA\job_openmeteo.kjb]  Finished job entry [unificar_dataset] (result=[true])
+2026-05-14 17:11:07.721 INFO  <Thread-8> [C:\ProyectoIA\job_openmeteo.kjb]  Finished job entry [descargar_realtime] (result=[true])
+2026-05-14 17:11:07.721 INFO  <Thread-8> [C:\ProyectoIA\job_openmeteo.kjb]  Finished job entry [descargar_historico] (result=[true])
+2026-05-14 17:11:07.721 WARN  <Thread-8> [C:\ProyectoIA\job_openmeteo.kjb]  Job execution finished
+2026-05-14 17:11:59.957 INFO  <main> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Iniciado despacho de la transformaci?n [transform_openmeteo]
+2026-05-14 17:12:01.299 INFO  <init of Salida Tabla Diaria.0 (Thread-19)> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Connected to database [mysql_clima] (commit=1000)
+2026-05-14 17:12:01.301 INFO  <init of Salida Tabla Semana.0 (Thread-16)> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Connected to database [mysql_clima] (commit=1000)
+2026-05-14 17:12:01.305 INFO  <init of Salida Tabla Mes.0 (Thread-13)> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Connected to database [mysql_clima] (commit=1000)
+2026-05-14 17:12:01.919 INFO  <transform_openmeteo - CSV file input> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Header row skipped in file 'C:/ProyectoIA/datos/openmeteo_dataset_final.csv'
+2026-05-14 17:12:02.357 INFO  <transform_openmeteo - estres termico> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Optimization level set to 9.
+2026-05-14 17:12:02.724 INFO  <transform_openmeteo - crea fecha> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Optimization level set to 9.
+2026-05-14 17:12:04.892 INFO  <transform_openmeteo - CSV file input> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Line number : 50000
+2026-05-14 17:12:05.056 INFO  <transform_openmeteo - CSV file input> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Procesamiento finalizado (I=55955, O=0, R=0, W=55954, U=0, E=0)
+2026-05-14 17:12:05.058 INFO  <transform_openmeteo - estres termico> [C:\ProyectoIA\etl_openmeteo_final.ktr]  N?mero de l?nea 50000
+2026-05-14 17:12:05.208 INFO  <transform_openmeteo - estres termico> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Procesamiento finalizado (I=0, O=0, R=55954, W=55954, U=0, E=0)
+2026-05-14 17:12:05.221 INFO  <transform_openmeteo - crea fecha> [C:\ProyectoIA\etl_openmeteo_final.ktr]  N?mero de l?nea 50000
+2026-05-14 17:12:05.341 INFO  <transform_openmeteo - crea fecha> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Procesamiento finalizado (I=0, O=0, R=55954, W=55954, U=0, E=0)
+2026-05-14 17:12:05.345 INFO  <transform_openmeteo - DIARIO> [C:\ProyectoIA\etl_openmeteo_final.ktr]  N?mero l?nea 50000
+2026-05-14 17:12:05.528 INFO  <transform_openmeteo - crear_mes> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Optimization level set to 9.
+2026-05-14 17:12:05.540 INFO  <transform_openmeteo - crear_semana> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Optimization level set to 9.
+2026-05-14 17:12:05.727 INFO  <transform_openmeteo - DIARIO> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Procesamiento finalizado (I=0, O=0, R=55954, W=2324, U=0, E=0)
+2026-05-14 17:12:05.738 INFO  <transform_openmeteo - duplicar_filas> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Procesamiento finalizado (I=0, O=0, R=2324, W=6972, U=0, E=0)
+2026-05-14 17:12:05.911 INFO  <transform_openmeteo - crear_mes> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Procesamiento finalizado (I=0, O=0, R=2324, W=2324, U=0, E=0)
+2026-05-14 17:12:05.929 INFO  <transform_openmeteo - MENSUAL> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Procesamiento finalizado (I=0, O=0, R=2324, W=77, U=0, E=0)
+2026-05-14 17:12:06.445 INFO  <transform_openmeteo - Salida Tabla Mes> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Procesamiento finalizado (I=0, O=77, R=77, W=77, U=0, E=0)
+2026-05-14 17:12:07.108 INFO  <transform_openmeteo - crear_semana> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Procesamiento finalizado (I=0, O=0, R=2324, W=2324, U=0, E=0)
+2026-05-14 17:12:07.122 INFO  <transform_openmeteo - SEMANAL> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Procesamiento finalizado (I=0, O=0, R=2324, W=334, U=0, E=0)
+2026-05-14 17:12:07.528 INFO  <transform_openmeteo - Salida Tabla Semana> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Procesamiento finalizado (I=0, O=334, R=334, W=334, U=0, E=0)
+2026-05-14 17:12:08.409 INFO  <transform_openmeteo - Salida Tabla Diaria> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Procesamiento finalizado (I=0, O=2324, R=2324, W=2324, U=0, E=0)
+2026-05-14 17:12:08.480 INFO  <main> [C:\ProyectoIA\etl_openmeteo_final.ktr]   
+2026-05-14 17:12:08.488 INFO  <main> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Los procesos CSV file input.0 han finalizado correctamente, se han procesado 55954 l?neas. ( 6994 l?neas)
+2026-05-14 17:12:08.492 INFO  <main> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Los procesos estres termico.0 han finalizado correctamente, se han procesado 55954 l?neas. ( 6994 l?neas)
+2026-05-14 17:12:08.499 INFO  <main> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Los procesos crea fecha.0 han finalizado correctamente, se han procesado 55954 l?neas. ( 6994 l?neas)
+2026-05-14 17:12:08.507 INFO  <main> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Los procesos crear_mes.0 han finalizado correctamente, se han procesado 2324 l?neas. ( 290 l?neas)
+2026-05-14 17:12:08.517 INFO  <main> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Los procesos MENSUAL.0 han finalizado correctamente, se han procesado 2324 l?neas. ( 290 l?neas)
+2026-05-14 17:12:08.523 INFO  <main> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Los procesos Salida Tabla Mes.0 han finalizado correctamente, se han procesado 77 l?neas. ( 9 l?neas)
+2026-05-14 17:12:08.539 INFO  <main> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Los procesos crear_semana.0 han finalizado correctamente, se han procesado 2324 l?neas. ( 290 l?neas)
+2026-05-14 17:12:08.552 INFO  <main> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Los procesos SEMANAL.0 han finalizado correctamente, se han procesado 2324 l?neas. ( 290 l?neas)
+2026-05-14 17:12:08.587 INFO  <main> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Los procesos Salida Tabla Semana.0 han finalizado correctamente, se han procesado 334 l?neas. ( 41 l?neas)
+2026-05-14 17:12:08.605 INFO  <main> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Los procesos DIARIO.0 han finalizado correctamente, se han procesado 55954 l?neas. ( 6994 l?neas)
+2026-05-14 17:12:08.648 INFO  <main> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Los procesos duplicar_filas.0 han finalizado correctamente, se han procesado 6972 l?neas. ( 871 l?neas)
+2026-05-14 17:12:08.660 INFO  <main> [C:\ProyectoIA\etl_openmeteo_final.ktr]  Los procesos Salida Tabla Diaria.0 han finalizado correctamente, se han procesado 2324 l?neas. ( 290 l?neas)
