@@ -646,12 +646,21 @@ body {
 
 #informe-contenido .informe-seccion:nth-of-type(8) {
     background: #ecfdf5;
-    border-left: 5px solid #34d399;
+    border-left: 5px solid #f48fec;
 }
 
 #informe-contenido .informe-seccion:nth-of-type(9) {
     background: #fff7ed;
-    border-left: 5px solid #fb923c;
+    border-left: 5px solid #85e8eb;
+}
+
+#informe-contenido .informe-seccion:nth-of-type(10) {
+    background: #fff7ed;
+    border-left: 5px solid #e7f082;
+}
+#informe-contenido .informe-seccion:nth-of-type(10) {
+    background: #fff7ed;
+    border-left: 5px solid #f8adb6;
 }
 
 .informe-logo {
