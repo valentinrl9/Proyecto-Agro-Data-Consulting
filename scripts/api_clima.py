@@ -1,43 +1,31 @@
-from fastapi import FastAPI
-import mysql.connector
-from datetime import datetime
-
-app = FastAPI()
-
-def conectar():
-    return mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="Valentin.09",
-        database="clima",
-        port=3307
-    )
-
-@app.get("/")
-def home():
-    return {"mensaje": "API de clima diario funcionando"}
-
-@app.get("/clima_hoy")
-def clima_hoy():
+@app.get("/clima_mes")
+def clima_mes():
     conexion = conectar()
     cursor = conexion.cursor(dictionary=True)
 
-    hoy = datetime.now().strftime("%Y-%m-%d")
-
+    # Obtener el mes actual
+    hoy = datetime.now()
+    mes = hoy.strftime("%Y-%m")
+    
     query = f"""
-        SELECT *
+        SELECT 
+            fecha,
+            eto_diaria AS et0,
+            radiacion_diaria AS radiacion,
+            temperatura_media AS temperatura,
+            humedad_media AS humedad,
+            viento_medio AS viento,
+            precipitacion_diaria AS precipitacion,
+            estres_termico_medio AS estres_termico
         FROM clima_diario
-        WHERE fecha = '{hoy}'
-        LIMIT 1;
+        WHERE fecha LIKE '{mes}%'
+        ORDER BY fecha ASC;
     """
 
     cursor.execute(query)
-    resultado = cursor.fetchone()
+    resultado = cursor.fetchall()
 
     cursor.close()
     conexion.close()
 
-    if resultado:
-        return resultado
-    else:
-        return {"error": "No hay datos para hoy"}
+    return resultado

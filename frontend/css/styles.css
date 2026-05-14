@@ -5,8 +5,8 @@
 body {
     margin: 0;
     font-family: "Inter", Arial, sans-serif;
-    background: #0b1724;
-    color: #f5f7fb;
+    background: linear-gradient(180deg, #0a1f2f 0%, #0d2e3a 50%, #0f3f46 100%);
+    color: #e6faff;
 }
 
 /* ===========================
@@ -18,8 +18,8 @@ body {
     align-items: center;
     justify-content: space-between;
     padding: 14px 28px;
-    background: radial-gradient(circle at top left, #1f6feb 0, #0b1724 55%, #020712 100%);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    background: radial-gradient(circle at top left, #1e3a8a 0%, #0d2e3a 55%, #082026 100%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.10);
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
     position: sticky;
     top: 0;
@@ -38,18 +38,12 @@ body {
     border-radius: 50%;
     object-fit: cover;
     padding: 6px;
-    background: rgba(0, 0, 0, 0.85); /* Fondo claro para contraste */
-    box-shadow: 0 0 12px rgba(255, 255, 255, 0.35);
-}
-.logo-img {
-    border: 2px solid rgba(255, 255, 255, 0.6);
-}
-.logo-img {
+    background: rgba(0, 0, 0, 0.85);
+    border: 2px solid rgba(255, 255, 255, 0.55);
     box-shadow:
         0 0 12px rgba(255, 255, 255, 0.35),
-        0 0 18px rgba(34, 197, 94, 0.35);
+        0 0 18px rgba(34, 197, 94, 0.35); /* verde suave */
 }
-
 
 .topbar-title h1 {
     margin: 0;
@@ -61,7 +55,7 @@ body {
     display: block;
     margin-top: 2px;
     font-size: 12px;
-    color: rgba(241, 245, 249, 0.75);
+    color: rgba(226, 242, 255, 0.75);
 }
 
 /* ===========================
@@ -73,34 +67,30 @@ body {
     gap: 8px;
 }
 
-/* Contenedor de navegación */
 .nav-btn {
     padding: 10px 18px;
     border-radius: 8px;
     background: transparent;
-    border: 1px solid rgba(255,255,255,0.15);
-    color: #e2e8f0;
+    border: 1px solid rgba(255,255,255,0.18);
+    color: #d9faff;
     cursor: pointer;
     transition: all 0.25s ease;
     font-size: 14px;
 }
 
-/* Hover premium */
 .nav-btn:hover {
-    background: rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.10);
     transform: translateY(-1px);
     border-color: rgba(255,255,255,0.25);
 }
 
-/* Botón activo premium */
 .nav-btn.active {
-    background: linear-gradient(90deg, #3b82f6, #22c55e);
+    background: linear-gradient(90deg, #3b82f6, #22c55e); /* azul → verde */
     color: white;
     border-color: transparent;
     box-shadow: 0 0 12px rgba(34,197,94,0.45), 0 0 18px rgba(59,130,246,0.35);
     transform: translateY(-1px);
 }
-
 
 /* ===========================
    SECCIONES
@@ -114,8 +104,6 @@ body {
     from { opacity: 0; transform: translateY(6px); }
     to   { opacity: 1; transform: translateY(0); }
 }
-
-
 
 .section {
     display: none;
@@ -131,9 +119,10 @@ body {
 =========================== */
 
 #cards-container {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-top: 15px;
 }
 
 /* ===========================
@@ -141,35 +130,34 @@ body {
 =========================== */
 
 .card {
-    background: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04));
-    backdrop-filter: blur(12px);
-    border-radius: 16px;
-    padding: 20px;
-    width: 240px;
-    color: #f1f5f9;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.35);
-    border: 1px solid rgba(255,255,255,0.08);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    background: linear-gradient(135deg, #0f2f3a 0%, #134e4a 100%); /* azul verdoso */
+    padding: 8px 10px;
+    border-radius: 8px;
+    box-shadow: 0 0 6px rgba(0,0,0,0.25);
+    color: #e0faff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 28px rgba(0,0,0,0.45);
+    transform: translateY(-3px);
+    box-shadow: 0 0 12px rgba(0,150,136,0.35); /* verde agua */
 }
 
 .card-title {
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 4px;
+    margin-bottom: 2px;
 }
 
 .card-value {
-    font-size: 26px;
-    font-weight: 700;
-    margin-top: 4px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    line-height: 1.1;
 }
 
 .card-icon {
@@ -177,21 +165,24 @@ body {
 }
 
 /* Colores según tipo */
-.card-et0 {
-    border-left: 4px solid #4ade80;
-}
+.card-et0 { border-left: 5px solid #22c55e; }
+.card-estres { border-left: 5px solid #4ade80; }
+.card-humedad { border-left: 5px solid #3b82f6; }
 
-.card-estres {
-    border-left: 4px solid #f97316;
-}
+.card-temp { border-left: 5px solid #0ea5e9; }
+.card-rad { border-left: 5px solid #38bdf8; }
+.card-viento { border-left: 5px solid #22d3ee; }
 
-.card-humedad {
-    border-left: 4px solid #60a5fa;
-}
+.card-dir { border-left: 5px solid #14b8a6; }
+.card-presion { border-left: 5px solid #16a34a; }
+.card-nubes { border-left: 5px solid #60a5fa; }
+.card-lluvia { border-left: 5px solid #0284c7; }
+
 
 /* ===========================
    GRAFICOS
 =========================== */
+
 /* GRÁFICAS EN FILA */
 .graficas-grid {
     display: grid;
@@ -202,11 +193,11 @@ body {
 
 /* TARJETAS DE GRÁFICA */
 .grafica-card {
-    background: rgba(255,255,255,0.05);
+    background: linear-gradient(135deg, rgba(14,165,233,0.12), rgba(34,197,94,0.12));
     padding: 20px;
     border-radius: 18px;
-    border: 1px solid rgba(255,255,255,0.08);
-    box-shadow: 0 10px 28px rgba(0,0,0,0.45);
+    border: 1px solid rgba(59,130,246,0.25); /* azul suave */
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
 }
 
 /* CANVAS */
@@ -224,10 +215,10 @@ body {
 }
 
 .panel-ia-card {
-    background: rgba(255,255,255,0.05);
+    background: linear-gradient(135deg, rgba(14,165,233,0.10), rgba(34,197,94,0.10));
     padding: 18px;
     border-radius: 16px;
-    border: 1px solid rgba(255,255,255,0.08);
+    border: 1px solid rgba(34,197,94,0.25); /* verde suave */
     box-shadow: 0 8px 22px rgba(0,0,0,0.35);
     display: flex;
     gap: 12px;
@@ -236,17 +227,19 @@ body {
 
 .panel-ia-icono {
     font-size: 32px;
+    color: #3b82f6; /* azul cielo */
 }
-
 
 /* ===========================
    RECOMENDACIONES
 =========================== */
+
 /* Título */
 #recomendaciones h2 {
     font-size: 22px;
     font-weight: 700;
     margin-bottom: 10px;
+    color: #a7f3d0; /* verde menta */
 }
 
 /* Grid */
@@ -261,8 +254,8 @@ body {
 .recomendacion-card {
     padding: 16px 18px;
     border-radius: 14px;
-    background: rgba(15,23,42,0.85);
-    border: 1px solid rgba(148,163,184,0.25);
+    background: rgba(13, 42, 56, 0.85); /* azul profundo */
+    border: 1px solid rgba(59,130,246,0.25); /* azul suave */
     display: flex;
     gap: 14px;
     align-items: flex-start;
@@ -273,20 +266,22 @@ body {
 .recomendacion-icono {
     font-size: 26px;
     margin-top: 2px;
+    color: #22c55e; /* verde */
 }
 
 /* Texto */
 .recomendacion-texto {
     font-size: 15px;
     line-height: 1.45;
+    color: #e0faff;
 }
 
 /* Colores según prioridad */
-.rec-verde   { border-left: 4px solid #22c55e; background: rgba(34,197,94,0.15); }
-.rec-amarillo{ border-left: 4px solid #eab308; background: rgba(234,179,8,0.15); }
-.rec-naranja { border-left: 4px solid #f97316; background: rgba(249,115,22,0.15); }
-.rec-rojo    { border-left: 4px solid #ef4444; background: rgba(239,68,68,0.15); }
-.rec-morado  { border-left: 4px solid #a855f7; background: rgba(168,85,247,0.15); }
+.rec-verde   { border-left: 4px solid #22c55e; background: rgba(34,197,94,0.18); }
+.rec-amarillo{ border-left: 4px solid #eab308; background: rgba(234,179,8,0.18); }
+.rec-naranja { border-left: 4px solid #f97316; background: rgba(249,115,22,0.18); }
+.rec-rojo    { border-left: 4px solid #ef4444; background: rgba(239,68,68,0.18); }
+.rec-morado  { border-left: 4px solid #a855f7; background: rgba(168,85,247,0.18); }
 
 /* Animación */
 @keyframes fadeIn {
@@ -301,22 +296,22 @@ body {
     opacity: 0.85;
     margin-top: 6px;
     line-height: 1.4;
+    color: #d9faff;
 }
 
 .recomendacion-base em,
 .recomendacion-razon em {
     font-style: normal;
     font-weight: 600;
-    color: #22c55e;
+    color: #22c55e; /* verde */
 }
 
 .recomendacion-card strong {
     display: block;
     font-size: 15px;
     margin-bottom: 4px;
+    color: #a7f3d0; /* verde menta */
 }
-
-
 
 
 /* ===========================
@@ -339,18 +334,20 @@ body {
     align-items: center;
     gap: 10px;
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.1);
+    border: 1px solid rgba(59,130,246,0.25); /* azul suave */
+    background: linear-gradient(135deg, rgba(14,165,233,0.12), rgba(34,197,94,0.12));
 }
 
 .alerta-icono {
     font-size: 20px;
+    color: #3b82f6; /* azul cielo */
 }
 
-.alerta-verde { background: rgba(34,197,94,0.25); border-left: 4px solid #22c55e; }
-.alerta-amarillo { background: rgba(234,179,8,0.25); border-left: 4px solid #eab308; }
+.alerta-verde   { background: rgba(34,197,94,0.25); border-left: 4px solid #22c55e; }
+.alerta-amarillo{ background: rgba(234,179,8,0.25); border-left: 4px solid #eab308; }
 .alerta-naranja { background: rgba(249,115,22,0.25); border-left: 4px solid #f97316; }
-.alerta-rojo { background: rgba(239,68,68,0.25); border-left: 4px solid #ef4444; }
-.alerta-azul { background: rgba(59,130,246,0.25); border-left: 4px solid #3b82f6; }
+.alerta-rojo    { background: rgba(239,68,68,0.25); border-left: 4px solid #ef4444; }
+.alerta-azul    { background: rgba(59,130,246,0.25); border-left: 4px solid #3b82f6; }
 
 .sin-alertas {
     opacity: 0.7;
@@ -361,21 +358,24 @@ body {
 /* ===========================
    RIESGO ACUMULADO
 =========================== */
+
 #riesgo h2 {
     font-size: 22px;
     font-weight: 700;
     margin-bottom: 6px;
+    color: #a7f3d0; /* verde menta */
 }
 
 .subtitulo-seccion {
     opacity: 0.8;
     margin-bottom: 18px;
+    color: #d9faff;
 }
 
 #riesgo-bar {
     width: 100%;
     height: 22px;
-    background: rgba(148,163,184,0.2);
+    background: rgba(59,130,246,0.20); /* azul suave */
     border-radius: 12px;
     overflow: hidden;
     margin-bottom: 8px;
@@ -384,7 +384,7 @@ body {
 #riesgo-bar-fill {
     height: 100%;
     width: 0%;
-    background: linear-gradient(90deg, #22c55e, #ef4444);
+    background: linear-gradient(90deg, #22c55e, #3b82f6); /* verde → azul */
     transition: width 0.6s ease;
 }
 
@@ -392,6 +392,7 @@ body {
     font-size: 14px;
     opacity: 0.9;
     margin-bottom: 20px;
+    color: #e0faff;
 }
 
 #riesgo-detalles {
@@ -403,23 +404,24 @@ body {
 .riesgo-card {
     padding: 14px 16px;
     border-radius: 12px;
-    background: rgba(15,23,42,0.85);
-    border: 1px solid rgba(148,163,184,0.25);
+    background: rgba(13,42,56,0.85); /* azul profundo */
+    border: 1px solid rgba(59,130,246,0.25);
     animation: fadeIn 0.4s ease;
+    color: #e0faff;
 }
 
 .riesgo-card h3 {
     margin-bottom: 6px;
     font-size: 16px;
     font-weight: 600;
+    color: #a7f3d0; /* verde menta */
 }
 
 .riesgo-card p {
     font-size: 14px;
     opacity: 0.85;
+    color: #d9faff;
 }
-
-
 
 
 /* ===========================
@@ -431,6 +433,7 @@ iframe {
     height: 600px;
     border: none;
 }
+
 #informe-contenido {
     background: white;
     color: #1e293b;
@@ -446,6 +449,7 @@ iframe {
     font-size: 28px;
     font-weight: 700;
     margin-bottom: 20px;
+    color: #0ea5e9; /* azul */
 }
 
 .informe-subtitulo {
@@ -453,20 +457,19 @@ iframe {
     font-size: 16px;
     opacity: 0.7;
     margin-bottom: 40px;
-}
-
-.informe-seccion {
-    margin-bottom: 30px;
+    color: #16a34a; /* verde */
 }
 
 .informe-seccion h3 {
     font-size: 20px;
     margin-bottom: 10px;
+    color: #0f3f46; /* azul verdoso */
 }
 
 .informe-seccion p {
     font-size: 14px;
     line-height: 1.5;
+    color: #1e293b;
 }
 
 
@@ -493,6 +496,10 @@ iframe {
 }
 
 
+/* ===========================
+   BOTÓN APAGAR
+=========================== */
+
 .nav-btn-apagar-round {
     width: 42px;
     height: 42px;
@@ -503,15 +510,12 @@ iframe {
     font-size: 20px;
     font-weight: 600;
     cursor: pointer;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
-    line-height: 1;          /* evita que el icono se desplace verticalmente */
-    padding: 0;              /* elimina espacio interno que descuadra */
-    transform: translateY(1px); /* ajuste óptico fino */
-
+    line-height: 1;
+    padding: 0;
+    transform: translateY(1px);
     transition: all 0.25s ease;
     box-shadow: 0 0 12px rgba(239,68,68,0.45), 0 0 18px rgba(220,38,38,0.35);
 }
@@ -523,4 +527,100 @@ iframe {
 
 .nav-btn-apagar-round:active {
     transform: scale(0.92);
+}
+
+
+/* ===========================
+   ESTILO PROFESIONAL INFORME
+=========================== */
+
+#informe-contenido {
+    font-family: "Inter", "Segoe UI", sans-serif;
+    line-height: 1.55;
+    color: #1f2937;
+    padding: 25px 30px;
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Título principal */
+.informe-titulo {
+    font-size: 32px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 5px;
+    color: #111827;
+}
+
+/* Subtítulo */
+.informe-subtitulo {
+    text-align: center;
+    font-size: 15px;
+    color: #6b7280;
+    margin-bottom: 30px;
+}
+
+/* Secciones */
+.informe-seccion {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    padding: 18px 22px;
+    border-radius: 12px;
+    margin-bottom: 22px;
+}
+
+/* Títulos de sección */
+.informe-seccion h3 {
+    margin-top: 0;
+    margin-bottom: 12px;
+    font-size: 20px;
+    font-weight: 600;
+    color: #111827;
+    border-left: 4px solid #3b82f6;
+    padding-left: 10px;
+}
+
+/* Texto */
+.informe-seccion p {
+    margin: 0;
+    font-size: 15px;
+    color: #374151;
+}
+
+/* Listas de alertas */
+.informe-seccion p br {
+    line-height: 1.8;
+}
+
+/* Destacar números importantes */
+.informe-seccion strong {
+    color: #111827;
+    font-weight: 600;
+}
+
+/* Riesgo mensual grande */
+.informe-seccion strong[style] {
+    color: #16a34a !important;
+    font-size: 26px !important;
+}
+
+/* Botón PDF */
+.btn-pdf {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    transition: 0.2s ease;
+    margin-bottom: 20px;
+}
+
+.btn-pdf:hover {
+    background: linear-gradient(135deg, #1d4ed8, #1e40af);
 }

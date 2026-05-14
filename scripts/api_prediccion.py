@@ -509,3 +509,36 @@ import signal
 def apagar():
     os.kill(os.getpid(), signal.SIGTERM)
     return {"mensaje": "API apagada"}
+
+
+@app.get("/actual")
+def actual():
+
+    try:
+        df = pd.read_csv("C:/ProyectoIA/datos/openmeteo_realtime.csv")
+    except Exception as e:
+        return {"error": f"No se pudo leer el realtime: {str(e)}"}
+
+    if df.empty:
+        return {"error": "El archivo realtime está vacío"}
+
+    row = df.iloc[-1]
+
+    salida = {
+        "timestamp": str(row["timestamp"]),
+        "et0_actual": float(row["et0_fao_evapotranspiration"]),
+        "temperatura": float(row["temperature_2m"]),
+        "humedad": float(row["relative_humidity_2m"]),
+        "radiacion": float(row["shortwave_radiation"]),
+        "viento": float(row["wind_speed_10m"]),
+        "direccion_viento": float(row["wind_direction_10m"]),
+        "presion": float(row["pressure_msl"]),
+        "nubes": float(row["cloud_cover"]),
+        "precipitacion": float(row["precipitation"])
+    }
+
+    salida["estres_termico"] = round(
+        row["temperature_2m"] * (1 - row["relative_humidity_2m"] / 100), 2
+    )
+
+    return salida

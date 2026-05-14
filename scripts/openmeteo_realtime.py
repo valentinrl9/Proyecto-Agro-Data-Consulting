@@ -1,5 +1,34 @@
 import requests
 import pandas as pd
+import math
+
+# -----------------------------
+# Función para calcular ET0 FAO-56 por intervalo (15 min / 1 hora)
+# -----------------------------
+def calc_et0_interval(T, RH, Rs, u2, P):
+    # Saturation vapor pressure
+    es = 0.6108 * math.exp((17.27 * T) / (T + 237.3))
+    ea = es * (RH / 100)
+
+    # Slope of vapor pressure curve
+    delta = (4098 * es) / ((T + 237.3)**2)
+
+    # Psychrometric constant
+    gamma = 0.000665 * P
+
+    # Net radiation approximation (válido para intervalos cortos)
+    Rn = Rs * 0.75
+
+    # Soil heat flux G ≈ 0
+    G = 0
+
+    # FAO-56 ET0
+    et0 = (0.408 * delta * (Rn - G) +
+           gamma * (900 / (T + 273)) * u2 * (es - ea)) / \
+          (delta + gamma * (1 + 0.34 * u2))
+
+    return max(et0, 0)
+
 
 # Coordenadas de El Ejido
 LAT = 36.77
@@ -37,6 +66,20 @@ df.rename(columns={"time": "timestamp"}, inplace=True)
 # 🔥 Convertir timestamp a formato estándar (igual que el histórico)
 df["timestamp"] = pd.to_datetime(df["timestamp"]).dt.strftime("%Y-%m-%d %H:%M:%S")
 
+# -----------------------------
+# 🔥 CALCULAR ET0 (sustituye el 0 de Open-Meteo)
+# -----------------------------
+df["et0_fao_evapotranspiration"] = df.apply(
+    lambda row: calc_et0_interval(
+        row["temperature_2m"],
+        row["relative_humidity_2m"],
+        row["shortwave_radiation"],
+        row["wind_speed_10m"],
+        row["pressure_msl"]
+    ),
+    axis=1
+)
+
 # 🔥 Reordenar columnas para asegurar consistencia
 columnas_correctas = [
     "timestamp",
@@ -57,4 +100,3 @@ df = df[columnas_correctas]
 df.to_csv("C:/ProyectoIA/datos/openmeteo_realtime.csv", index=False, encoding="utf-8")
 
 print("Datos actuales limpios guardados en C:/ProyectoIA/datos/openmeteo_realtime.csv")
-
