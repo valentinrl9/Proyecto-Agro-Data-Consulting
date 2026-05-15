@@ -105,7 +105,10 @@ async function cargarDashboard() {
 
     // 2. Cargar datos de IA (DIARIOS)
     const pred = await getRecomendaciones();
+    window.DATA_GRAFICAS = pred.diario;
+    cargarGraficas(pred);
 
+    
     // IA avanzada
     const estresHoy = parseFloat(pred.diario[0].informacion[1]);
     const estresManana = parseFloat(pred.diario[1].informacion[1]);
@@ -335,7 +338,7 @@ function mostrarRiesgo(diario) {
 
 
 // ===============================
-// ALAERTAS
+// ALERTAS
 // ===============================
 
 function generarAlertas(dia) {
@@ -511,18 +514,17 @@ function generarInformePDF(data) {
     console.log("DATA.DIARIO REAL:", JSON.stringify(data.diario, null, 2));
     const cont = document.getElementById("informe-contenido");
     cont.innerHTML = "";
-    data.diario = normalizarDiario(data.diario);
+    const diarioNormalizado = normalizarDiario(JSON.parse(JSON.stringify(data.diario)));
 
     // Datos derivados reales
-    const resumen = generarResumenEjecutivo(data);
-    const analisis = generarAnalisisClimatico(data);
-    const recs = generarRecomendacionesEstrategicas(data);
-    const riesgo = calcularRiesgoSemanal(data.diario);
-
+    const resumen = generarResumenEjecutivo({ ...data, diario: diarioNormalizado });
+    const analisis = generarAnalisisClimatico({ ...data, diario: diarioNormalizado });
+    const recs = generarRecomendacionesEstrategicas({ ...data, diario: diarioNormalizado });
+    const riesgo = calcularRiesgoSemanal(diarioNormalizado);
     // Tendencias reales (mín, máx)
-    const et0_vals = data.diario.map(d => d.et0 || 0);
-    const estres_vals = data.diario.map(d => d.estres_termico || 0);
-    const hum_vals = data.diario.map(d => d.humedad || 0);
+    const et0_vals = diarioNormalizado.map(d => d.et0 || 0);
+    const estres_vals = diarioNormalizado.map(d => d.estres_termico || 0);
+    const hum_vals = diarioNormalizado.map(d => d.humedad || 0);
 
     const safeMax = arr => arr.length ? Math.max(...arr) : 0;
     const safeMin = arr => arr.length ? Math.min(...arr) : 0;
@@ -539,11 +541,12 @@ function generarInformePDF(data) {
 
     // Alertas únicas del mes
     const alertasMes = [...new Set(
-        data.diario
+        diarioNormalizado
             .flatMap(d => generarAlertas(d))
             .sort((a, b) => a.prioridad - b.prioridad)
             .map(a => alertaToTexto(a))
     )];
+
 
     // INFORME PROFESIONAL
     cont.innerHTML = `
@@ -799,7 +802,3 @@ document.querySelector('button[data-section="informe"]').addEventListener("click
 
     cargarInformeMensual();
 });
-
-
-
-

@@ -11,6 +11,7 @@ Chart.defaults.plugins.legend.labels.boxWidth = 12;
 // FUNCIÓN PARA EXTRAER NÚMEROS DE TEXTOS CON EMOJIS
 // ===============================
 function extraerNumero(texto) {
+    texto = texto.replace(",", "."); // ⭐ convertir coma → punto
     const match = texto.match(/[-+]?\d*\.?\d+/);
     return match ? parseFloat(match[0]) : 0;
 }
@@ -49,7 +50,16 @@ function crearGraficaLinea(ctx, labels, data, colorBase, opcionesExtra = {}) {
             maintainAspectRatio: false,
             plugins: {
                 legend: { display: false },
-                filler: { propagate: false }
+                filler: { propagate: false },
+
+                // ⭐ AÑADIDO: TÍTULO DE LA GRÁFICA
+                title: {
+                    display: true,
+                    text: opcionesExtra.titulo || "",
+                    color: "#e5e7eb",
+                    font: { size: 16, weight: "bold" },
+                    padding: { top: 10, bottom: 10 }
+                }
             },
             scales: {
                 x: {
@@ -68,11 +78,14 @@ function crearGraficaLinea(ctx, labels, data, colorBase, opcionesExtra = {}) {
 // ===============================
 // CARGAR GRÁFICAS
 // ===============================
-async function cargarGraficas() {
-    const data = await getRecomendaciones();
+function cargarGraficas(data) {
+    //const data = await getRecomendaciones();
 
     const labels = data.diario.map(d => d.fecha);
     const et0 = data.diario.map(d => extraerNumero(d.informacion[0]));
+        console.log("📌 ET0 recibido por la gráfica:", et0);
+        console.log("📌 INFORMACION[0] bruto:", data.diario.map(d => d.informacion[0]));
+
     const estres = data.diario.map(d => extraerNumero(d.informacion[1]));
     const humedad = data.diario.map(d => extraerNumero(d.informacion[2]));
 
@@ -80,18 +93,22 @@ async function cargarGraficas() {
     const ctx2 = document.getElementById("chart-estres").getContext("2d");
     const ctx3 = document.getElementById("chart-humedad").getContext("2d");
 
-    // ET0 → escala fija 0–1
+    // ET0 → escala fija 0–50
     crearGraficaLinea(ctx1, labels, et0, "rgb(74, 222, 128)", {
-        y: { min: 0, max: 1 }
+        titulo: "ET0",
+        y: { min: 0, max: 50 }
     });
 
     // Estrés térmico → escala automática
-    crearGraficaLinea(ctx2, labels, estres, "rgb(249, 115, 22)");
+    crearGraficaLinea(ctx2, labels, estres, "rgb(249, 115, 22)", {
+        titulo: "Estrés térmico"
+    });
 
     // Humedad → escala 0–100
     crearGraficaLinea(ctx3, labels, humedad, "rgb(96, 165, 250)", {
+        titulo: "Humedad",
         y: { min: 0, max: 100 }
     });
 }
 
-cargarGraficas();
+

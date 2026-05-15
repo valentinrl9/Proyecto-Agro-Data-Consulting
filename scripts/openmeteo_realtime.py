@@ -6,23 +6,17 @@ import math
 # Función para calcular ET0 FAO-56 por intervalo (15 min / 1 hora)
 # -----------------------------
 def calc_et0_interval(T, RH, Rs, u2, P):
-    # Saturation vapor pressure
     es = 0.6108 * math.exp((17.27 * T) / (T + 237.3))
     ea = es * (RH / 100)
-
-    # Slope of vapor pressure curve
     delta = (4098 * es) / ((T + 237.3)**2)
-
-    # Psychrometric constant
     gamma = 0.000665 * P
 
-    # Net radiation approximation (válido para intervalos cortos)
-    Rn = Rs * 0.75
+    # 🔥 CONVERSIÓN CORRECTA
+    Rs_MJ = Rs * 0.0036   # W/m² → MJ/m²·hora
+    Rn = Rs_MJ * 0.75
 
-    # Soil heat flux G ≈ 0
     G = 0
 
-    # FAO-56 ET0
     et0 = (0.408 * delta * (Rn - G) +
            gamma * (900 / (T + 273)) * u2 * (es - ea)) / \
           (delta + gamma * (1 + 0.34 * u2))
@@ -79,6 +73,8 @@ df["et0_fao_evapotranspiration"] = df.apply(
     ),
     axis=1
 )
+
+df["et0_fao_evapotranspiration"] = df["et0_fao_evapotranspiration"] / 100
 
 # 🔥 Reordenar columnas para asegurar consistencia
 columnas_correctas = [

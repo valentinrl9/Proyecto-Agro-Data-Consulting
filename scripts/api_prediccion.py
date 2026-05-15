@@ -124,7 +124,7 @@ def prediccion(dias: int = 7):
             if var in ["et0_diaria", "radiacion_diaria", "precipitacion_diaria"]:
                 valor = max(valor, 0)
 
-            if predicciones:
+            if predicciones and var not in ["et0_diaria", "radiacion_diaria", "precipitacion_diaria"]:
                 valor = 0.7 * valor + 0.3 * predicciones[-1][var]
 
             pred[var] = float(round(valor, 3))
@@ -242,9 +242,11 @@ def recomendaciones(dias: int = 7):
         info = []
         recs = []
 
-        et0 = dia["et0_diaria"]
-        estres = dia["estres_termico_medio"]
-        humedad = dia["humedad_media"]
+       # ⭐ Usar SIEMPRE la predicción, no la tabla real
+        et0 = pred[i]["et0_diaria"]
+        estres = pred[i]["estres_termico_medio"]
+        humedad = pred[i]["humedad_media"]
+
         viento = dia["viento_medio"]
         radiacion = dia["radiacion_diaria"]
         lluvia = dia["precipitacion_diaria"]
@@ -252,7 +254,7 @@ def recomendaciones(dias: int = 7):
         prev = pred[i - 1] if i > 0 else None
 
         # INFORMACIÓN
-        info.append(f"🟢 ET0 actual: {round(et0, 2)}")
+        info.append(f"{round(et0, 2)}")
         info.append(f"🟠 Estrés térmico: {round(estres, 2)}")
         info.append(f"💧 Humedad: {round(humedad, 2)}%")
 
@@ -299,6 +301,9 @@ def recomendaciones(dias: int = 7):
 
         salida.append({
             "fecha": fecha,
+            "et0": round(et0, 2),
+            "estres": round(estres, 2),
+            "humedad": round(humedad, 2),
             "informacion": info,
             "recomendaciones": recs
         })
