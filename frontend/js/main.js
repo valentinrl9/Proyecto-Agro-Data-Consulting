@@ -2,7 +2,6 @@
 const miBoton = document.getElementById("btn-descargar-pdf");
 if (miBoton) {
     miBoton.addEventListener("click", () => {
-        console.log("💥 ¡BOOM! Click interceptado. Iniciando descarga del PDF...");
 
         const element = document.getElementById("informe-contenido");
 
