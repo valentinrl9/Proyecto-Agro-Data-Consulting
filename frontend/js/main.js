@@ -259,7 +259,7 @@ if (pendienteRiesgo > 0.3) {
 } else if (pendienteRiesgo < -0.3) {
     mensajeRiesgo = "El riesgo acumulado está descendiendo según la IA.";
 } else {
-    mensajeRiesgo = "El riesgo acumulado se mantiene estable esta semana.";
+    mensajeRiesgo = "El riesgo acumulado se mantiene estable.";
 }
 
 // 4. Mostrar todo en el panel IA
