@@ -689,17 +689,13 @@ function generarInformePDF(data) {
         <div class="informe-titulo">Informe Mensual Agronómico</div>
         <div class="informe-subtitulo">Generado automáticamente por el Dashboard Agronómico Inteligente</div>
 
-        <!-- ===========================
-             RESUMEN EJECUTIVO
-        ============================ -->
+
         <div class="informe-seccion">
             <h3>Resumen Ejecutivo</h3>
             <p>${resumen}</p>
         </div>
 
-        <!-- ===========================
-             ANÁLISIS DEL MES (solo datos reales)
-        ============================ -->
+        
         <div class="informe-seccion">
             <h3>Análisis del Mes</h3>
             <p>
@@ -709,9 +705,7 @@ function generarInformePDF(data) {
             </p>
         </div>
 
-        <!-- ===========================
-             ANÁLISIS CLIMÁTICO DERIVADO
-        ============================ -->
+        
         <div class="informe-seccion">
             <h3>Tendencias Climáticas</h3>
             <p>
@@ -721,9 +715,7 @@ function generarInformePDF(data) {
             </p>
         </div>
 
-        <!-- ===========================
-             RIESGO AGRONÓMICO
-        ============================ -->
+        
         <div class="informe-seccion">
             <h3>Riesgo Agronómico Acumulado</h3>
             <p>
@@ -733,9 +725,7 @@ function generarInformePDF(data) {
             </p>
         </div>
 
-        <!-- ===========================
-             RESUMEN MENSUAL REAL (BACKEND)
-        ============================ -->
+        
         ${data.resumen_mensual ? `
         <div class="informe-seccion">
             <h3>Resumen Mensual Real</h3>
@@ -749,9 +739,7 @@ function generarInformePDF(data) {
         ` : ""}
 
         
-        <!-- ===========================
-             RECOMENDACIONES
-        ============================ -->
+        
         <div class="informe-seccion">
             <h3>Recomendaciones Estratégicas del Mes</h3>
             <p>
@@ -762,9 +750,7 @@ function generarInformePDF(data) {
             </p>
         </div>
 
-        <!-- ===========================
-             ALERTAS
-        ============================ -->
+        
         <div class="informe-seccion">
             <h3>Alertas Relevantes del Mes</h3>
             <p>
@@ -775,18 +761,21 @@ function generarInformePDF(data) {
 }
 
 
-document.getElementById("btn-descargar-pdf").addEventListener("click", () => {
-    const element = document.getElementById("informe-contenido");
+document.addEventListener("click", e => {
+    if (e.target.id === "btn-descargar-pdf") {
 
-    const options = {
-        margin: 0.5,
-        filename: "informe_mensual.pdf",
-        image: { type: "jpeg", quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: "in", format: "a4", orientation: "portrait" }
-    };
+        const element = document.getElementById("informe-contenido");
 
-    html2pdf().set(options).from(element).save();
+        const options = {
+            margin: 0.5,
+            filename: "informe_mensual.pdf",
+            image: { type: "jpeg", quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: "in", format: "a4", orientation: "portrait" }
+        };
+
+        html2pdf().set(options).from(element).save();
+    }
 });
 
 
