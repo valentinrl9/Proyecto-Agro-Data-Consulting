@@ -1,2 +1,2 @@
 timestamp,temperature_2m,relative_humidity_2m,precipitation,wind_speed_10m,wind_direction_10m,shortwave_radiation,pressure_msl,et0_fao_evapotranspiration,cloud_cover
-2026-05-17 12:00:00,19.9,64,0.0,6.8,177,692.0,1017.2,0.050051513865276995,100
+2026-05-17 17:00:00,21.3,61,0.0,13.5,226,647.0,1015.3,0.07036320352327777,79

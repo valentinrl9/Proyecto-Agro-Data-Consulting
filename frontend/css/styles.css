@@ -486,7 +486,9 @@ body {
    (solo estética, no rompe nada)
 ============================================ */
 
-/* Contenedor general */
+/* ===================================================
+   CONTENEDOR GENERAL
+====================================================== */
 #informe-contenido {
     font-family: "Inter", "Segoe UI", sans-serif;
     line-height: 1.6;
@@ -499,7 +501,9 @@ body {
     margin: 0 auto;
 }
 
-/* Título principal */
+/* ===================================================
+   CABECERA Y TÍTULOS
+====================================================== */
 .informe-titulo {
     font-size: 34px;
     font-weight: 800;
@@ -509,7 +513,6 @@ body {
     letter-spacing: -0.5px;
 }
 
-/* Subtítulo */
 .informe-subtitulo {
     text-align: center;
     font-size: 15px;
@@ -517,15 +520,39 @@ body {
     margin-bottom: 35px;
 }
 
-/* Tarjetas de sección */
+/* ===================================================
+   ESTRUCTURA DE DOS COLUMNAS (GRID MODERNO)
+====================================================== */
+.informe-grid {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    margin-top: 0px;
+}
+
+.informe-columna {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Controla la separación vertical dentro de las columnas */
+}
+
+/* ===================================================
+   TARJETAS DE SECCIÓN (ESTILO BASE)
+====================================================== */
 .informe-seccion {
     background: #ffffff;
     border: 1px solid #e2e8f0;
     padding: 22px 26px;
     border-radius: 14px;
-    margin-bottom: 25px;
+    margin-bottom: 20px; /* Margen por defecto para bloques fuera del grid */
     box-shadow: 0 3px 10px rgba(0,0,0,0.04);
     transition: 0.2s ease;
+}
+
+/* Las secciones dentro del grid no necesitan margen inferior propio, lo maneja el contenedor */
+.informe-columna .informe-seccion {
+    margin-bottom: 0 !important;
 }
 
 .informe-seccion:hover {
@@ -533,7 +560,6 @@ body {
     box-shadow: 0 6px 18px rgba(0,0,0,0.08);
 }
 
-/* Títulos de sección con barra de color */
 .informe-seccion h3 {
     margin-top: 0;
     margin-bottom: 14px;
@@ -544,31 +570,51 @@ body {
     padding-left: 12px;
 }
 
-/* Texto */
 .informe-seccion p {
     margin: 0;
     font-size: 15px;
     color: #334155;
 }
 
-/* Números importantes */
+/* Formatos de texto específicos */
 .informe-seccion strong {
     color: #0f172a;
     font-weight: 700;
 }
 
-/* Riesgo mensual grande */
-.informe-seccion strong[style] {
-    color: #16a34a !important;
-    font-size: 28px !important;
-}
-
-/* Listas de alertas */
 .informe-seccion p br {
     line-height: 1.9;
 }
 
-/* Botón PDF */
+/* Aseguramos que el indicador de riesgo grande mantenga tu color verde */
+.indicador-riesgo-box .valor-riesgo {
+    color: #16a34a !important;
+    font-size: 32px !important;
+    font-weight: 800;
+    text-align: center;
+    margin-top: 15px;
+}
+
+/* Variación para la caja de alertas */
+.alertas-caja {
+    margin-top: 20px;
+    margin-bottom: 0 !important;
+}
+
+/* ===================================================
+   LOGOS Y BOTONES
+====================================================== */
+.informe-logo {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.informe-logo img {
+    width: 110px;
+    height: auto;
+    opacity: 0.95;
+}
+
 .btn-pdf {
     background: linear-gradient(135deg, #2563eb, #1d4ed8);
     color: white;
@@ -587,89 +633,97 @@ body {
     transform: translateY(-1px);
 }
 
-/* Iconos dentro del informe */
-.informe-seccion p::first-letter {
-    /* opcional: un toque elegante */
-}
-
-/* Logo superior del informe */
-#informe-contenido::before {
-    content: "";
-    display: block;
-    width: 110px;
-    height: 110px;
-    margin: 0 auto 20px auto;
-    background-image: url("/frontend/assets/logos/LogoV.png");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    opacity: 0.95;
-    position: relative;
-    z-index: 10;
-}
-
-/* Colores suaves por sección (corregido) */
-#informe-contenido .informe-seccion:nth-of-type(1) {
+/* ===================================================
+   ASIGNACIÓN DE COLORES HISTÓRICOS POR SECCIÓN
+====================================================== */
+/* 1. Resumen Ejecutivo (Fuera del grid) */
+#informe-contenido > .informe-seccion:nth-of-type(1) {
     background: #f0f9ff;
     border-left: 5px solid #38bdf8;
 }
 
-#informe-contenido .informe-seccion:nth-of-type(2) {
-    background: #fefce8;
-    border-left: 5px solid #facc15;
+/* Columna Izquierda */
+.informe-columna:nth-child(1) .informe-seccion:nth-of-type(1) { background: #fefce8; border-left: 5px solid #facc15; } /* Análisis del Mes */
+.informe-columna:nth-child(1) .informe-seccion:nth-of-type(2) { background: #f0fdf4; border-left: 5px solid #4ade80; } /* Tendencias Climáticas */
+.informe-columna:nth-child(1) .informe-seccion:nth-of-type(3) { background: #ecfdf5; border-left: 5px solid #34d399; } /* Riesgo Agronómico Acumulado */
+
+/* Columna Derecha */
+.informe-columna:nth-child(2) .informe-seccion:nth-of-type(1) { background: #fef2f2; border-left: 5px solid #f87171; } /* Resumen Mensual Real */
+.informe-columna:nth-child(2) .informe-seccion:nth-of-type(2) { background: #f5f3ff; border-left: 5px solid #a78bfa; } /* Recomendaciones Estratégicas */
+
+/* Alertas Relevantes (Fuera del grid, al final) */
+.alertas-caja {
+    background: #fff7ed !important;
+    border-left: 5px solid #fb923c !important;
 }
 
-#informe-contenido .informe-seccion:nth-of-type(3) {
-    background: #f0fdf4;
-    border-left: 5px solid #4ade80;
-}
 
-#informe-contenido .informe-seccion:nth-of-type(4) {
-    background: #fef2f2;
-    border-left: 5px solid #f87171;
-}
+/* ===================================================
+   OPTIMIZACIÓN DE IMPRESIÓN (FORZADO A 1 PÁGINA A4)
+====================================================== */
+@media print {
+    #informe-contenido {
+        font-size: 12px !important;
+        line-height: 1.3 !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+        background: transparent !important;
+    }
 
-#informe-contenido .informe-seccion:nth-of-type(5) {
-    background: #f5f3ff;
-    border-left: 5px solid #a78bfa;
-}
+    /* Mantenemos estrictamente las dos columnas en el PDF */
+    .informe-grid {
+        display: flex !important;
+        flex-direction: row !important;
+        gap: 12px !important;
+        margin-top: 10px !important;
+    }
 
-#informe-contenido .informe-seccion:nth-of-type(6) {
-    background: #ecfdf5;
-    border-left: 5px solid #34d399;
-}
+    .informe-columna {
+        flex: 1 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 12px !important;
+    }
 
-#informe-contenido .informe-seccion:nth-of-type(7) {
-    background: #fff7ed;
-    border-left: 5px solid #fb923c;
-}
+    /* Reducción de espacios para compresión en una página */
+    .informe-seccion {
+        margin-bottom: 0 !important;
+        padding: 12px 16px !important;
+        border-radius: 8px !important;
+        page-break-inside: avoid !important; /* Evita roturas feas */
+    }
 
-#informe-contenido .informe-seccion:nth-of-type(8) {
-    background: #ecfdf5;
-    border-left: 5px solid #f48fec;
-}
+    .alertas-caja {
+        margin-top: 12px !important;
+    }
 
-#informe-contenido .informe-seccion:nth-of-type(9) {
-    background: #fff7ed;
-    border-left: 5px solid #85e8eb;
-}
+    .informe-seccion h3 {
+        font-size: 14px !important;
+        margin-bottom: 6px !important;
+        padding-left: 8px !important;
+    }
 
-#informe-contenido .informe-seccion:nth-of-type(10) {
-    background: #fff7ed;
-    border-left: 5px solid #e7f082;
-}
-#informe-contenido .informe-seccion:nth-of-type(10) {
-    background: #fff7ed;
-    border-left: 5px solid #f8adb6;
-}
+    .informe-seccion p {
+        font-size: 12px !important;
+    }
 
-.informe-logo {
-    text-align: center;
-    margin-bottom: 20px;
-}
+    .informe-titulo {
+        font-size: 22px !important;
+        margin-bottom: 4px !important;
+    }
 
-.informe-logo img {
-    width: 110px;
-    height: auto;
-    opacity: 0.95;
+    .informe-subtitulo {
+        font-size: 11px !important;
+        margin-bottom: 15px !important;
+    }
+
+    .indicador-riesgo-box .valor-riesgo {
+        font-size: 22px !important;
+        margin-top: 5px !important;
+    }
+
+    .informe-logo img {
+        width: 80px !important;
+        margin-bottom: 5px !important;
+    }
 }

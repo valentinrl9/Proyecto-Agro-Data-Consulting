@@ -1,3 +1,52 @@
+// Buscamos el botón y le asignamos la descarga real
+const miBoton = document.getElementById("btn-descargar-pdf");
+if (miBoton) {
+    miBoton.addEventListener("click", () => {
+        console.log("💥 ¡BOOM! Click interceptado. Iniciando descarga del PDF...");
+
+        const element = document.getElementById("informe-contenido");
+
+        // 1. Verificación de seguridad
+        if (!element || element.innerHTML.trim() === "") {
+            console.warn("⚠️ El contenedor 'informe-contenido' está vacío.");
+            alert("Primero debes generar el informe con datos en la pantalla para poder descargarlo.");
+            return;
+        }
+
+        // 2. Configuración del PDF en milímetros
+        const options = {
+            margin: 10,
+            filename: "informe_mensual.pdf",
+            image: { type: "jpeg", quality: 0.98 },
+            html2canvas: { scale: 2, useCORS: true },
+            jsPDF: { unit: "mm", format: "a4", orientation: "portrait" }
+        };
+
+        console.log("🚀 Enviando datos a html2pdf...");
+
+        // 3. Ejecución y descarga
+        html2pdf().set(options).from(element).save()
+            .then(() => {
+                console.log("✅ ¡PDF descargado con éxito!");
+            })
+            .catch(err => {
+                console.error("❌ Error interno de la librería html2pdf:", err);
+            });
+    });
+}
+// Forzamos un listener directo al botón nada más cargar
+window.addEventListener("DOMContentLoaded", () => {
+    const miBoton = document.getElementById("btn-descargar-pdf");
+    if (miBoton) {
+        console.log("🎯 Botón PDF encontrado en el DOM con éxito.");
+        miBoton.addEventListener("click", () => {
+            console.log("💥 ¡BOOM! Click directo interceptado en el botón.");
+        });
+    } else {
+        console.error("❌ Ojo: El botón 'btn-descargar-pdf' no existe en el HTML en este momento.");
+    }
+});
+
 // ===============================
 // NAVEGACIÓN ENTRE SECCIONES
 // ===============================
@@ -684,77 +733,75 @@ function generarInformePDF(data) {
     )];
 
 
-    // INFORME PROFESIONAL
     cont.innerHTML = `
-        <div class="informe-titulo">Informe Mensual Agronómico</div>
-        <div class="informe-subtitulo">Generado automáticamente por el Dashboard Agronómico Inteligente</div>
-
+        <div class="informe-header">
+            <div class="informe-titulo">📊 Informe Mensual Agronómico</div>
+            <div class="informe-subtitulo">Generado automáticamente por el Dashboard Agronómico Inteligente</div>
+        </div>
 
         <div class="informe-seccion">
-            <h3>Resumen Ejecutivo</h3>
+            <h3>📝 Resumen Ejecutivo</h3>
             <p>${resumen}</p>
         </div>
 
-        
-        <div class="informe-seccion">
-            <h3>Análisis del Mes</h3>
-            <p>
-                <strong>ET0:</strong> mínima ${et0_min}, máxima ${et0_max}.<br>
-                <strong>Estrés térmico:</strong> mínimo ${estres_min}, máximo ${estres_max}.<br>
-                <strong>Humedad:</strong> mínima ${hum_min}%, máxima ${hum_max}%.
-            </p>
+        <div class="informe-grid">
+            
+            <div class="informe-columna">
+                <div class="informe-seccion">
+                    <h3>🌡️ Análisis del Mes</h3>
+                    <p>
+                        <strong>ET0:</strong> mín ${et0_min}, máx ${et0_max}.<br>
+                        <strong>Estrés térmico:</strong> mín ${estres_min}, máx ${estres_max}.<br>
+                        <strong>Humedad:</strong> mín ${hum_min}%, máx ${hum_max}%.
+                    </p>
+                </div>
+
+                <div class="informe-seccion">
+                    <h3>📈 Tendencias Climáticas</h3>
+                    <p>
+                        <strong>Humedad:</strong> ${analisis.humedad}<br>
+                        <strong>Radiación:</strong> ${analisis.radiacion}<br>
+                        <strong>Viento:</strong> ${analisis.viento}
+                    </p>
+                </div>
+
+                <div class="informe-seccion indicador-riesgo-box">
+                    <h3>🛡️ Riesgo Agronómico Acumulado</h3>
+                    <p>El índice mensual de riesgo se estima en:</p>
+                    <div class="valor-riesgo">${riesgo}%</div>
+                </div>
+            </div>
+
+            <div class="informe-columna">
+                ${data.resumen_mensual ? `
+                <div class="informe-seccion">
+                    <h3>📋 Resumen Mensual Real</h3>
+                    <p>
+                        ${data.resumen_mensual.informacion.map(l => `• ${l}<br>`).join("")}
+                        <br>
+                        <strong>Riesgo:</strong> ${data.resumen_mensual.nivel_riesgo}<br>
+                        <strong>Recomendación:</strong> ${data.resumen_mensual.recomendacion_general}
+                    </p>
+                </div>
+                ` : ""}
+
+                <div class="informe-seccion">
+                    <h3>💡 Recomendaciones Estratégicas</h3>
+                    <p>
+                        <strong>Estrés:</strong> ${recs.estres}<br>
+                        <strong>Riego:</strong> ${recs.riego}<br>
+                        <strong>Ventilación:</strong> ${recs.ventilacion}<br>
+                        <strong>Manejo:</strong> ${recs.manejo}
+                    </p>
+                </div>
+            </div>
+
         </div>
 
-        
-        <div class="informe-seccion">
-            <h3>Tendencias Climáticas</h3>
-            <p>
-                <strong>Humedad:</strong> ${analisis.humedad}<br>
-                <strong>Radiación:</strong> ${analisis.radiacion}<br>
-                <strong>Viento:</strong> ${analisis.viento}
-            </p>
-        </div>
-
-        
-        <div class="informe-seccion">
-            <h3>Riesgo Agronómico Acumulado</h3>
-            <p>
-                El índice mensual de riesgo se estima en:
-                <br><br>
-                <strong style="font-size: 20px; color: #22c55e;">${riesgo}%</strong>
-            </p>
-        </div>
-
-        
-        ${data.resumen_mensual ? `
-        <div class="informe-seccion">
-            <h3>Resumen Mensual Real</h3>
-            <p>
-                ${data.resumen_mensual.informacion.map(l => `${l}<br>`).join("")}
-                <br>
-                <strong>Riesgo mensual:</strong> ${data.resumen_mensual.nivel_riesgo}<br>
-                <strong>Recomendación general:</strong> ${data.resumen_mensual.recomendacion_general}
-            </p>
-        </div>
-        ` : ""}
-
-        
-        
-        <div class="informe-seccion">
-            <h3>Recomendaciones Estratégicas del Mes</h3>
-            <p>
-                <strong>Estrés térmico:</strong> ${recs.estres}<br>
-                <strong>Riego:</strong> ${recs.riego}<br>
-                <strong>Ventilación:</strong> ${recs.ventilacion}<br>
-                <strong>Manejo general:</strong> ${recs.manejo}
-            </p>
-        </div>
-
-        
-        <div class="informe-seccion">
-            <h3>Alertas Relevantes del Mes</h3>
-            <p>
-                ${alertasMes.map(a => `• ${a}<br>`).join("")}
+        <div class="informe-seccion alertas-caja">
+            <h3>⚠️ Alertas Relevantes del Mes</h3>
+            <p style="margin: 0;">
+                ${alertasMes.length ? alertasMes.map(a => `• ${a}<br>`).join("") : "No se registraron alertas críticas durante este período."}
             </p>
         </div>
     `;
@@ -762,19 +809,69 @@ function generarInformePDF(data) {
 
 
 document.addEventListener("click", e => {
+    // Log 1: Ver si el navegador detecta CUALQUIER click en la pantalla
+    console.log("🖱️ Click detectado en un elemento con ID:", e.target.id);
+
     if (e.target.id === "btn-descargar-pdf") {
+        console.log("✅ ¡Confirmado! Has pulsado el botón del PDF.");
 
         const element = document.getElementById("informe-contenido");
+        
+        // Log 2: Comprobar si el contenedor del informe existe
+        console.log("📦 Elemento contenedor obtenido:", element);
+
+        if (!element) {
+            console.error("❌ ERROR: No se encuentra ningún elemento con el ID 'informe-contenido' en el HTML.");
+            return;
+        }
+
+        // Log 3: Ver qué texto o HTML tiene dentro el informe
+        console.log("📝 Contenido actual del informe (HTML):", element.innerHTML.trim());
+
+        if (element.innerHTML.trim() === "") {
+            console.warn("⚠️ ADVERTENCIA: El informe está vacío.html2pdf no se ejecutará porque no hay nada que pintar.");
+            alert("Primero debes generar el informe antes de descargarlo.");
+            return;
+        }
+
+        // Log 4: Comprobar si la librería externa html2pdf está cargada en memoria
+        console.log("📚 ¿La librería html2pdf existe en la página?:", typeof html2pdf !== 'undefined' ? "SÍ, CARGADA" : "NO EXISTE (Mala importación)");
+
+        if (typeof html2pdf === 'undefined') {
+            console.error("❌ ERROR CRÍTICO: html2pdf no está definida. Revisa si pusiste la etiqueta <script> en tu HTML.");
+            alert("Error del sistema: Falta la librería de PDF.");
+            return;
+        }
 
         const options = {
-            margin: 0.5,
+            margin: 8, // Reducimos ligeramente el margen (de 10mm a 8mm) para ganar espacio
             filename: "informe_mensual.pdf",
             image: { type: "jpeg", quality: 0.98 },
-            html2canvas: { scale: 2 },
-            jsPDF: { unit: "in", format: "a4", orientation: "portrait" }
+            
+            // 1. html2canvas: Bajamos la escala a 1.5 o 1.2 si tu contenido es muy largo.
+            // Esto hace que el texto "encoja" de tamaño de forma uniforme.
+            html2canvas: { 
+                scale: 1.5, 
+                useCORS: true,
+                scrollX: 0,
+                scrollY: 0
+            },
+            
+            // 2. jsPDF: Mantenemos el formato A4 estándar
+            jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+            
+            // 3. Modificamos el pagebreak para que sea ultra estricto
+            pagebreak: { mode: 'avoid-all' }
         };
 
-        html2pdf().set(options).from(element).save();
+        console.log("🚀 Lanzando html2pdf().set().from().save()...");
+        
+        try {
+            html2pdf().set(options).from(element).save();
+            console.log("🏁 Comando de guardado ejecutado sin crasear.");
+        } catch (err) {
+            console.error("❌ ERROR en la ejecución interna de html2pdf:", err);
+        }
     }
 });
 
