@@ -104,9 +104,59 @@ async function cargarDashboard() {
     cards.appendChild(crearTarjeta("Precipitación", data.precipitacion + " mm", "lluvia"));
 
     // 2. Cargar datos de IA (DIARIOS)
-    const pred = await getRecomendaciones();
+    window.pred = await getRecomendaciones();
+
+    // ⭐ Crear riesgo diario ANTES de usar pred.diario
+    pred.diario.forEach(d => {
+        const estres = parseFloat(d.estres) || 0;
+        const humedad = parseFloat(d.humedad) || 0;
+
+        const estres_norm = Math.min(100, (estres / 120) * 100);
+        const humedad_norm = Math.min(100, (humedad / 100) * 100);
+
+        d.riesgo = Math.round(estres_norm * 0.6 + humedad_norm * 0.4);
+    });
+
+    // Guardar datos para gráficas
     window.DATA_GRAFICAS = pred.diario;
+
+    // Cargar gráficas
     cargarGraficas(pred);
+
+
+
+    function tendenciaRegresionHumedad(pred) {
+    const valores = pred.diario.map((d, i) => ({
+        x: i,
+        y: parseFloat(d.humedad) // humedad predicha
+    }));
+
+    const n = valores.length;
+    if (n < 2) return 0;
+
+    const sumX = valores.reduce((a, v) => a + v.x, 0);
+    const sumY = valores.reduce((a, v) => a + v.y, 0);
+    const sumXY = valores.reduce((a, v) => a + v.x * v.y, 0);
+    const sumX2 = valores.reduce((a, v) => a + v.x * v.x, 0);
+
+    // Pendiente de la regresión
+    const pendiente = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
+
+    return pendiente;
+}
+const pendiente = tendenciaRegresionHumedad(pred);
+
+let mensaje = "";
+
+if (pendiente > 0.2) {
+    mensaje = "La humedad muestra una tendencia al alza.";
+} else if (pendiente < -0.2) {
+    mensaje = "La humedad está descendiendo según la IA.";
+} else {
+    mensaje = "La humedad se mantiene estable esta semana.";
+}
+
+document.getElementById("ia-tendencia").innerText = mensaje;
 
     
     // IA avanzada
@@ -115,31 +165,68 @@ async function cargarDashboard() {
 
     document.getElementById("ia-prediccion").innerText =
         estresManana > estresHoy
-            ? "La IA prevé un aumento del estrés térmico mañana."
-            : "La IA anticipa un descenso del estrés térmico mañana.";
+            ? "La IA prevé un aumento del estrés térmico estos días."
+            : "La IA anticipa un descenso del estrés térmico estos días.";
 
     const humedadHoy = parseFloat(pred.diario[0].informacion[2]);
     const humedadManana = parseFloat(pred.diario[1].informacion[2]);
 
-    document.getElementById("ia-tendencia").innerText =
-        humedadManana > humedadHoy
-            ? "La humedad muestra una tendencia al alza."
-            : "La humedad está descendiendo según la IA.";
+    // document.getElementById("ia-tendencia").innerText =
+    //     humedadManana > humedadHoy
+    //         ? "La humedad muestra una tendencia al alza."
+    //         : "La humedad está descendiendo según la IA.";
 
-    const riesgoAcumulado = Math.round(
-        pred.diario.reduce((acc, d) => acc + (parseFloat(d.riesgo) || 0), 0)
-    );
+// 1. Riesgo acumulado (tu cálculo original)
+const riesgoAcumulado = Math.round(
+    pred.diario.reduce((acc, d) => acc + (parseFloat(d.riesgo) || 0), 0)
+);
 
-    document.getElementById("ia-analisis").innerText =
-        "La IA detecta un riesgo acumulado de " +
-        riesgoAcumulado +
-        " puntos esta semana.";
+// 2. Tendencia por regresión del riesgo
+function tendenciaRegresionRiesgo(pred) {
+    const valores = pred.diario.map((d, i) => ({
+        x: i,
+        y: parseFloat(d.riesgo) || 0
+    }));
+
+    const n = valores.length;
+    if (n < 2) return 0;
+
+    const sumX = valores.reduce((a, v) => a + v.x, 0);
+    const sumY = valores.reduce((a, v) => a + v.y, 0);
+    const sumXY = valores.reduce((a, v) => a + v.x * v.y, 0);
+    const sumX2 = valores.reduce((a, v) => a + v.x * v.x, 0);
+
+    const pendiente = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
+
+    return pendiente;
+}
+
+// 3. Interpretación de la tendencia
+const pendienteRiesgo = tendenciaRegresionRiesgo(pred);
+
+let mensajeRiesgo = "";
+
+if (pendienteRiesgo > 0.3) {
+    mensajeRiesgo = "El riesgo acumulado muestra una tendencia al alza.";
+} else if (pendienteRiesgo < -0.3) {
+    mensajeRiesgo = "El riesgo acumulado está descendiendo según la IA.";
+} else {
+    mensajeRiesgo = "El riesgo acumulado se mantiene estable esta semana.";
+}
+
+// 4. Mostrar todo en el panel IA
+document.getElementById("ia-analisis").innerText =
+    "La IA detecta un riesgo acumulado de " +
+    riesgoAcumulado +
+    " puntos esta semana. " +
+    mensajeRiesgo;
 
     // Resto del dashboard
     mostrarRecomendaciones(pred.diario[0]);
     const alertasHoy = generarAlertas(pred.diario[0]);
     mostrarAlertas(alertasHoy);
     mostrarRiesgo(pred.diario);
+    cargarInformeMensual();
 }
 
 
@@ -163,10 +250,6 @@ document.getElementById("btn-apagar").addEventListener("click", () => {
 // INICIAR DASHBOARD
 // ===============================
 cargarDashboard();
-
-
-// console.log(data);
-// console.log(data.diario);
 
 
 // ===============================
@@ -278,6 +361,59 @@ function generarExplicacionIA_Texto(texto) {
 // ===============================
 // RIESGO SEMANAL (NUEVO)
 // ===============================
+
+function calcularRiesgoSemanalPred(predDiario) {
+    if (!predDiario.length) return 0;
+
+    let riesgos = [];
+
+    predDiario.forEach(d => {
+        const estres = d.estres_termico;  // ya viene como número
+        const humedad = d.humedad;        // ya viene como número
+
+        // Normalización suave
+        const estres_norm = Math.min(100, (estres / 120) * 100);
+        const humedad_norm = Math.min(100, (humedad / 100) * 100);
+
+        // Peso realista
+        const riesgoDia = estres_norm * 0.6 + humedad_norm * 0.4;
+
+        riesgos.push(riesgoDia);
+    });
+
+    const promedio = riesgos.reduce((a, b) => a + b, 0) / riesgos.length;
+
+    return Math.round(promedio);
+}
+function mostrarRiesgoPred(pred) {
+    const riesgo = calcularRiesgoSemanalPred(pred.diario);
+
+    // Barra
+    const fill = document.getElementById("riesgo-bar-fill");
+    fill.style.width = riesgo + "%";
+
+    const texto = document.getElementById("riesgo-bar-text");
+    texto.textContent = `Riesgo acumulado semanal: ${riesgo}%`;
+
+    // Detalles
+    const cont = document.getElementById("riesgo-detalles");
+    cont.innerHTML = "";
+
+    pred.diario.forEach(d => {
+        const card = document.createElement("div");
+        card.classList.add("riesgo-card");
+
+        card.innerHTML = `
+            <h3>${d.fecha}</h3>
+            <p><strong>Estrés térmico:</strong> ${d.estres_termico}</p>
+            <p><strong>Humedad:</strong> ${d.humedad}%</p>
+        `;
+
+        cont.appendChild(card);
+    });
+}
+mostrarRiesgoPred(pred);
+
 
 function calcularRiesgoSemanal(diario) {
     if (!diario.length) return 0;

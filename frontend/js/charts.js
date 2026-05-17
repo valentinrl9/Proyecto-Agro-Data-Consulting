@@ -104,11 +104,25 @@ function cargarGraficas(data) {
         titulo: "Estrés térmico"
     });
 
-    // Humedad → escala 0–100
+    // 1. Convertimos los valores de humedad a números
+    const valoresHumedad = humedad.map(v => parseFloat(v));
+
+    // 2. Calculamos el mínimo y máximo real de la serie
+    const minH = Math.min(...valoresHumedad);
+    const maxH = Math.max(...valoresHumedad);
+
+    // 3. Añadimos un pequeño margen visual
+    const margen = 2;
+
+    const minEscala = Math.max(0, minH - margen);
+    const maxEscala = Math.min(100, maxH + margen);
+
+    // 4. Creamos la gráfica con escala dinámica
     crearGraficaLinea(ctx3, labels, humedad, "rgb(96, 165, 250)", {
         titulo: "Humedad",
-        y: { min: 0, max: 100 }
+        y: { min: minEscala, max: maxEscala }
     });
+
 }
 
 
