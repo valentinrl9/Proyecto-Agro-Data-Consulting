@@ -686,10 +686,6 @@ function generarInformePDF(data) {
 
     // INFORME PROFESIONAL
     cont.innerHTML = `
-        <div class="informe-logo">
-            <img src="assets/logos/LogoV.png" alt="Logo" />
-        </div>
-
         <div class="informe-titulo">Informe Mensual Agronómico</div>
         <div class="informe-subtitulo">Generado automáticamente por el Dashboard Agronómico Inteligente</div>
 
@@ -719,7 +715,6 @@ function generarInformePDF(data) {
         <div class="informe-seccion">
             <h3>Tendencias Climáticas</h3>
             <p>
-                <strong>Temperatura:</strong> ${analisis.temperatura}<br>
                 <strong>Humedad:</strong> ${analisis.humedad}<br>
                 <strong>Radiación:</strong> ${analisis.radiacion}<br>
                 <strong>Viento:</strong> ${analisis.viento}
@@ -821,9 +816,9 @@ function generarAnalisisClimatico(data) {
     const diario = data.diario;
 
     const hums = diario.map(d => d.humedad).filter(v => v !== undefined);
-    const temps = [];
-    const rads = [];
-    const vientos = [];
+    const temps = diario.map(d => d.temperatura).filter(v => v !== undefined);
+    const rads = diario.map(d => d.radiacion).filter(v => v !== undefined);
+    const vientos = diario.map(d => d.viento).filter(v => v !== undefined);
 
     function analizar(lista, nombre) {
         if (!lista.length) return `No hay datos suficientes de ${nombre}.`;

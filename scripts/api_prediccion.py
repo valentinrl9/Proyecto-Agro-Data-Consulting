@@ -304,9 +304,16 @@ def recomendaciones(dias: int = 7):
             "et0": round(et0, 2),
             "estres": round(estres, 2),
             "humedad": round(humedad, 2),
+
+            # ⭐ Añadimos los datos que el informe mensual necesita
+            "viento": round(viento, 2),
+            "radiacion": round(radiacion, 2),
+            "lluvia": round(lluvia, 2),
+
             "informacion": info,
             "recomendaciones": recs
         })
+
 
     # ---------- RESUMEN SEMANAL (igual que tenías) ----------
     et0_vals = [d["et0_diaria"] for d in pred]
