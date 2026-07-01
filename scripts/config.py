@@ -8,12 +8,10 @@ from dotenv import load_dotenv
 ROOT = Path(__file__).resolve().parent.parent
 ENV_FILE = ROOT / ".env"
 
-if not ENV_FILE.exists():
-    raise RuntimeError(
-        f"No existe {ENV_FILE}. Copia .env.example a .env y configura MYSQL_PASSWORD."
-    )
-
-load_dotenv(ENV_FILE)
+if ENV_FILE.exists():
+    load_dotenv(ENV_FILE)
+else:
+    load_dotenv()  # variables inyectadas por Docker (--env-file)
 
 DATOS_DIR = ROOT / "datos"
 HISTORICO_CSV = DATOS_DIR / "openmeteo_historico.csv"
@@ -31,8 +29,8 @@ MYSQL_PASSWORD = os.getenv("MYSQL_PASSWORD", "")
 
 if not MYSQL_PASSWORD:
     raise RuntimeError(
-        "MYSQL_PASSWORD esta vacio en .env. "
-        "Edita el archivo .env con la contraseña de tu MySQL local."
+        "MYSQL_PASSWORD no configurado. "
+        "Definelo en .env (local) o en variables de entorno (Docker)."
     )
 MYSQL_DATABASE = os.getenv("MYSQL_DATABASE", "clima")
 

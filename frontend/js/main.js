@@ -126,7 +126,7 @@ function mostrarVista(id) {
 // ===============================
 async function cargarDashboard() {
     try {
-    const data = await fetch(`${window.API_BASE}/actual`)
+    const data = await fetch(apiUrl("/actual"))
         .then(r => r.json());
 
     if (data.error) {
@@ -157,7 +157,9 @@ async function cargarDashboard() {
     // 2. Cargar datos de IA (DIARIOS)
     window.pred = await getRecomendaciones();
 
-    // ⭐ Crear riesgo diario ANTES de usar pred.diario
+    if (!pred || !Array.isArray(pred.diario) || pred.diario.length === 0) {
+        throw new Error(pred?.error || "No hay datos de recomendaciones disponibles.");
+    }
     pred.diario.forEach(d => {
         const estres = parseFloat(d.estres) || 0;
         const humedad = parseFloat(d.humedad) || 0;
@@ -282,7 +284,7 @@ document.getElementById("ia-analisis").innerText =
         console.error("Error cargando dashboard:", err);
         const cards = document.getElementById("cards-container");
         if (cards) {
-            cards.innerHTML = `<p class="sin-alertas">No se pudieron cargar los datos. Comprueba que la API esta activa en http://127.0.0.1:8000<br><small>${err.message}</small></p>`;
+            cards.innerHTML = `<p class="sin-alertas">No se pudieron cargar los datos del dashboard.<br><small>${err.message}</small></p>`;
         }
     }
 }
@@ -297,7 +299,7 @@ document.getElementById("ia-analisis").innerText =
 document.getElementById("btn-apagar").addEventListener("click", () => {
     const confirmar = confirm("⚠️ ¿Seguro que deseas apagar el sistema?\nSe detendrán las tareas automáticas de actualización 24h.");
     if (confirmar) {
-        fetch(`${window.API_BASE}/apagar`, { method: "POST" })
+        fetch(apiUrl("/apagar"), { method: "POST" })
             .then(() => window.close());
     }
 });
@@ -1006,7 +1008,7 @@ function generarResumenEjecutivo(data) {
 
 
 async function cargarInformeMensual() {
-    const res = await fetch(`${window.API_BASE}/recomendaciones?dias=30`);
+    const res = await fetch(apiUrl("/recomendaciones?dias=30"));
     const json = await res.json();
 
     const data = {

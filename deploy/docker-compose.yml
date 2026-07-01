@@ -3,19 +3,18 @@ services:
     image: mysql:8.0
     container_name: agrodata-mysql
     restart: unless-stopped
-    env_file:
-      - ../.env
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE:-clima}
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     volumes:
       - mysql_data:/var/lib/mysql
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p$$MYSQL_ROOT_PASSWORD"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1"]
       interval: 10s
       timeout: 5s
-      retries: 10
-      start_period: 30s
+      retries: 12
+      start_period: 60s
     networks:
       - agrodata
 
@@ -33,12 +32,14 @@ services:
     ports:
       - "127.0.0.1:8000:8000"
     volumes:
+      - ../.env:/app/.env:ro
       - clima_datos:/app/datos
     depends_on:
       db:
         condition: service_healthy
     networks:
       - agrodata
+      - agroplaga
 
   etl:
     build:
@@ -52,6 +53,7 @@ services:
       MYSQL_HOST: db
       MYSQL_PORT: 3306
     volumes:
+      - ../.env:/app/.env:ro
       - clima_datos:/app/datos
     depends_on:
       db:
@@ -77,3 +79,6 @@ volumes:
 networks:
   agrodata:
     driver: bridge
+  agroplaga:
+    external: true
+    name: agroplaga_default

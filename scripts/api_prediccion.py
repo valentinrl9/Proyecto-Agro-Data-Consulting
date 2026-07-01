@@ -223,6 +223,8 @@ def recomendaciones(dias: int = 7):
         return {"error": f"Error interno al obtener predicciones: {str(e)}"}
 
     if not isinstance(pred, list):
+        if isinstance(pred, dict) and pred.get("error"):
+            return {"error": pred["error"]}
         return {"error": "No se pudieron obtener predicciones válidas."}
 
     salida = []
