@@ -1,3 +1,5 @@
+name: deploy
+
 services:
   db:
     image: mysql:8.0
@@ -27,7 +29,7 @@ services:
     env_file:
       - ../.env
     environment:
-      MYSQL_HOST: db
+      MYSQL_HOST: agrodata-mysql
       MYSQL_PORT: 3306
     ports:
       - "127.0.0.1:8000:8000"
@@ -50,7 +52,7 @@ services:
     env_file:
       - ../.env
     environment:
-      MYSQL_HOST: db
+      MYSQL_HOST: agrodata-mysql
       MYSQL_PORT: 3306
     volumes:
       - ../.env:/app/.env:ro

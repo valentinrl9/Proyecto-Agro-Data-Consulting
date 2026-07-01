@@ -8,10 +8,11 @@ from dotenv import load_dotenv
 ROOT = Path(__file__).resolve().parent.parent
 ENV_FILE = ROOT / ".env"
 
+# override=False: respeta MYSQL_HOST=db inyectado por Docker Compose
 if ENV_FILE.exists():
-    load_dotenv(ENV_FILE)
+    load_dotenv(ENV_FILE, override=False)
 else:
-    load_dotenv()  # variables inyectadas por Docker (--env-file)
+    load_dotenv(override=False)
 
 DATOS_DIR = ROOT / "datos"
 HISTORICO_CSV = DATOS_DIR / "openmeteo_historico.csv"
