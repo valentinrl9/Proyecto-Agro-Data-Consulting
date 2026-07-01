@@ -1,4 +1,0 @@
-Graphics2D from BufferedImage lacks BUFFERED_IMAGE hint
-Loading class `com.mysql.jdbc.Driver'. This is deprecated. The new driver class is `com.mysql.cj.jdbc.Driver'. The driver is automatically registered via the SPI and manual loading of the driver class is generally unnecessary.
-2026/05/16 12:23:37 - Spoon - Spoon  ha terminado.
-stopping
