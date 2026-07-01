@@ -1,18 +1,11 @@
 import pandas as pd
-import mysql.connector
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_absolute_error
 import joblib
 
-# 1. Conexión a MySQL
-conexion = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="Valentin.09",
-    database="clima",
-    port=3307
-)
+from config import ROOT
+from db import conectar
 
 # 2. Consulta SQL completa (sin límite)
 query = """
@@ -31,7 +24,7 @@ ORDER BY fecha;
 """
 
 # 3. Cargar dataset completo
-df = pd.read_sql(query, conexion)
+df = pd.read_sql(query, conectar())
 
 # 4. Mostrar tamaño real del dataset
 print("Filas cargadas:", len(df))
@@ -76,5 +69,5 @@ print("Error MAE:", mae)
 # 7. Guardar el modelo entrenado
 # ============================
 
-joblib.dump(modelo, "modelos/modelo_riego.pkl")
+joblib.dump(modelo, ROOT / "modelos" / "modelo_riego.pkl")
 print("Modelo guardado en modelos/modelo_riego.pkl")

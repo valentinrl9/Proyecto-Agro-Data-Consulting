@@ -1,18 +1,11 @@
 import pandas as pd
-import mysql.connector
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_absolute_error
 import joblib
 
-# 1. Conexión MySQL
-conexion = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="Valentin.09",
-    database="clima",
-    port=3307
-)
+from config import ROOT
+from db import conectar
 
 # 2. Consulta SQL
 query = """
@@ -29,7 +22,7 @@ FROM clima_diario
 ORDER BY fecha;
 """
 
-df = pd.read_sql(query, conexion)
+df = pd.read_sql(query, conectar())
 print("Filas cargadas:", len(df))
 
 # 3. Crear variable objetivo: Índice de Estrés Hídrico (ISH)
@@ -75,5 +68,5 @@ mae = mean_absolute_error(y_test, pred)
 print("Error MAE:", mae)
 
 # 6. Guardar modelo
-joblib.dump(modelo, "modelos/modelo_estres.pkl")
+joblib.dump(modelo, ROOT / "modelos" / "modelo_estres.pkl")
 print("Modelo guardado en modelos/modelo_estres.pkl")

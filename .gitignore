@@ -18,9 +18,8 @@ data-integration/
 *.log
 
 # Datos
+datos/*.csv
 data/*.csv
-data/*.txt
-data/*.json
 
 # Sistema
 .DS_Store

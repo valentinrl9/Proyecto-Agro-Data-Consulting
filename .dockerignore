@@ -1,0 +1,16 @@
+data-integration/
+Docs/
+.git/
+*.bat
+*.ktr
+*.kjb
+datos/*.csv
+__pycache__/
+.env
+*.pyc
+node_modules/
+logs/
+img/
+modelos/
+d.informacion*
+eyJhbGciOiJIUzI.txt

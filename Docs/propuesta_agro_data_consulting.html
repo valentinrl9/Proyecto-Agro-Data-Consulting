@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Executive Brief - Agro Data Consulting</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            color: #2c3e50;
+            line-height: 1.5;
+            margin: 0;
+            padding: 30px;
+            font-size: 11pt;
+        }
+        .header {
+            border-bottom: 4px solid #2e86c1;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .title-area h1 {
+            color: #2e86c1;
+            margin: 0;
+            font-size: 24pt;
+            letter-spacing: -0.5px;
+        }
+        .title-area p {
+            margin: 5px 0 0 0;
+            color: #7f8c8d;
+            font-size: 11pt;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .badge-ecosystem {
+            background-color: #ebf5fb;
+            border: 1px solid #aeecff;
+            color: #2e86c1;
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-size: 9.5pt;
+            font-weight: bold;
+        }
+        .executive-summary {
+            background-color: #f8f9fa;
+            border-left: 5px solid #2e86c1;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 0 6px 6px 0;
+        }
+        .executive-summary h3 {
+            margin-top: 0;
+            color: #2e86c1;
+        }
+        h2 {
+            color: #2c3e50;
+            font-size: 14pt;
+            border-bottom: 1px solid #d5dbdb;
+            padding-bottom: 5px;
+            margin-top: 25px;
+            margin-bottom: 12px;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .card {
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 15px;
+            background-color: #fff;
+        }
+        .card h4 {
+            margin-top: 0;
+            margin-bottom: 8px;
+            color: #2e86c1;
+            font-size: 11pt;
+        }
+        ul {
+            margin-top: 5px;
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 6px;
+        }
+        .tech-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        .tech-table th, .tech-table td {
+            border: 1px solid #d5dbdb;
+            padding: 8px 12px;
+            text-align: left;
+            font-size: 10pt;
+        }
+        .tech-table th {
+            background-color: #f2f4f4;
+            color: #34495e;
+        }
+        .highlight {
+            font-weight: bold;
+            color: #2e86c1;
+        }
+        .footer {
+            text-align: center;
+            color: #bdc3c7;
+            font-size: 9pt;
+            margin-top: 40px;
+            border-top: 1px solid #e5e7eb;
+            padding-top: 10px;
+        }
+        @media print {
+            body { padding: 0; }
+            .page-break { page-break-before: always; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- CABECERA -->
+    <div class="header">
+        <div class="title-area">
+            <h1>Agro Data Consulting</h1>
+            <p>Business Brief & Proyección Estratégica para Aceleradoras</p>
+        </div>
+        <div class="badge-ecosystem">
+            Proyecto Paralelo / Sinergia: AgroPlaga AI
+        </div>
+    </div>
+
+    <!-- RESUMEN EJECUTIVO -->
+    <div class="executive-summary">
+        <h3>1. Resumen Ejecutivo (The Pitch)</h3>
+        <p><strong>Agro Data Consulting</strong> es una firma de consultoría tecnológica e integración de datos especializada en el sector hortofrutícola intensivo (invernaderos). Resolvemos el problema de la fragmentación analógica de datos en almacenes agrícolas y cooperativas, transformando registros dispersos (Excels, libretas de peritos, albaranes) en un <strong>Ecosistema Integrado de Inteligencia Agrícola</strong>. Mediante cuadros de mando corporativos y analítica predictiva cruzada con estaciones microclimáticas, permitimos a los directores técnicos anticipar crisis fitosanitarias, optimizar la asistencia en campo y blindar la seguridad alimentaria de cara a la exportación europea.</p>
+    </div>
+
+    <!-- EL PROBLEMA Y LA SOLUCIÓN -->
+    <h2>2. Ajuste Problema-Solución en el Sector Agrícola</h2>
+    <div class="grid-2">
+        <div class="card">
+            <h4>El Dolor del Cliente (Cooperativas y Almacenes)</h4>
+            <ul>
+                <li><span class="highlight">Datos silenciados y analógicos:</span> Los informes de visitas de los técnicos agrícolas/peritos se quedan en libretas o mensajes aislados.</li>
+                <li><span class="highlight">Riesgo operativo en exportación:</span> Falta de control en tiempo real sobre qué tratamientos aplican los agricultores y sus plazos de seguridad, arriesgando el rechazo de camiones en Europa por alertas de residuos.</li>
+                <li><span class="highlight">Meteorología reactiva:</span> Las cooperativas disponen de datos climáticos, pero no los cruzan con modelos predictivos de riesgo de plagas.</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h4>Nuestra Solución</h4>
+            <ul>
+                <li><span class="highlight">Auditoría e Ingesta Automatizada:</span> Ingeniería de datos (ETL) para unificar las fuentes analógicas de la cooperativa en un almacén de datos centralizado.</li>
+                <li><span class="highlight">Dashboard Ejecutivo a Medida:</span> Panel visual con trazabilidad biológica completa de fincas, geolocalización de incidencias por zonas SIGPAC y alertas tempranas fitosanitarias.</li>
+                <li><span class="highlight">Inteligencia Microclimática:</span> Integración de estaciones meteorológicas para emitir modelos de riesgo comarcal (ej. semáforo predictivo de hongos).</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- EL MODELO DE NEGOCIO PARALELO -->
+    <h2>3. Sinergia del Modelo de Negocio Dual</h2>
+    <p>Agro Data Consulting opera de forma paralela y simbiótica con nuestro SaaS/App escalable (<strong>AgroPlaga AI</strong>), mitigando el riesgo y acelerando la tracción financiera:</p>
+    
+    <table class="tech-table">
+        <thead>
+            <tr>
+                <th style="width: 30%;">Dimensión</th>
+                <th style="width: 35%;">Agro Data Consulting (Consultoría B2B)</th>
+                <th style="width: 35%;">AgroPlaga AI (Software Escalable)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="highlight">Modelo Financiero</td>
+                <td>Ingresos directos por servicios de implantación, auditoría técnica y desarrollo de dashboards a medida. High-Ticket.</td>
+                <td>Modelo SaaS recurrente (Freemium agricultores, suscripción de licencias estándar cooperativas). High-Scale.</td>
+            </tr>
+            <tr>
+                <td class="highlight">Tracción y Caja</td>
+                <td><strong>Financiación orgánica:</strong> Aporta flujo de caja inmediato desde el Año 1 para autofinanciar el desarrollo de la infraestructura de software.</td>
+                <td><strong>Escalabilidad del producto:</strong> Genera masa crítica de usuarios y datos geográficos automatizados a largo plazo.</td>
+            </tr>
+            <tr>
+                <td class="highlight">Estrategia B2B (El Caballo de Troya)</td>
+                <td>Entramos al cliente (Cooperativa) resolviendo su infraestructura interna y consolidando la confianza del Consejo Rector.</td>
+                <td>Desplegamos la app móvil en los agricultores de la cooperativa para alimentar el dashboard previamente vendido.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- FORZAR SALTO DE PÁGINA PARA LA PRESENTACIÓN TÉCNICA Y MONETIZACIÓN -->
+    <div class="page-break"></div>
+
+    <!-- PILARES TECNOLÓGICOS -->
+    <h2>4. Arquitectura y Stack Tecnológico Sólido</h2>
+    <p>El proyecto aprovecha un stack técnico ágil y moderno, minimizando los costes de infraestructura y maximizando la velocidad de despliegue:</p>
+    
+    <ul>
+        <li><strong>Ingeniería de Datos (ETL):</strong> Pipelines automatizados en <em>Python / Pentaho Data Integration</em> para la migración de sistemas heredados (Excels) hacia bases de datos relacionales sin fricción.</li>
+        <li><strong>Procesamiento Core y Seguridad:</strong> Backend robusto con <em>FastAPI</em> y control de accesos basado en roles (RBAC) para aislar estrictamente los datos de cada cooperativa socia.</li>
+        <li><strong>Base de Datos Geoespacial:</strong> <em>PostgreSQL + PostGIS</em> para el análisis espacial avanzado de propagación de plagas estructurado por recintos y municipios SIGPAC.</li>
+        <li><strong>Visualización y Analítica:</strong> Cuadros de mando reactivos desarrollados en <em>React + TypeScript</em> e integraciones de mapas con <em>Leaflet</em>, combinados con integraciones de APIs climáticas como <em>Open-Meteo</em>.</li>
+    </ul>
+
+    <!-- PROYECCIÓN FINANCIERA -->
+    <h2>5. Proyección y Fases de Lanzamiento (Mercado de Origen: Poniente Almeriense)</h2>
+    
+    <div class="card" style="margin-bottom: 15px;">
+        <strong style="color:#2e86c1;">Fase 1: Validación y Piloto (Mes 1 - 6)</strong>
+        <p style="margin: 5px 0 0 0; font-size: 10pt; color: #566573;">Desarrollo del framework básico de analítica. Captación de 2 cooperativas/almacenes piloto en El Ejido / Dalías para la implantación gratuita del panel de control a cambio de validación e ingesta de históricos de datos reales. Conexión experimental con las primeras estaciones climáticas locales.</p>
+    </div>
+
+    <div class="card" style="margin-bottom: 15px;">
+        <strong style="color:#2e86c1;">Fase 2: Monetización de Servicios e Integración (Mes 6 - 18)</strong>
+        <p style="margin: 5px 0 0 0; font-size: 10pt; color: #566573;">Comercialización activa del servicio de consultoría. Coste medio por implantación e integración de datos: 3.000€ - 6.000€ (pago único) + mantenimiento mensual del Dashboard (200€/mes). Objetivo: 8 cooperativas medianas contratadas. Activación en paralelo de los primeros despliegues de la app satélite para agricultores.</p>
+    </div>
+
+    <div class="card" style="margin-bottom: 15px;">
+        <strong style="color:#2e86c1;">Fase 3: Escalabilidad de Producto y Modelos de Riesgo (Mes 18+)</strong>
+        <p style="margin: 5px 0 0 0; font-size: 10pt; color: #566573;">Estandarización del software. Expansión de la consultoría hacia otras regiones de alta concentración agrícola (Murcia, Huelva, Comunidad Valenciana). Venta de APIs de datos de riesgo microclimático anonimizados para aseguradoras agrarias y grandes comercializadoras.</p>
+    </div>
+
+    <!-- ¿POR QUÉ SOMOS ATRACTIVOS PARA UNA ACELERADORA? -->
+    <h2>6. ¿Por qué es un proyecto idóneo para una Aceleradora?</h2>
+    <ul>
+        <li><strong>Bajo riesgo de capital:</strong> Al combinar servicios de consultoría inmediata con desarrollo de producto, reducimos la dependencia de capital externo rápido (Bootstrap financiero).</li>
+        <li><strong>Impacto en Sostenibilidad (Criterios ESG):</strong> Ayudamos de forma medible al sector agrícola a transicionar hacia el control biológico y la reducción del uso de químicos gracias a la precisión de los datos.</li>
+        <li><strong>Escalabilidad técnica demostrada:</strong> Un backend unificado que sirve tanto a las consultorías personalizadas a medida como al mapa global colaborativo del sector.</li>
+    </ul>
+
+    <!-- PIE DE PÁGINA -->
+    <div class="footer">
+        Agro Data Consulting © 2026 — Confidencial y Propietario. Desarrollado por Valentín Ruiz León.
+    </div>
+
+</body>
+</html>

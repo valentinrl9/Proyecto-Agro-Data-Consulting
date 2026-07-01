@@ -1,0 +1,79 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: agrodata-mysql
+    restart: unless-stopped
+    env_file:
+      - ../.env
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-clima}
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p$$MYSQL_ROOT_PASSWORD"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    networks:
+      - agrodata
+
+  api:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    container_name: agrodata-api
+    restart: unless-stopped
+    env_file:
+      - ../.env
+    environment:
+      MYSQL_HOST: db
+      MYSQL_PORT: 3306
+    ports:
+      - "127.0.0.1:8000:8000"
+    volumes:
+      - clima_datos:/app/datos
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - agrodata
+
+  etl:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    container_name: agrodata-etl
+    restart: unless-stopped
+    env_file:
+      - ../.env
+    environment:
+      MYSQL_HOST: db
+      MYSQL_PORT: 3306
+    volumes:
+      - clima_datos:/app/datos
+    depends_on:
+      db:
+        condition: service_healthy
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        echo "ETL: primer ciclo..."
+        python etl_pipeline.py || true
+        while true; do
+          sleep 900
+          echo "ETL: ciclo programado..."
+          python etl_pipeline.py || true
+        done
+    working_dir: /app/scripts
+    networks:
+      - agrodata
+
+volumes:
+  mysql_data:
+  clima_datos:
+
+networks:
+  agrodata:
+    driver: bridge

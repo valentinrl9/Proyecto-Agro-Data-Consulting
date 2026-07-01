@@ -125,10 +125,13 @@ function mostrarVista(id) {
 // CARGAR DASHBOARD
 // ===============================
 async function cargarDashboard() {
-
-    // 1. Cargar datos ACTUALES
-    const data = await fetch("http://localhost:8000/actual")
+    try {
+    const data = await fetch(`${window.API_BASE}/actual`)
         .then(r => r.json());
+
+    if (data.error) {
+        throw new Error(data.error);
+    }
 
     console.log("DATOS ACTUALES:", data);
 
@@ -275,6 +278,13 @@ document.getElementById("ia-analisis").innerText =
     mostrarAlertas(alertasHoy);
     mostrarRiesgo(pred.diario);
     cargarInformeMensual();
+    } catch (err) {
+        console.error("Error cargando dashboard:", err);
+        const cards = document.getElementById("cards-container");
+        if (cards) {
+            cards.innerHTML = `<p class="sin-alertas">No se pudieron cargar los datos. Comprueba que la API esta activa en http://127.0.0.1:8000<br><small>${err.message}</small></p>`;
+        }
+    }
 }
 
 
@@ -287,7 +297,7 @@ document.getElementById("ia-analisis").innerText =
 document.getElementById("btn-apagar").addEventListener("click", () => {
     const confirmar = confirm("⚠️ ¿Seguro que deseas apagar el sistema?\nSe detendrán las tareas automáticas de actualización 24h.");
     if (confirmar) {
-        fetch("http://127.0.0.1:8000/apagar", { method: "POST" })
+        fetch(`${window.API_BASE}/apagar`, { method: "POST" })
             .then(() => window.close());
     }
 });
@@ -460,7 +470,6 @@ function mostrarRiesgoPred(pred) {
         cont.appendChild(card);
     });
 }
-mostrarRiesgoPred(pred);
 
 
 function calcularRiesgoSemanal(diario) {
@@ -997,7 +1006,7 @@ function generarResumenEjecutivo(data) {
 
 
 async function cargarInformeMensual() {
-    const res = await fetch("http://localhost:8000/recomendaciones?dias=30");
+    const res = await fetch(`${window.API_BASE}/recomendaciones?dias=30`);
     const json = await res.json();
 
     const data = {

@@ -1,13 +1,18 @@
 from fastapi import FastAPI
 import pandas as pd
-import mysql.connector
 from datetime import datetime, timedelta
 from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import RandomForestRegressor
 import numpy as np
-import requests  # Lo dejo por si lo usas en otro sitio
 
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
+
+from config import REALTIME_CSV, ROOT
+from db import conectar
+
+FRONTEND = ROOT / "frontend"
 
 app = FastAPI()
 
@@ -21,24 +26,11 @@ app.add_middleware(
 
 
 # ---------------------------------------------------------
-#   CONEXIÓN A BASE DE DATOS
-# ---------------------------------------------------------
-def conectar():
-    return mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="Valentin.09",
-        database="clima",
-        port=3307
-    )
-
-
-# ---------------------------------------------------------
 #   HOME
 # ---------------------------------------------------------
 @app.get("/")
 def home():
-    return {"mensaje": "API de predicción futura funcionando"}
+    return FileResponse(FRONTEND / "index.html")
 
 
 # ---------------------------------------------------------
@@ -527,7 +519,7 @@ def apagar():
 def actual():
 
     try:
-        df = pd.read_csv("C:/ProyectoIA/datos/openmeteo_realtime.csv")
+        df = pd.read_csv(REALTIME_CSV)
     except Exception as e:
         return {"error": f"No se pudo leer el realtime: {str(e)}"}
 
@@ -554,3 +546,13 @@ def actual():
     )
 
     return salida
+
+
+if FRONTEND.joinpath("css").is_dir():
+    app.mount("/css", StaticFiles(directory=FRONTEND / "css"), name="css")
+if FRONTEND.joinpath("js").is_dir():
+    app.mount("/js", StaticFiles(directory=FRONTEND / "js"), name="js")
+if FRONTEND.joinpath("assets").is_dir():
+    app.mount("/assets", StaticFiles(directory=FRONTEND / "assets"), name="assets")
+if FRONTEND.joinpath("informes").is_dir():
+    app.mount("/informes", StaticFiles(directory=FRONTEND / "informes"), name="informes")
