@@ -234,16 +234,37 @@ body {
     background: linear-gradient(135deg, rgba(14,165,233,0.10), rgba(34,197,94,0.10));
     padding: 18px;
     border-radius: 16px;
-    border: 1px solid rgba(34,197,94,0.25); /* verde suave */
+    border: 1px solid rgba(34,197,94,0.25);
     box-shadow: 0 8px 22px rgba(0,0,0,0.35);
     display: flex;
     gap: 12px;
-    align-items: center;
+    align-items: flex-start;
+}
+
+.panel-ia-titulo {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #a7f3d0;
+}
+
+.panel-ia-card p {
+    margin: 0;
+    line-height: 1.45;
+    font-size: 14px;
+}
+
+.card-hint {
+    margin-top: 6px;
+    font-size: 11px;
+    color: rgba(226, 242, 255, 0.55);
 }
 
 .panel-ia-icono {
     font-size: 32px;
-    color: #3b82f6; /* azul cielo */
+    color: #3b82f6;
+    flex-shrink: 0;
 }
 
 /* ===========================

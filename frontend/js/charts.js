@@ -6,22 +6,33 @@ Chart.defaults.font.family = "Inter, Arial, sans-serif";
 Chart.defaults.borderColor = "rgba(255,255,255,0.08)";
 Chart.defaults.plugins.legend.labels.boxWidth = 12;
 
+window.chartInstances = window.chartInstances || [];
 
-// ===============================
-// FUNCIÓN PARA EXTRAER NÚMEROS DE TEXTOS CON EMOJIS
-// ===============================
+function destruirGraficas() {
+    window.chartInstances.forEach(c => c.destroy());
+    window.chartInstances = [];
+}
+
 function extraerNumero(texto) {
-    texto = texto.replace(",", "."); // ⭐ convertir coma → punto
+    if (typeof texto === "number") return texto;
+    texto = String(texto).replace(",", ".");
     const match = texto.match(/[-+]?\d*\.?\d+/);
     return match ? parseFloat(match[0]) : 0;
 }
 
+function escalaDinamica(valores, margen = 0.08) {
+    const nums = valores.filter(v => Number.isFinite(v));
+    if (!nums.length) return { min: 0, max: 1 };
+    const min = Math.min(...nums);
+    const max = Math.max(...nums);
+    const rango = max - min || Math.max(max * 0.1, 1);
+    return {
+        min: Math.max(0, min - rango * margen),
+        max: max + rango * margen,
+    };
+}
 
-// ===============================
-// FUNCIÓN PARA CREAR GRÁFICAS MODERNAS
-// ===============================
 function crearGraficaLinea(ctx, labels, data, colorBase, opcionesExtra = {}) {
-
     const colorLinea = colorBase;
     const colorFondo = colorBase.replace(")", ", 0.25)").replace("rgb", "rgba");
 
@@ -29,7 +40,7 @@ function crearGraficaLinea(ctx, labels, data, colorBase, opcionesExtra = {}) {
     gradient.addColorStop(0, colorFondo);
     gradient.addColorStop(1, "rgba(0,0,0,0)");
 
-    return new Chart(ctx, {
+    const chart = new Chart(ctx, {
         type: "line",
         data: {
             labels: labels,
@@ -42,7 +53,6 @@ function crearGraficaLinea(ctx, labels, data, colorBase, opcionesExtra = {}) {
                 pointBackgroundColor: colorLinea,
                 tension: 0.35,
                 fill: true,
-                order: 1
             }]
         },
         options: {
@@ -50,16 +60,20 @@ function crearGraficaLinea(ctx, labels, data, colorBase, opcionesExtra = {}) {
             maintainAspectRatio: false,
             plugins: {
                 legend: { display: false },
-                filler: { propagate: false },
-
-                // ⭐ AÑADIDO: TÍTULO DE LA GRÁFICA
                 title: {
                     display: true,
                     text: opcionesExtra.titulo || "",
                     color: "#e5e7eb",
                     font: { size: 16, weight: "bold" },
                     padding: { top: 10, bottom: 10 }
-                }
+                },
+                subtitle: opcionesExtra.subtitulo ? {
+                    display: true,
+                    text: opcionesExtra.subtitulo,
+                    color: "rgba(226,242,255,0.65)",
+                    font: { size: 11 },
+                    padding: { bottom: 8 }
+                } : undefined,
             },
             scales: {
                 x: {
@@ -72,57 +86,45 @@ function crearGraficaLinea(ctx, labels, data, colorBase, opcionesExtra = {}) {
             }
         }
     });
+
+    window.chartInstances.push(chart);
+    return chart;
 }
 
-
-// ===============================
-// CARGAR GRÁFICAS
-// ===============================
 function cargarGraficas(data) {
-    //const data = await getRecomendaciones();
+    destruirGraficas();
 
-    const labels = data.diario.map(d => d.fecha);
-    const et0 = data.diario.map(d => extraerNumero(d.informacion[0]));
-        console.log("📌 ET0 recibido por la gráfica:", et0);
-        console.log("📌 INFORMACION[0] bruto:", data.diario.map(d => d.informacion[0]));
-
-    const estres = data.diario.map(d => extraerNumero(d.informacion[1]));
-    const humedad = data.diario.map(d => extraerNumero(d.informacion[2]));
+    const diario = data.diario || [];
+    const labels = diario.map(d => d.fecha);
+    const et0 = diario.map(d => d.et0 ?? extraerNumero(d.informacion?.[0]));
+    const estres = diario.map(d => d.estres ?? extraerNumero(d.informacion?.[1]));
+    const humedad = diario.map(d => d.humedad ?? extraerNumero(d.informacion?.[2]));
 
     const ctx1 = document.getElementById("chart-et0").getContext("2d");
     const ctx2 = document.getElementById("chart-estres").getContext("2d");
     const ctx3 = document.getElementById("chart-humedad").getContext("2d");
 
-    // ET0 → escala fija 0–50
+    const escalaEt0 = escalaDinamica(et0);
     crearGraficaLinea(ctx1, labels, et0, "rgb(74, 222, 128)", {
         titulo: "ET0",
-        y: { min: 0, max: 50 }
+        subtitulo: "mm/día · hoy + predicción 7 días",
+        y: { min: escalaEt0.min, max: escalaEt0.max }
     });
 
-    // Estrés térmico → escala automática
+    const escalaEstres = escalaDinamica(estres);
     crearGraficaLinea(ctx2, labels, estres, "rgb(249, 115, 22)", {
-        titulo: "Estrés térmico"
+        titulo: "Estrés térmico",
+        subtitulo: "Índice medio diario",
+        y: { min: escalaEstres.min, max: escalaEstres.max }
     });
 
-    // 1. Convertimos los valores de humedad a números
-    const valoresHumedad = humedad.map(v => parseFloat(v));
-
-    // 2. Calculamos el mínimo y máximo real de la serie
-    const minH = Math.min(...valoresHumedad);
-    const maxH = Math.max(...valoresHumedad);
-
-    // 3. Añadimos un pequeño margen visual
-    const margen = 2;
-
-    const minEscala = Math.max(0, minH - margen);
-    const maxEscala = Math.min(100, maxH + margen);
-
-    // 4. Creamos la gráfica con escala dinámica
+    const escalaHum = escalaDinamica(humedad, 0.05);
     crearGraficaLinea(ctx3, labels, humedad, "rgb(96, 165, 250)", {
         titulo: "Humedad",
-        y: { min: minEscala, max: maxEscala }
+        subtitulo: "% media diaria",
+        y: {
+            min: Math.max(0, escalaHum.min),
+            max: Math.min(100, escalaHum.max)
+        }
     });
-
 }
-
-

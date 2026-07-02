@@ -9,9 +9,30 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
-from config import LAT, LON, REALTIME_CSV, ROOT
+from config import DATASET_FINAL_CSV, LAT, LON, REALTIME_CSV, ROOT
 from db import conectar
 from openmeteo_transform import calc_estres_termico
+
+
+def _metricas_dia(ts) -> dict | None:
+    """Agregados del día actual (misma escala que predicción/gráficas)."""
+    hoy = pd.to_datetime(ts).date()
+    if not DATASET_FINAL_CSV.exists():
+        return None
+
+    df = pd.read_csv(DATASET_FINAL_CSV)
+    df["timestamp"] = pd.to_datetime(df["timestamp"])
+    df = df[df["timestamp"].dt.date == hoy]
+    if df.empty:
+        return None
+
+    df = df.copy()
+    df["estres"] = calc_estres_termico(df)
+    return {
+        "et0_dia": round(float(df["et0_fao_evapotranspiration"].sum()), 2),
+        "estres_termico": round(float(df["estres"].mean()), 2),
+        "humedad_media": round(float(df["relative_humidity_2m"].mean()), 1),
+    }
 
 FRONTEND = ROOT / "frontend"
 
@@ -273,8 +294,8 @@ def recomendaciones(dias: int = 7):
 
         prev = pred[i - 1] if i > 0 else None
 
-        # INFORMACIÓN
-        info.append(f"{round(et0, 2)}")
+        # INFORMACIÓN (etiquetas claras para UI y gráficas)
+        info.append(f"🌿 ET0: {round(et0, 2)} mm/día")
         info.append(f"🟠 Estrés térmico: {round(estres, 2)}")
         info.append(f"💧 Humedad: {round(humedad, 2)}%")
 
@@ -290,8 +311,6 @@ def recomendaciones(dias: int = 7):
                 info.append("⬇️ Humedad en descenso.")
 
         info = info[:3]
-
-        # RECOMENDACIONES
         if et0 > 4:
             recs.append("🔴 ET0 muy alta → aumentar riego.")
         elif et0 > 2:
@@ -546,10 +565,11 @@ def actual():
         return {"error": "El archivo realtime está vacío"}
 
     row = df.iloc[-1]
+    ts = row["timestamp"]
 
     salida = {
-        "timestamp": str(row["timestamp"]),
-        "et0_actual": float(row["et0_fao_evapotranspiration"]),
+        "timestamp": str(ts),
+        "et0_hora": round(float(row["et0_fao_evapotranspiration"]), 2),
         "temperatura": float(row["temperature_2m"]),
         "humedad": float(row["relative_humidity_2m"]),
         "radiacion": float(row["shortwave_radiation"]),
@@ -560,7 +580,8 @@ def actual():
         "precipitacion": float(row["precipitation"]),
     }
 
-    salida["estres_termico"] = round(
+    # Estrés instantáneo (solo referencia; escala distinta al promedio diario)
+    salida["estres_instantaneo"] = round(
         float(
             calc_estres_termico(
                 pd.DataFrame(
@@ -576,6 +597,20 @@ def actual():
         ),
         2,
     )
+
+    # Métricas diarias (misma escala que gráficas y predicción)
+    metricas = _metricas_dia(ts)
+    if metricas:
+        salida["et0_dia"] = metricas["et0_dia"]
+        salida["estres_termico"] = metricas["estres_termico"]
+        salida["humedad_dia"] = metricas["humedad_media"]
+    else:
+        salida["et0_dia"] = salida["et0_hora"]
+        salida["estres_termico"] = salida["estres_instantaneo"]
+        salida["humedad_dia"] = salida["humedad"]
+
+    # Compatibilidad con frontend previo
+    salida["et0_actual"] = salida["et0_dia"]
 
     return salida
 

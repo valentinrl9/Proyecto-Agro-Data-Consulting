@@ -70,7 +70,7 @@ function limpiarValor(texto) {
     return match ? match[0] : texto;
 }
 
-function crearTarjeta(titulo, valor, tipo) {
+function crearTarjeta(titulo, valor, tipo, hint = "") {
     const card = document.createElement("div");
     card.classList.add("card", `card-${tipo}`);
 
@@ -92,9 +92,78 @@ function crearTarjeta(titulo, valor, tipo) {
             <span class="card-icon">${iconos[tipo] || "📊"}</span>
             ${titulo}: <strong>${valor}</strong>
         </div>
+        ${hint ? `<div class="card-hint">${hint}</div>` : ""}
     `;
 
     return card;
+}
+
+
+function prepararSerieGrafica(actual, pred) {
+    const serie = [...pred.diario];
+    if (actual && actual.et0_dia != null) {
+        serie.unshift({
+            fecha: "Hoy",
+            et0: actual.et0_dia,
+            estres: actual.estres_termico,
+            humedad: actual.humedad_dia ?? actual.humedad,
+        });
+    }
+    return serie;
+}
+
+
+function generarConsejosAgricultor(actual, pred) {
+    const hoy = pred.diario[0] || {};
+    const et0Hoy = actual.et0_dia ?? actual.et0_actual ?? 0;
+    const et0PredMax = Math.max(...pred.diario.map(d => d.et0 || 0));
+    const lluviaSemana = pred.diario.reduce((acc, d) => acc + (d.lluvia || 0), 0);
+    const estres = actual.estres_termico ?? 0;
+    const humedadHoy = hoy.humedad ?? actual.humedad_dia ?? actual.humedad;
+    const temp = actual.temperatura ?? 0;
+
+    let riego;
+    if (lluviaSemana > 8) {
+        riego = `Se previenen ${lluviaSemana.toFixed(1)} mm esta semana. Reduce riego y revisa drenaje para evitar encharcamiento.`;
+    } else if (et0PredMax > 4 || et0Hoy > 3.5) {
+        riego = `ET0 acumulado hoy ${et0Hoy.toFixed(1)} mm/día. Programa riego en la tarde (18-20 h); evita regar con ${temp.toFixed(0)}°C al mediodía.`;
+    } else if (et0Hoy > 2) {
+        riego = `Demanda hídrica moderada (${et0Hoy.toFixed(1)} mm/día). Riego normal; comprueba humedad de suelo antes de regar.`;
+    } else {
+        riego = `Baja evapotranspiración (${et0Hoy.toFixed(1)} mm/día). Riego ligero o nulo; prioriza ventilación si la humedad supera el 85%.`;
+    }
+
+    let ventilacion;
+    if (estres > 110) {
+        ventilacion = `Estrés medio hoy ${estres.toFixed(0)} (alto). Abre ventilaciones al máximo entre 11 h y 16 h y valora sombreo temporal.`;
+    } else if (estres > 95) {
+        ventilacion = `Estrés ${estres.toFixed(0)} en subida. Aumenta ventilación en horas centrales; evita cierres completos con ${temp.toFixed(0)}°C.`;
+    } else if (hoy.estres > estres + 5) {
+        ventilacion = `El estrés subirá en los próximos días (hasta ~${hoy.estres.toFixed(0)}). Prepasa ventilación y revisa mallas de sombreo.`;
+    } else {
+        ventilacion = `Estrés térmico controlado (${estres.toFixed(0)}). Mantén ventilación programada; revisa alcanzar 60-70% de apertura al mediodía.`;
+    }
+
+    let humedad;
+    if (humedadHoy > 90 || (humedadHoy > 85 && lluviaSemana > 3)) {
+        humedad = `Humedad ${humedadHoy.toFixed(0)}% + lluvia prevista. Ventila al amanecer y revisa brotes bajos por botrytis u oidio.`;
+    } else if (humedadHoy > 85) {
+        humedad = `Humedad alta (${humedadHoy.toFixed(0)}%). Evita riego foliar, no cierres hermético al atardecer y inspecciona hojas senescentes.`;
+    } else if (humedadHoy < 45) {
+        humedad = `Ambiente seco (${humedadHoy.toFixed(0)}%). Riesgo en brotes tiernos; riego ligero o nebulización breve al amanecer.`;
+    } else {
+        humedad = `Humedad en rango adecuado (${humedadHoy.toFixed(0)}%). Mantén ventilación al atardecer para evitar condensación nocturna.`;
+    }
+
+    return { riego, ventilacion, humedad };
+}
+
+
+function mostrarConsejosAgricultor(actual, pred) {
+    const c = generarConsejosAgricultor(actual, pred);
+    document.getElementById("ia-riego").innerText = c.riego;
+    document.getElementById("ia-ventilacion").innerText = c.ventilacion;
+    document.getElementById("ia-humedad").innerText = c.humedad;
 }
 
 
@@ -141,9 +210,19 @@ async function cargarDashboard() {
     const cards = document.getElementById("cards-container");
     cards.innerHTML = ""; // limpiamos
 
-    cards.appendChild(crearTarjeta("ET0 actual", data.et0_actual.toFixed(2), "et0"));
-    cards.appendChild(crearTarjeta("Estrés térmico", data.estres_termico, "estres"));
-    cards.appendChild(crearTarjeta("Humedad", data.humedad + "%", "humedad"));
+    cards.appendChild(crearTarjeta(
+        "ET0 acumulado hoy",
+        `${Number(data.et0_dia ?? data.et0_actual).toFixed(1)} mm/día`,
+        "et0",
+        data.et0_hora != null ? `Última hora: ${Number(data.et0_hora).toFixed(2)} mm/h` : ""
+    ));
+    cards.appendChild(crearTarjeta(
+        "Estrés térmico (media hoy)",
+        Number(data.estres_termico).toFixed(1),
+        "estres",
+        data.estres_instantaneo != null ? `Pico instantáneo: ${Number(data.estres_instantaneo).toFixed(0)}` : ""
+    ));
+    cards.appendChild(crearTarjeta("Humedad actual", data.humedad + "%", "humedad"));
 
     cards.appendChild(crearTarjeta("Temperatura", data.temperatura + "°C", "temp"));
     cards.appendChild(crearTarjeta("Radiación", data.radiacion + " W/m²", "rad"));
@@ -170,109 +249,12 @@ async function cargarDashboard() {
         d.riesgo = Math.round(estres_norm * 0.6 + humedad_norm * 0.4);
     });
 
-    // Guardar datos para gráficas
-    window.DATA_GRAFICAS = pred.diario;
+    // Guardar datos para gráficas (hoy real + predicción)
+    const serieGrafica = prepararSerieGrafica(data, pred);
+    window.DATA_GRAFICAS = serieGrafica;
+    cargarGraficas({ diario: serieGrafica });
 
-    // Cargar gráficas
-    cargarGraficas(pred);
-
-
-
-    function tendenciaRegresionHumedad(pred) {
-    const valores = pred.diario.map((d, i) => ({
-        x: i,
-        y: parseFloat(d.humedad) // humedad predicha
-    }));
-
-    const n = valores.length;
-    if (n < 2) return 0;
-
-    const sumX = valores.reduce((a, v) => a + v.x, 0);
-    const sumY = valores.reduce((a, v) => a + v.y, 0);
-    const sumXY = valores.reduce((a, v) => a + v.x * v.y, 0);
-    const sumX2 = valores.reduce((a, v) => a + v.x * v.x, 0);
-
-    // Pendiente de la regresión
-    const pendiente = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
-
-    return pendiente;
-}
-const pendiente = tendenciaRegresionHumedad(pred);
-
-let mensaje = "";
-
-if (pendiente > 0.2) {
-    mensaje = "La humedad muestra una tendencia al alza.";
-} else if (pendiente < -0.2) {
-    mensaje = "La humedad está descendiendo según la IA.";
-} else {
-    mensaje = "La humedad se mantiene estable esta semana.";
-}
-
-document.getElementById("ia-tendencia").innerText = mensaje;
-
-    
-    // IA avanzada
-    const estresHoy = parseFloat(pred.diario[0].informacion[1]);
-    const estresManana = parseFloat(pred.diario[1].informacion[1]);
-
-    document.getElementById("ia-prediccion").innerText =
-        estresManana > estresHoy
-            ? "La IA prevé un aumento del estrés térmico estos días."
-            : "La IA anticipa un descenso del estrés térmico estos días.";
-
-    const humedadHoy = parseFloat(pred.diario[0].informacion[2]);
-    const humedadManana = parseFloat(pred.diario[1].informacion[2]);
-
-    // document.getElementById("ia-tendencia").innerText =
-    //     humedadManana > humedadHoy
-    //         ? "La humedad muestra una tendencia al alza."
-    //         : "La humedad está descendiendo según la IA.";
-
-// 1. Riesgo acumulado (tu cálculo original)
-const riesgoAcumulado = Math.round(
-    pred.diario.reduce((acc, d) => acc + (parseFloat(d.riesgo) || 0), 0)
-);
-
-// 2. Tendencia por regresión del riesgo
-function tendenciaRegresionRiesgo(pred) {
-    const valores = pred.diario.map((d, i) => ({
-        x: i,
-        y: parseFloat(d.riesgo) || 0
-    }));
-
-    const n = valores.length;
-    if (n < 2) return 0;
-
-    const sumX = valores.reduce((a, v) => a + v.x, 0);
-    const sumY = valores.reduce((a, v) => a + v.y, 0);
-    const sumXY = valores.reduce((a, v) => a + v.x * v.y, 0);
-    const sumX2 = valores.reduce((a, v) => a + v.x * v.x, 0);
-
-    const pendiente = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
-
-    return pendiente;
-}
-
-// 3. Interpretación de la tendencia
-const pendienteRiesgo = tendenciaRegresionRiesgo(pred);
-
-let mensajeRiesgo = "";
-
-if (pendienteRiesgo > 0.3) {
-    mensajeRiesgo = "El riesgo acumulado muestra una tendencia al alza.";
-} else if (pendienteRiesgo < -0.3) {
-    mensajeRiesgo = "El riesgo acumulado está descendiendo según la IA.";
-} else {
-    mensajeRiesgo = "El riesgo acumulado se mantiene estable.";
-}
-
-// 4. Mostrar todo en el panel IA
-document.getElementById("ia-analisis").innerText =
-    "La IA detecta un riesgo acumulado de " +
-    riesgoAcumulado +
-    " puntos esta semana. " +
-    mensajeRiesgo;
+    mostrarConsejosAgricultor(data, pred);
 
     // Resto del dashboard
     mostrarRecomendaciones(pred.diario[0]);
