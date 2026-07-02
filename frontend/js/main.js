@@ -276,10 +276,14 @@ document.getElementById("ia-analisis").innerText =
 
     // Resto del dashboard
     mostrarRecomendaciones(pred.diario[0]);
-    const alertasHoy = generarAlertas(pred.diario[0]);
-    mostrarAlertas(alertasHoy);
+    await cargarAlertasBackend();
     mostrarRiesgo(pred.diario);
     cargarInformeMensual();
+
+    const footer = document.getElementById("footer-actualizacion");
+    if (footer && data.timestamp) {
+        footer.textContent = `Fuente: Open-Meteo · Actualizado: ${data.timestamp} · Agro Data Consulting`;
+    }
     } catch (err) {
         console.error("Error cargando dashboard:", err);
         const cards = document.getElementById("cards-container");
@@ -290,19 +294,6 @@ document.getElementById("ia-analisis").innerText =
 }
 
 
-
-
-
-// ===============================
-// BOTÓN APAGAR SISTEMA
-// ===============================
-document.getElementById("btn-apagar").addEventListener("click", () => {
-    const confirmar = confirm("⚠️ ¿Seguro que deseas apagar el sistema?\nSe detendrán las tareas automáticas de actualización 24h.");
-    if (confirmar) {
-        fetch(apiUrl("/apagar"), { method: "POST" })
-            .then(() => window.close());
-    }
-});
 
 
 
@@ -533,8 +524,78 @@ function mostrarRiesgo(diario) {
 
 
 // ===============================
-// ALERTAS
+// ALERTAS (desde API /alertas)
 // ===============================
+
+function colorAlerta(texto) {
+    if (texto.includes("🔴")) return "rojo";
+    if (texto.includes("🟠")) return "naranja";
+    if (texto.includes("🟡")) return "amarillo";
+    if (texto.includes("🟣")) return "morado";
+    if (texto.includes("🔥")) return "naranja";
+    if (texto.includes("🔮")) return "azul";
+    return "verde";
+}
+
+async function cargarAlertasBackend() {
+    const cont = document.getElementById("alertas-container");
+    try {
+        const data = await getAlertas();
+        mostrarAlertasBackend(data);
+    } catch (err) {
+        if (cont) {
+            cont.innerHTML = `<p class="sin-alertas">No se pudieron cargar las alertas.<br><small>${err.message}</small></p>`;
+        }
+    }
+}
+
+function mostrarAlertasBackend(data) {
+    const cont = document.getElementById("alertas-container");
+    cont.innerHTML = "";
+
+    const secciones = [
+        { titulo: "📡 Alertas reales (últimos 7 días)", items: data.alertas_reales || [] },
+        { titulo: "🔮 Alertas de predicción (próximos 7 días)", items: data.alertas_prediccion || [] },
+        { titulo: "🔗 Alertas combinadas", items: data.alertas_combinadas || [] },
+    ];
+
+    const riesgo = data.riesgo_acumulado || {};
+    const riesgoItems = [
+        ...(riesgo.real || []),
+        ...(riesgo.prediccion || []),
+        ...(riesgo.combinado || []),
+    ];
+    if (riesgoItems.length) {
+        secciones.push({ titulo: "🔥 Riesgo acumulado", items: riesgoItems });
+    }
+
+    let total = 0;
+    secciones.forEach(sec => {
+        if (!sec.items.length) return;
+        total += sec.items.length;
+
+        const grupo = document.createElement("div");
+        grupo.className = "alertas-grupo";
+
+        const titulo = document.createElement("h3");
+        titulo.className = "alertas-grupo-titulo";
+        titulo.textContent = sec.titulo;
+        grupo.appendChild(titulo);
+
+        sec.items.forEach(texto => {
+            const div = document.createElement("div");
+            div.classList.add("alerta", `alerta-${colorAlerta(texto)}`);
+            div.innerHTML = `<strong>${texto}</strong>`;
+            grupo.appendChild(div);
+        });
+
+        cont.appendChild(grupo);
+    });
+
+    if (total === 0) {
+        cont.innerHTML = "<p class='sin-alertas'>No hay alertas activas.</p>";
+    }
+}
 
 function generarAlertas(dia) {
     const alertas = [];
@@ -543,15 +604,8 @@ function generarAlertas(dia) {
     const estres = extraerNumero(dia.informacion[1]);
     const humedad = extraerNumero(dia.informacion[2]);
 
-    // ============================
-    // ALERTAS INDIVIDUALES
-    // ============================
-
-    // ET0
     if (et0 < 0.2) {
         alertas.push({
-            tipo: "et0",
-            nivel: "bajo",
             prioridad: 4,
             color: "verde",
             icono: "🌿",
@@ -559,8 +613,6 @@ function generarAlertas(dia) {
         });
     } else if (et0 > 0.8) {
         alertas.push({
-            tipo: "et0",
-            nivel: "alto",
             prioridad: 2,
             color: "naranja",
             icono: "⚠️",
@@ -568,11 +620,8 @@ function generarAlertas(dia) {
         });
     }
 
-    // Estrés térmico
     if (estres > 110) {
         alertas.push({
-            tipo: "estres",
-            nivel: "critico",
             prioridad: 1,
             color: "rojo",
             icono: "🔥",
@@ -580,8 +629,6 @@ function generarAlertas(dia) {
         });
     } else if (estres > 100) {
         alertas.push({
-            tipo: "estres",
-            nivel: "alto",
             prioridad: 2,
             color: "naranja",
             icono: "⚠️",
@@ -589,11 +636,8 @@ function generarAlertas(dia) {
         });
     }
 
-    // Humedad
     if (humedad < 40) {
         alertas.push({
-            tipo: "humedad",
-            nivel: "medio",
             prioridad: 3,
             color: "amarillo",
             icono: "🌡️",
@@ -601,8 +645,6 @@ function generarAlertas(dia) {
         });
     } else if (humedad > 90) {
         alertas.push({
-            tipo: "humedad",
-            nivel: "medio",
             prioridad: 3,
             color: "azul",
             icono: "💧",
@@ -610,15 +652,8 @@ function generarAlertas(dia) {
         });
     }
 
-    // ============================
-    // ALERTAS COMBINADAS INTELIGENTES
-    // ============================
-
-    // ET0 baja + estrés alto
     if (et0 < 0.2 && estres > 100) {
         alertas.push({
-            tipo: "combinada",
-            nivel: "alto",
             prioridad: 1,
             color: "naranja",
             icono: "⚠️",
@@ -626,11 +661,8 @@ function generarAlertas(dia) {
         });
     }
 
-    // Humedad alta + estrés bajo
     if (humedad > 85 && estres < 90) {
         alertas.push({
-            tipo: "combinada",
-            nivel: "medio",
             prioridad: 3,
             color: "azul",
             icono: "💧",
@@ -638,34 +670,8 @@ function generarAlertas(dia) {
         });
     }
 
-    // ============================
-    // ORDENAR POR PRIORIDAD
-    // ============================
     alertas.sort((a, b) => a.prioridad - b.prioridad);
-
     return alertas;
-}
-
-function mostrarAlertas(alertas) {
-    const cont = document.getElementById("alertas-container");
-    cont.innerHTML = "";
-
-    if (alertas.length === 0) {
-        cont.innerHTML = "<p class='sin-alertas'>No hay alertas para hoy.</p>";
-        return;
-    }
-
-    alertas.forEach(a => {
-        const div = document.createElement("div");
-        div.classList.add("alerta", `alerta-${a.color}`);
-
-        div.innerHTML = `
-            <span class="alerta-icono">${a.icono}</span>
-            <strong>${a.mensaje}</strong>
-        `;
-
-        cont.appendChild(div);
-    });
 }
 
 
@@ -745,8 +751,8 @@ function generarInformePDF(data) {
 
     cont.innerHTML = `
         <div class="informe-header">
-            <div class="informe-titulo">📊 Informe Mensual Agronómico</div>
-            <div class="informe-subtitulo">Generado automáticamente por el Dashboard Agronómico Inteligente</div>
+            <div class="informe-titulo">📊 Informe Mensual · Agro Data Consulting</div>
+            <div class="informe-subtitulo">Generado automáticamente · El Ejido, Almería</div>
         </div>
 
         <div class="informe-seccion">

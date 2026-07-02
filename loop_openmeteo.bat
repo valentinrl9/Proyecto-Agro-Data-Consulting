@@ -1,3 +1,0 @@
-@echo off
-echo [AVISO] Pentaho eliminado. Usando loop Python...
-call "%~dp0loop_etl.bat"

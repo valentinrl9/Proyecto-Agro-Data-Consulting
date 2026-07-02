@@ -11,17 +11,23 @@ function apiUrl(path) {
     return `${window.API_BASE}${path}`;
 }
 
+async function fetchJson(path) {
+    const res = await fetch(apiUrl(path));
+    const data = await res.json();
+    if (!res.ok) {
+        throw new Error(data.detail || data.error || `Error HTTP ${res.status}`);
+    }
+    return data;
+}
+
 async function getRecomendaciones() {
-    const res = await fetch(apiUrl("/recomendaciones?dias=7"));
-    return await res.json();
+    return fetchJson("/recomendaciones?dias=7");
 }
 
 async function getAlertas() {
-    const res = await fetch(apiUrl("/alertas"));
-    return await res.json();
+    return fetchJson("/alertas");
 }
 
-async function getInformeMensual() {
-    const res = await fetch(apiUrl("/informe_mensual"));
-    return await res.json();
+async function getHealth() {
+    return fetchJson("/health");
 }

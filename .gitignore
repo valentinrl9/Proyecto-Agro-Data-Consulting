@@ -24,3 +24,6 @@ data/*.csv
 # Sistema
 .DS_Store
 Thumbs.db
+
+# Secretos / tokens sueltos
+eyJ*.txt

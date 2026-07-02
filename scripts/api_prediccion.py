@@ -9,8 +9,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
-from config import REALTIME_CSV, ROOT
+from config import LAT, LON, REALTIME_CSV, ROOT
 from db import conectar
+from openmeteo_transform import calc_estres_termico
 
 FRONTEND = ROOT / "frontend"
 
@@ -31,6 +32,31 @@ app.add_middleware(
 @app.get("/")
 def home():
     return FileResponse(FRONTEND / "index.html")
+
+
+@app.get("/health")
+def health():
+    """Estado del servicio para monitorización y despliegue."""
+    result = {
+        "status": "ok",
+        "mysql": False,
+        "realtime_csv": REALTIME_CSV.exists(),
+        "ubicacion": {"lat": LAT, "lon": LON},
+    }
+    try:
+        conn = conectar()
+        cur = conn.cursor()
+        cur.execute("SELECT COUNT(*) FROM clima_diario")
+        result["mysql"] = True
+        result["clima_diario_filas"] = cur.fetchone()[0]
+        cur.close()
+        conn.close()
+    except Exception as exc:
+        result["status"] = "degraded"
+        result["mysql_error"] = str(exc)
+    if not result["mysql"]:
+        result["status"] = "degraded"
+    return result
 
 
 # ---------------------------------------------------------
@@ -508,18 +534,9 @@ def alertas():
         }
     }
 
-import os
-import signal
-
-@app.post("/apagar")
-def apagar():
-    os.kill(os.getpid(), signal.SIGTERM)
-    return {"mensaje": "API apagada"}
-
 
 @app.get("/actual")
 def actual():
-
     try:
         df = pd.read_csv(REALTIME_CSV)
     except Exception as e:
@@ -540,11 +557,24 @@ def actual():
         "direccion_viento": float(row["wind_direction_10m"]),
         "presion": float(row["pressure_msl"]),
         "nubes": float(row["cloud_cover"]),
-        "precipitacion": float(row["precipitation"])
+        "precipitacion": float(row["precipitation"]),
     }
 
     salida["estres_termico"] = round(
-        row["temperature_2m"] * (1 - row["relative_humidity_2m"] / 100), 2
+        float(
+            calc_estres_termico(
+                pd.DataFrame(
+                    [
+                        {
+                            "temperature_2m": row["temperature_2m"],
+                            "shortwave_radiation": row["shortwave_radiation"],
+                            "wind_speed_10m": row["wind_speed_10m"],
+                        }
+                    ]
+                )
+            ).iloc[0]
+        ),
+        2,
     )
 
     return salida

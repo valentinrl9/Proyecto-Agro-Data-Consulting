@@ -1,3 +1,0 @@
-@echo off
-echo [AVISO] Pentaho eliminado. Usando pipeline Python...
-call "%~dp0run_etl.bat"
