@@ -196,11 +196,6 @@ function mostrarVista(id) {
 // ===============================
 async function cargarDashboard(opciones = {}) {
     const { silencioso = false } = opciones;
-    const syncEl = document.getElementById("footer-sync");
-    if (silencioso && syncEl) {
-        syncEl.textContent = "Actualizando datos…";
-        syncEl.classList.add("actualizando");
-    }
 
     try {
     const data = await fetch(apiUrl("/actual"))
@@ -281,15 +276,8 @@ async function cargarDashboard(opciones = {}) {
     if (footer && data.timestamp) {
         footer.textContent = `Fuente: Open-Meteo · Datos clima: ${data.timestamp} · Agro Data Consulting`;
     }
-    if (silencioso && syncEl) {
-        syncEl.classList.remove("actualizando");
-        syncEl.textContent = `Dashboard actualizado · ${new Date().toLocaleTimeString("es-ES", { hour: "2-digit", minute: "2-digit" })}`;
-    }
     } catch (err) {
         console.error("Error cargando dashboard:", err);
-        if (syncEl) {
-            syncEl.classList.remove("actualizando");
-        }
         if (!silencioso) {
         const cards = document.getElementById("cards-container");
         if (cards) {
@@ -301,10 +289,9 @@ async function cargarDashboard(opciones = {}) {
 
 
 // ===============================
-// SINCRONIZACIÓN CON ETL (cada 15 min)
+// SINCRONIZACIÓN CON ETL (cada 15 min, en :00 :15 :30 :45)
 // ===============================
 const ETL_ESPERA_TRAS_CICLO_MS = 5000;
-const ETL_POLL_MS = 20000;
 
 let ultimoEtlExitosoVisto = null;
 let refrescoDashboardEnCurso = false;
@@ -322,73 +309,113 @@ function formatearHora(iso) {
     });
 }
 
-function actualizarTextoSyncEtl(status) {
+/** Milisegundos hasta el próximo slot :00/:15/:30/:45 + margen ETL. */
+function msHastaProximoSlotEtl() {
+    const ahora = new Date();
+    const min = ahora.getMinutes();
+    const seg = ahora.getSeconds();
+    const ms = ahora.getMilliseconds();
+
+    let minsHasta = 15 - (min % 15);
+    if (minsHasta === 15) minsHasta = 0;
+
+    // Si ya pasó el slot hace >2 min, ir al siguiente cuarto de hora
+    if (minsHasta === 0 && seg > 120) {
+        minsHasta = 15;
+    }
+
+    const espera = minsHasta * 60_000 - seg * 1000 - ms + ETL_ESPERA_TRAS_CICLO_MS;
+    return Math.max(ETL_ESPERA_TRAS_CICLO_MS, espera);
+}
+
+function actualizarTextoSyncEtl(status, dashboardActualizado = false) {
     const syncEl = document.getElementById("footer-sync");
     if (!syncEl) return;
 
     const intervalMin = status.interval_minutes || 15;
+    let texto;
+
     if (!status.last_success) {
-        syncEl.textContent = `ETL: sin registro aún · comprobación cada ${intervalMin} min`;
-        return;
+        texto = `ETL: sin registro aún · refresco cada ${intervalMin} min`;
+    } else {
+        const proximo = new Date(new Date(status.last_success).getTime() + intervalMin * 60 * 1000);
+        texto = `Último ETL: ${formatearHora(status.last_success)} · próximo ~${formatearHora(proximo.toISOString())}`;
     }
 
-    const proximo = new Date(new Date(status.last_success).getTime() + intervalMin * 60 * 1000);
-    syncEl.textContent =
-        `Último ETL: ${formatearHora(status.last_success)} · próximo ~${formatearHora(proximo.toISOString())}`;
+    if (dashboardActualizado) {
+        const hora = new Date().toLocaleTimeString("es-ES", { hour: "2-digit", minute: "2-digit" });
+        texto += ` · Dashboard ${hora}`;
+    }
+
+    syncEl.textContent = texto;
+    syncEl.classList.remove("actualizando");
 }
 
-function programarRefrescoTrasEtl(lastSuccessIso, intervalSeconds) {
+function programarSiguienteRefrescoEtl() {
     if (timerProximoRefresco) {
         clearTimeout(timerProximoRefresco);
     }
-    const intervalMs = (intervalSeconds || 900) * 1000;
-    const objetivo = new Date(lastSuccessIso).getTime() + intervalMs + ETL_ESPERA_TRAS_CICLO_MS;
-    const espera = Math.max(ETL_ESPERA_TRAS_CICLO_MS, objetivo - Date.now());
-
-    timerProximoRefresco = setTimeout(async () => {
-        await refrescarDashboardTrasEtl("programado");
-        if (ultimoEtlExitosoVisto) {
-            programarRefrescoTrasEtl(ultimoEtlExitosoVisto, intervalSeconds);
-        }
-    }, espera);
+    timerProximoRefresco = setTimeout(() => cicloRefrescoEtl(), msHastaProximoSlotEtl());
 }
 
 async function refrescarDashboardTrasEtl(motivo) {
     if (refrescoDashboardEnCurso) return;
     refrescoDashboardEnCurso = true;
+    const syncEl = document.getElementById("footer-sync");
+    if (syncEl) {
+        syncEl.textContent = "Actualizando datos…";
+        syncEl.classList.add("actualizando");
+    }
     try {
         await cargarDashboard({ silencioso: true });
+        const status = await getEtlStatus();
+        actualizarTextoSyncEtl(status, true);
     } catch (err) {
         console.warn(`Refresco dashboard (${motivo}) falló:`, err);
+        if (syncEl) syncEl.classList.remove("actualizando");
     } finally {
         refrescoDashboardEnCurso = false;
+        programarSiguienteRefrescoEtl();
     }
 }
 
-async function comprobarEstadoEtl() {
+async function cicloRefrescoEtl() {
     try {
         const status = await getEtlStatus();
-        actualizarTextoSyncEtl(status);
-
         const exito = status.last_success;
-        if (!exito) return;
 
-        if (ultimoEtlExitosoVisto && exito !== ultimoEtlExitosoVisto) {
-            setTimeout(() => refrescarDashboardTrasEtl("etl-nuevo"), ETL_ESPERA_TRAS_CICLO_MS);
+        if (exito && ultimoEtlExitosoVisto && exito !== ultimoEtlExitosoVisto) {
+            ultimoEtlExitosoVisto = exito;
+            await refrescarDashboardTrasEtl("etl-nuevo");
+            return;
         }
 
-        if (!ultimoEtlExitosoVisto || exito !== ultimoEtlExitosoVisto) {
+        if (exito && !ultimoEtlExitosoVisto) {
             ultimoEtlExitosoVisto = exito;
-            programarRefrescoTrasEtl(exito, status.interval_seconds);
+            actualizarTextoSyncEtl(status);
+        } else if (exito) {
+            // Refresco programado cada 15 min aunque el timestamp ETL no cambie
+            await refrescarDashboardTrasEtl("programado");
+            return;
+        } else {
+            actualizarTextoSyncEtl(status);
         }
     } catch (err) {
         console.warn("No se pudo consultar /etl/status:", err);
     }
+    programarSiguienteRefrescoEtl();
 }
 
 function iniciarSincronizacionEtl() {
-    comprobarEstadoEtl();
-    setInterval(comprobarEstadoEtl, ETL_POLL_MS);
+    getEtlStatus()
+        .then(status => {
+            if (status.last_success) {
+                ultimoEtlExitosoVisto = status.last_success;
+            }
+            actualizarTextoSyncEtl(status);
+        })
+        .catch(() => {});
+    programarSiguienteRefrescoEtl();
 }
 
 
