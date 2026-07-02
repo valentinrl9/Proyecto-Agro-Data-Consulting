@@ -404,6 +404,23 @@ body {
     font-size: 12px;
     color: rgba(226, 242, 255, 0.55);
     border-top: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.footer-sync {
+    color: rgba(167, 243, 208, 0.75);
+}
+
+.footer-sync.actualizando {
+    color: #5eead4;
+    animation: pulse-sync 1s ease-in-out infinite;
+}
+
+@keyframes pulse-sync {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
 }
 
 .sin-alertas {

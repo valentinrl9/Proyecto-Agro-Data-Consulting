@@ -18,6 +18,8 @@ DATOS_DIR = ROOT / "datos"
 HISTORICO_CSV = DATOS_DIR / "openmeteo_historico.csv"
 REALTIME_CSV = DATOS_DIR / "openmeteo_realtime.csv"
 DATASET_FINAL_CSV = DATOS_DIR / "openmeteo_dataset_final.csv"
+ETL_LAST_RUN_JSON = DATOS_DIR / "etl_last_run.json"
+ETL_INTERVAL_SECONDS = int(os.getenv("ETL_INTERVAL_SECONDS", "900"))
 
 LAT = float(os.getenv("OPENMETEO_LAT", "36.77"))
 LON = float(os.getenv("OPENMETEO_LON", "-2.81"))

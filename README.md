@@ -75,6 +75,7 @@ docker compose --env-file ../.env up -d --build
 |----------|-------------|
 | `GET /` | Dashboard |
 | `GET /health` | Estado MySQL + CSV realtime |
+| `GET /etl/status` | Última ejecución ETL (sync dashboard) |
 | `GET /actual` | Datos en tiempo real |
 | `GET /prediccion?dias=7` | Predicción ML |
 | `GET /recomendaciones?dias=7` | Recomendaciones agronómicas |

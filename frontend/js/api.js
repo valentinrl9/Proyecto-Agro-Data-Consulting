@@ -28,6 +28,11 @@ async function getAlertas() {
     return fetchJson("/alertas");
 }
 
+async function getEtlStatus() {
+    const res = await fetch(apiUrl("/etl/status"));
+    return await res.json();
+}
+
 async function getHealth() {
     return fetchJson("/health");
 }

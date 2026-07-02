@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+import json
 import pandas as pd
 from datetime import datetime, timedelta
 from sklearn.linear_model import LinearRegression
@@ -9,7 +10,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
-from config import DATASET_FINAL_CSV, LAT, LON, REALTIME_CSV, ROOT
+from config import DATASET_FINAL_CSV, ETL_INTERVAL_SECONDS, ETL_LAST_RUN_JSON, LAT, LON, REALTIME_CSV, ROOT
 from db import conectar
 from openmeteo_transform import calc_estres_termico
 
@@ -78,6 +79,40 @@ def health():
     if not result["mysql"]:
         result["status"] = "degraded"
     return result
+
+
+@app.get("/etl/status")
+def etl_status():
+    """Última ejecución del ETL (para sincronizar auto-refresh del dashboard)."""
+    if not ETL_LAST_RUN_JSON.exists():
+        return {
+            "success": None,
+            "last_run": None,
+            "last_success": None,
+            "interval_seconds": ETL_INTERVAL_SECONDS,
+            "interval_minutes": ETL_INTERVAL_SECONDS // 60,
+        }
+
+    try:
+        data = json.loads(ETL_LAST_RUN_JSON.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError):
+        return {
+            "success": False,
+            "last_run": None,
+            "last_success": None,
+            "interval_seconds": ETL_INTERVAL_SECONDS,
+            "interval_minutes": ETL_INTERVAL_SECONDS // 60,
+            "error": "No se pudo leer etl_last_run.json",
+        }
+
+    finished = data.get("finished_at")
+    return {
+        **data,
+        "last_run": finished,
+        "last_success": finished if data.get("success") else None,
+        "interval_seconds": ETL_INTERVAL_SECONDS,
+        "interval_minutes": ETL_INTERVAL_SECONDS // 60,
+    }
 
 
 # ---------------------------------------------------------

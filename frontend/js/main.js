@@ -193,7 +193,14 @@ function mostrarVista(id) {
 // ===============================
 // CARGAR DASHBOARD
 // ===============================
-async function cargarDashboard() {
+async function cargarDashboard(opciones = {}) {
+    const { silencioso = false } = opciones;
+    const syncEl = document.getElementById("footer-sync");
+    if (silencioso && syncEl) {
+        syncEl.textContent = "Actualizando datos…";
+        syncEl.classList.add("actualizando");
+    }
+
     try {
     const data = await fetch(apiUrl("/actual"))
         .then(r => r.json());
@@ -264,15 +271,116 @@ async function cargarDashboard() {
 
     const footer = document.getElementById("footer-actualizacion");
     if (footer && data.timestamp) {
-        footer.textContent = `Fuente: Open-Meteo · Actualizado: ${data.timestamp} · Agro Data Consulting`;
+        footer.textContent = `Fuente: Open-Meteo · Datos clima: ${data.timestamp} · Agro Data Consulting`;
+    }
+    if (silencioso && syncEl) {
+        syncEl.classList.remove("actualizando");
+        syncEl.textContent = `Dashboard actualizado · ${new Date().toLocaleTimeString("es-ES", { hour: "2-digit", minute: "2-digit" })}`;
     }
     } catch (err) {
         console.error("Error cargando dashboard:", err);
+        if (syncEl) {
+            syncEl.classList.remove("actualizando");
+        }
+        if (!silencioso) {
         const cards = document.getElementById("cards-container");
         if (cards) {
             cards.innerHTML = `<p class="sin-alertas">No se pudieron cargar los datos del dashboard.<br><small>${err.message}</small></p>`;
         }
+        }
     }
+}
+
+
+// ===============================
+// SINCRONIZACIÓN CON ETL (cada 15 min)
+// ===============================
+const ETL_ESPERA_TRAS_CICLO_MS = 5000;
+const ETL_POLL_MS = 20000;
+
+let ultimoEtlExitosoVisto = null;
+let refrescoDashboardEnCurso = false;
+let timerProximoRefresco = null;
+
+function formatearHora(iso) {
+    if (!iso) return "—";
+    const d = new Date(iso);
+    if (Number.isNaN(d.getTime())) return iso;
+    return d.toLocaleString("es-ES", {
+        day: "2-digit",
+        month: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+    });
+}
+
+function actualizarTextoSyncEtl(status) {
+    const syncEl = document.getElementById("footer-sync");
+    if (!syncEl) return;
+
+    const intervalMin = status.interval_minutes || 15;
+    if (!status.last_success) {
+        syncEl.textContent = `ETL: sin registro aún · comprobación cada ${intervalMin} min`;
+        return;
+    }
+
+    const proximo = new Date(new Date(status.last_success).getTime() + intervalMin * 60 * 1000);
+    syncEl.textContent =
+        `Último ETL: ${formatearHora(status.last_success)} · próximo ~${formatearHora(proximo.toISOString())}`;
+}
+
+function programarRefrescoTrasEtl(lastSuccessIso, intervalSeconds) {
+    if (timerProximoRefresco) {
+        clearTimeout(timerProximoRefresco);
+    }
+    const intervalMs = (intervalSeconds || 900) * 1000;
+    const objetivo = new Date(lastSuccessIso).getTime() + intervalMs + ETL_ESPERA_TRAS_CICLO_MS;
+    const espera = Math.max(ETL_ESPERA_TRAS_CICLO_MS, objetivo - Date.now());
+
+    timerProximoRefresco = setTimeout(async () => {
+        await refrescarDashboardTrasEtl("programado");
+        if (ultimoEtlExitosoVisto) {
+            programarRefrescoTrasEtl(ultimoEtlExitosoVisto, intervalSeconds);
+        }
+    }, espera);
+}
+
+async function refrescarDashboardTrasEtl(motivo) {
+    if (refrescoDashboardEnCurso) return;
+    refrescoDashboardEnCurso = true;
+    try {
+        await cargarDashboard({ silencioso: true });
+    } catch (err) {
+        console.warn(`Refresco dashboard (${motivo}) falló:`, err);
+    } finally {
+        refrescoDashboardEnCurso = false;
+    }
+}
+
+async function comprobarEstadoEtl() {
+    try {
+        const status = await getEtlStatus();
+        actualizarTextoSyncEtl(status);
+
+        const exito = status.last_success;
+        if (!exito) return;
+
+        if (ultimoEtlExitosoVisto && exito !== ultimoEtlExitosoVisto) {
+            setTimeout(() => refrescarDashboardTrasEtl("etl-nuevo"), ETL_ESPERA_TRAS_CICLO_MS);
+        }
+
+        if (!ultimoEtlExitosoVisto || exito !== ultimoEtlExitosoVisto) {
+            ultimoEtlExitosoVisto = exito;
+            programarRefrescoTrasEtl(exito, status.interval_seconds);
+        }
+    } catch (err) {
+        console.warn("No se pudo consultar /etl/status:", err);
+    }
+}
+
+function iniciarSincronizacionEtl() {
+    comprobarEstadoEtl();
+    setInterval(comprobarEstadoEtl, ETL_POLL_MS);
 }
 
 
@@ -282,7 +390,7 @@ async function cargarDashboard() {
 // ===============================
 // INICIAR DASHBOARD
 // ===============================
-cargarDashboard();
+cargarDashboard().then(() => iniciarSincronizacionEtl());
 
 
 // ===============================
