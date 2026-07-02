@@ -104,10 +104,13 @@ function cargarGraficas(data) {
     const ctx2 = document.getElementById("chart-estres").getContext("2d");
     const ctx3 = document.getElementById("chart-humedad").getContext("2d");
 
+    const esParcial = diario.some(d => d.es_parcial);
     const escalaEt0 = escalaDinamica(et0);
     crearGraficaLinea(ctx1, labels, et0, "rgb(74, 222, 128)", {
         titulo: "ET0",
-        subtitulo: "mm/día · hoy + predicción 7 días",
+        subtitulo: esParcial
+            ? "mm/día · *Hoy parcial + predicción 7 días"
+            : "mm/día · hoy + predicción 7 días",
         y: { min: escalaEt0.min, max: escalaEt0.max }
     });
 

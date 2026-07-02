@@ -103,10 +103,11 @@ function prepararSerieGrafica(actual, pred) {
     const serie = [...pred.diario];
     if (actual && actual.et0_dia != null) {
         serie.unshift({
-            fecha: "Hoy",
+            fecha: actual.et0_parcial ? "Hoy*" : "Hoy",
             et0: actual.et0_dia,
             estres: actual.estres_termico,
             humedad: actual.humedad_dia ?? actual.humedad,
+            es_parcial: actual.et0_parcial,
         });
     }
     return serie;
@@ -221,7 +222,10 @@ async function cargarDashboard(opciones = {}) {
         "ET0 acumulado hoy",
         `${Number(data.et0_dia ?? data.et0_actual).toFixed(1)} mm/día`,
         "et0",
-        data.et0_hora != null ? `Última hora: ${Number(data.et0_hora).toFixed(2)} mm/h` : ""
+        [
+            data.et0_parcial ? "Día en curso (parcial)" : "Día completo",
+            data.et0_hora != null ? `Última hora: ${Number(data.et0_hora).toFixed(2)} mm/h` : "",
+        ].filter(Boolean).join(" · ")
     ));
     cards.appendChild(crearTarjeta(
         "Estrés térmico (media hoy)",

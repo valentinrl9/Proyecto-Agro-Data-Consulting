@@ -15,24 +15,68 @@ from db import conectar
 from openmeteo_transform import calc_estres_termico
 
 
+def _metricas_desde_mysql(fecha) -> dict | None:
+    try:
+        conn = conectar()
+        cur = conn.cursor(dictionary=True)
+        cur.execute(
+            """
+            SELECT et0_diaria, estres_termico_medio, humedad_media
+            FROM clima_diario
+            WHERE fecha = %s
+            """,
+            (fecha,),
+        )
+        row = cur.fetchone()
+        cur.close()
+        conn.close()
+        if not row:
+            return None
+        return {
+            "et0_dia": round(float(row["et0_diaria"]), 2),
+            "estres_termico": round(float(row["estres_termico_medio"]), 2),
+            "humedad_media": round(float(row["humedad_media"]), 1),
+            "et0_parcial": False,
+            "fuente": "mysql",
+        }
+    except Exception:
+        return None
+
+
 def _metricas_dia(ts) -> dict | None:
     """Agregados del día actual (misma escala que predicción/gráficas)."""
     hoy = pd.to_datetime(ts).date()
+
     if not DATASET_FINAL_CSV.exists():
-        return None
+        return _metricas_desde_mysql(hoy)
 
     df = pd.read_csv(DATASET_FINAL_CSV)
     df["timestamp"] = pd.to_datetime(df["timestamp"])
-    df = df[df["timestamp"].dt.date == hoy]
+    df = df[df["timestamp"].dt.date == hoy].sort_values("timestamp")
     if df.empty:
-        return None
+        return _metricas_desde_mysql(hoy)
 
     df = df.copy()
+    df["hora"] = df["timestamp"].dt.floor("h")
+    df = df.drop_duplicates(subset=["hora"], keep="last")
     df["estres"] = calc_estres_termico(df)
+
+    et0_series = df["et0_fao_evapotranspiration"].astype(float)
+    # Open-Meteo "current" devuelve ET0 acumulado del día, no mm/h.
+    # Sumar varios snapshots del ETL inflaba valores (300+ mm).
+    if et0_series.max() > 2.0:
+        et0_dia = float(et0_series.iloc[-1])
+        et0_parcial = True
+    else:
+        et0_dia = float(et0_series.sum())
+        et0_parcial = len(df) < 20
+
     return {
-        "et0_dia": round(float(df["et0_fao_evapotranspiration"].sum()), 2),
+        "et0_dia": round(et0_dia, 2),
         "estres_termico": round(float(df["estres"].mean()), 2),
         "humedad_media": round(float(df["relative_humidity_2m"].mean()), 1),
+        "et0_parcial": et0_parcial,
+        "fuente": "csv",
     }
 
 FRONTEND = ROOT / "frontend"
@@ -639,10 +683,12 @@ def actual():
         salida["et0_dia"] = metricas["et0_dia"]
         salida["estres_termico"] = metricas["estres_termico"]
         salida["humedad_dia"] = metricas["humedad_media"]
+        salida["et0_parcial"] = metricas.get("et0_parcial", False)
     else:
         salida["et0_dia"] = salida["et0_hora"]
         salida["estres_termico"] = salida["estres_instantaneo"]
         salida["humedad_dia"] = salida["humedad"]
+        salida["et0_parcial"] = True
 
     # Compatibilidad con frontend previo
     salida["et0_actual"] = salida["et0_dia"]
