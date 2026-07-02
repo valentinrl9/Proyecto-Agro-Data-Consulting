@@ -135,11 +135,30 @@ def fetch_realtime() -> pd.DataFrame:
     return df
 
 
+def _limpiar_snapshots_hoy(df: pd.DataFrame) -> pd.DataFrame:
+    """Evita acumular decenas de lecturas 'current' del ETL en el mismo día."""
+    df = df.copy()
+    if df.empty:
+        return df
+    hoy = df["timestamp"].dt.date.max()
+    mask = df["timestamp"].dt.date == hoy
+    hoy_rows = df[mask]
+    if len(hoy_rows) <= 24:
+        return df
+
+    en_punto = hoy_rows[hoy_rows["timestamp"].dt.minute == 0]
+    ultimo = hoy_rows.iloc[[-1]]
+    otros = df[~mask]
+    limpio = pd.concat([otros, en_punto, ultimo], ignore_index=True)
+    return limpio.drop_duplicates(subset=["timestamp"], keep="last").sort_values("timestamp")
+
+
 def merge_datasets(historico: pd.DataFrame, realtime: pd.DataFrame) -> pd.DataFrame:
     df = pd.concat([historico, realtime], ignore_index=True)
     df["timestamp"] = pd.to_datetime(df["timestamp"])
     df = df.sort_values("timestamp")
     df = df.drop_duplicates(subset=["timestamp"], keep="last")
+    df = _limpiar_snapshots_hoy(df)
     df = _fill_et0(df)
 
     df.to_csv(HISTORICO_CSV, index=False, encoding="utf-8")

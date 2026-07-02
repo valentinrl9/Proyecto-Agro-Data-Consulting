@@ -224,7 +224,11 @@ async function cargarDashboard(opciones = {}) {
         "et0",
         [
             data.et0_parcial ? "Día en curso (parcial)" : "Día completo",
-            data.et0_hora != null ? `Última hora: ${Number(data.et0_hora).toFixed(2)} mm/h` : "",
+            data.et0_hora != null && data.et0_parcial
+                ? `Acumulado API: ${Number(data.et0_hora).toFixed(1)} mm`
+                : data.et0_hora != null
+                    ? `Última hora: ${Number(data.et0_hora).toFixed(2)} mm/h`
+                    : "",
         ].filter(Boolean).join(" · ")
     ));
     cards.appendChild(crearTarjeta(
