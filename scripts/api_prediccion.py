@@ -478,158 +478,245 @@ def recomendaciones(dias: int = 7):
 
 
 # ---------------------------------------------------------
+#   ALERTAS — evaluación y consolidación por día
+# ---------------------------------------------------------
+def _ultimos_dias_clima(n: int = 7) -> list[dict]:
+    conn = conectar()
+    cur = conn.cursor(dictionary=True)
+    cur.execute(
+        """
+        SELECT fecha, et0_diaria, estres_termico_medio, humedad_media,
+               radiacion_diaria, viento_medio, precipitacion_diaria
+        FROM clima_diario
+        WHERE fecha IN (
+            SELECT fecha FROM (
+                SELECT DISTINCT fecha
+                FROM clima_diario
+                ORDER BY fecha DESC
+                LIMIT %s
+            ) AS ultimos
+        )
+        ORDER BY fecha ASC
+        """,
+        (n,),
+    )
+    rows = cur.fetchall()
+    cur.close()
+    conn.close()
+
+    # Por si hubiera filas duplicadas con la misma fecha, quedarse con la última
+    por_fecha: dict = {}
+    for row in rows:
+        por_fecha[str(row["fecha"])] = row
+    return [por_fecha[k] for k in sorted(por_fecha.keys())]
+
+
+def _evaluar_dia(d: dict) -> tuple[int, list[str]]:
+    """Devuelve (nivel 0-3, lista de condiciones) para un día."""
+    estres = float(d.get("estres_termico_medio") or 0)
+    humedad = float(d.get("humedad_media") or 0)
+    radiacion = float(d.get("radiacion_diaria") or 0)
+    viento = float(d.get("viento_medio") or 0)
+    lluvia = float(d.get("precipitacion_diaria") or 0)
+    et0 = float(d.get("et0_diaria") or 0)
+
+    nivel = 0
+    condiciones: list[str] = []
+
+    if estres > 110:
+        condiciones.append("estrés térmico crítico")
+        nivel = max(nivel, 3)
+    elif estres > 95:
+        condiciones.append("estrés térmico alto")
+        nivel = max(nivel, 2)
+
+    if humedad > 90:
+        condiciones.append("humedad extrema (riesgo hongos)")
+        nivel = max(nivel, 3)
+    elif humedad > 85:
+        condiciones.append("humedad elevada")
+        nivel = max(nivel, 2)
+
+    if radiacion > 7500:
+        condiciones.append("radiación muy alta")
+        nivel = max(nivel, 3)
+
+    if viento > 30:
+        condiciones.append("viento muy fuerte")
+        nivel = max(nivel, 3)
+    elif viento > 20 and radiacion > 6500:
+        condiciones.append("viento + radiación (quemaduras)")
+        nivel = max(nivel, 2)
+
+    if lluvia > 3:
+        condiciones.append("lluvia intensa")
+        nivel = max(nivel, 2)
+
+    if et0 > 4:
+        condiciones.append("ET0 muy alta")
+        nivel = max(nivel, 2)
+
+    return nivel, condiciones
+
+
+def _emoji_nivel(nivel: int, futuro: bool = False) -> str:
+    base = {3: "🔴", 2: "🟠", 1: "🟡"}.get(nivel, "🟢")
+    return f"🔮{base}" if futuro else base
+
+
+def _alerta_dia(fecha, nivel: int, condiciones: list[str], futuro: bool = False) -> str:
+    prefijo = "Previsto: " if futuro else ""
+    texto = " · ".join(condiciones)
+    return f"{_emoji_nivel(nivel, futuro)} [{fecha}] {prefijo}{texto.capitalize()}."
+
+
+def _consecutivos(estres_vals: list[float], umbral: float) -> int:
+    max_racha = racha = 0
+    for v in estres_vals:
+        if v > umbral:
+            racha += 1
+            max_racha = max(max_racha, racha)
+        else:
+            racha = 0
+    return max_racha
+
+
+# ---------------------------------------------------------
 #   ALERTAS REALES + PREDICCIÓN FUTURA + COMBINADAS
 # ---------------------------------------------------------
 @app.get("/alertas")
 def alertas():
 
+    alertas_prioritarias = []
     alertas_reales = []
     alertas_pred = []
     alertas_combinadas = []
 
-    # -----------------------------
-    # 1) DATOS REALES (últimos 7 días)
-    # -----------------------------
-    conn = conectar()
-    cur = conn.cursor(dictionary=True)
+    reales = _ultimos_dias_clima(7)
 
-    cur.execute("""
-        SELECT fecha, et0_diaria, estres_termico_medio, humedad_media,
-               radiacion_diaria, viento_medio, precipitacion_diaria
-        FROM clima_diario
-        ORDER BY fecha DESC
-        LIMIT 7;
-    """)
-    reales = cur.fetchall()
-
-    cur.close()
-    conn.close()
-
-    reales = reales[::-1]  # Orden ascendente
-
+    dias_con_alerta = 0
     for d in reales:
         fecha = d["fecha"]
-        et0 = d["et0_diaria"]
-        estres = d["estres_termico_medio"]
-        humedad = d["humedad_media"]
-        viento = d["viento_medio"]
-        radiacion = d["radiacion_diaria"]
-        lluvia = d["precipitacion_diaria"]
+        nivel, condiciones = _evaluar_dia(d)
+        if nivel < 2:
+            continue
+        dias_con_alerta += 1
+        alertas_reales.append(_alerta_dia(fecha, nivel, condiciones))
 
-        if estres > 110:
-            alertas_reales.append(f"🔴 [{fecha}] Estrés térmico crítico.")
-        elif estres > 95:
-            alertas_reales.append(f"🟠 [{fecha}] Estrés térmico alto.")
+    if reales:
+        ultimo = reales[-1]
+        nivel_hoy, cond_hoy = _evaluar_dia(ultimo)
+        if nivel_hoy >= 2:
+            alertas_prioritarias.append(_alerta_dia(ultimo["fecha"], nivel_hoy, cond_hoy))
 
-        if humedad > 90:
-            alertas_reales.append(f"🔴 [{fecha}] Humedad extrema → riesgo de hongos.")
-        elif humedad > 85:
-            alertas_reales.append(f"🟠 [{fecha}] Humedad elevada.")
+    estres_vals = [float(d.get("estres_termico_medio") or 0) for d in reales]
+    racha_estres = _consecutivos(estres_vals, 95)
+    if racha_estres >= 3:
+        alertas_combinadas.append(
+            f"🔥 {racha_estres} días seguidos con estrés térmico alto."
+        )
 
-        if radiacion > 7500:
-            alertas_reales.append(f"🔴 [{fecha}] Radiación muy alta.")
+    if reales:
+        ult = reales[-1]
+        if float(ult.get("humedad_media") or 0) > 85 and float(ult.get("radiacion_diaria") or 0) < 2500:
+            alertas_combinadas.append("🟣 Riesgo de botrytis: humedad alta + baja radiación hoy.")
 
-        if viento > 30:
-            alertas_reales.append(f"🔴 [{fecha}] Viento muy fuerte.")
+        if float(ult.get("viento_medio") or 0) > 20 and float(ult.get("radiacion_diaria") or 0) > 6500:
+            alertas_combinadas.append("🟣 Riesgo de quemaduras: viento + radiación alta hoy.")
 
-        if lluvia > 3:
-            alertas_reales.append(f"🟠 [{fecha}] Lluvia intensa.")
-
-    estres_vals = [d["estres_termico_medio"] for d in reales]
-    if sum(1 for x in estres_vals if x > 95) >= 3:
-        alertas_reales.append("🔴 Riesgo acumulado: 3 días seguidos con estrés térmico alto.")
-
-    # -----------------------------
-    # 2) ALERTAS DE PREDICCIÓN (futuro)
-    # -----------------------------
     try:
-        pred = prediccion(7)  # Antes: petición HTTP; ahora: llamada directa
+        pred = prediccion(7)
     except Exception:
         pred = []
 
+    dias_pred_alerta = 0
     for d in pred:
         fecha = d["fecha"]
-        et0 = d["et0_diaria"]
-        estres = d["estres_termico_medio"]
-        humedad = d["humedad_media"]
-        radiacion = d["radiacion_diaria"]
-        lluvia = d["precipitacion_diaria"]
+        nivel, condiciones = _evaluar_dia(d)
+        if nivel < 2:
+            continue
+        dias_pred_alerta += 1
+        alertas_pred.append(_alerta_dia(fecha, nivel, condiciones, futuro=True))
 
-        if estres > 110:
-            alertas_pred.append(f"🔮🔴 [{fecha}] Estrés térmico crítico previsto.")
-        elif estres > 95:
-            alertas_pred.append(f"🔮🟠 [{fecha}] Estrés térmico alto previsto.")
+    if pred and reales:
+        estres_ahora = float(reales[-1].get("estres_termico_medio") or 0)
+        estres_manana = float(pred[0].get("estres_termico_medio") or 0)
+        if estres_ahora > 95 and estres_manana > estres_ahora:
+            msg = "🔴🔮 Estrés alto hoy y subiendo mañana."
+            if msg not in alertas_combinadas:
+                alertas_combinadas.append(msg)
+            if msg not in alertas_prioritarias:
+                alertas_prioritarias.append(msg)
 
-        if et0 > 4:
-            alertas_pred.append(f"🔮🟠 [{fecha}] ET0 alta prevista.")
+    if pred:
+        d0 = pred[0]
+        nivel_manana, cond_manana = _evaluar_dia(d0)
+        if nivel_manana >= 3:
+            alertas_prioritarias.append(_alerta_dia(d0["fecha"], nivel_manana, cond_manana, futuro=True))
 
-        if humedad > 90:
-            alertas_pred.append(f"🔮🟠 [{fecha}] Humedad muy alta prevista.")
+    # Una sola entrada por mensaje (orden estable)
+    def _unicos(items: list[str]) -> list[str]:
+        vistos: set[str] = set()
+        out: list[str] = []
+        for item in items:
+            if item not in vistos:
+                vistos.add(item)
+                out.append(item)
+        return out
 
-        if radiacion > 7500:
-            alertas_pred.append(f"🔮🟡 [{fecha}] Radiación muy alta prevista.")
+    alertas_prioritarias = _unicos(alertas_prioritarias)
+    alertas_reales = _unicos(alertas_reales)
+    alertas_pred = _unicos(alertas_pred)
+    alertas_combinadas = _unicos(alertas_combinadas)
 
-        if lluvia > 3:
-            alertas_pred.append(f"🔮🟡 [{fecha}] Lluvia intensa prevista.")
+    partes_resumen = []
+    if dias_con_alerta:
+        partes_resumen.append(f"{dias_con_alerta} día(s) con alertas en la última semana")
+    if dias_pred_alerta:
+        partes_resumen.append(f"{dias_pred_alerta} día(s) con riesgo previsto")
+    if not partes_resumen:
+        resumen = "Sin condiciones críticas en los últimos 7 días."
+    else:
+        resumen = " · ".join(partes_resumen) + "."
 
-    # -----------------------------
-    # 3) ALERTAS COMBINADAS
-    # -----------------------------
-    if reales and pred:
-        if reales[-1]["estres_termico_medio"] > 95 and pred[0]["estres_termico_medio"] > reales[-1]["estres_termico_medio"]:
-            alertas_combinadas.append("🔴🔮 Estrés térmico alto ahora + tendencia futura al alza.")
-
-        if reales[-1]["humedad_media"] > 85 and reales[-1]["radiacion_diaria"] < 2500:
-            alertas_combinadas.append("🟣 Riesgo de botrytis: humedad alta + baja radiación.")
-
-        if reales[-1]["viento_medio"] > 20 and reales[-1]["radiacion_diaria"] > 6500:
-            alertas_combinadas.append("🟣 Riesgo de quemaduras: viento + radiación alta.")
-
-    # -----------------------------
-    # 4) RIESGO ACUMULADO AVANZADO
-    # -----------------------------
     riesgo_acumulado_real = []
     riesgo_acumulado_pred = []
     riesgo_acumulado_comb = []
 
-    if sum(1 for d in reales if d["estres_termico_medio"] > 95) >= 4:
-        riesgo_acumulado_real.append("🔥 Estrés térmico alto repetido en varios días → riesgo severo.")
+    if sum(1 for v in estres_vals if v > 95) >= 4:
+        riesgo_acumulado_real.append("🔥 Estrés térmico alto en 4+ días esta semana.")
 
-    if sum(1 for d in reales if d["humedad_media"] > 85 and d["radiacion_diaria"] < 2500) >= 3:
-        riesgo_acumulado_real.append("🔥 Riesgo de botrytis: humedad alta + baja radiación repetida.")
+    if sum(1 for d in reales if float(d.get("humedad_media") or 0) > 85 and float(d.get("radiacion_diaria") or 0) < 2500) >= 3:
+        riesgo_acumulado_real.append("🔥 Patrón botrytis: humedad alta + poca radiación repetido.")
 
-    lluvia_real_total = sum(d["precipitacion_diaria"] for d in reales)
+    lluvia_real_total = sum(float(d.get("precipitacion_diaria") or 0) for d in reales)
     if lluvia_real_total > 40:
-        riesgo_acumulado_real.append(f"🔥 Lluvia acumulada alta ({round(lluvia_real_total, 1)} mm) → riesgo de hongos.")
+        riesgo_acumulado_real.append(f"🔥 Lluvia acumulada alta ({round(lluvia_real_total, 1)} mm).")
 
-    if sum(1 for d in pred if d["estres_termico_medio"] > 95) >= 4:
-        riesgo_acumulado_pred.append("🔮🔥 Estrés térmico alto previsto varios días seguidos.")
+    if sum(1 for d in pred if float(d.get("estres_termico_medio") or 0) > 95) >= 4:
+        riesgo_acumulado_pred.append("🔮🔥 Estrés térmico alto previsto varios días.")
 
-    if sum(1 for d in pred if d["precipitacion_diaria"] > 2) >= 3:
-        riesgo_acumulado_pred.append("🔮🔥 Lluvia prevista varios días → riesgo de hongos.")
+    if sum(1 for d in pred if float(d.get("precipitacion_diaria") or 0) > 2) >= 3:
+        riesgo_acumulado_pred.append("🔮🔥 Lluvia prevista varios días → riesgo hongos.")
 
-    if sum(1 for d in pred if d["et0_diaria"] > 4) >= 3:
-        riesgo_acumulado_pred.append("🔮🔥 ET0 alta prevista varios días → riesgo de estrés hídrico.")
+    if sum(1 for d in pred if float(d.get("et0_diaria") or 0) > 4) >= 3:
+        riesgo_acumulado_pred.append("🔮🔥 ET0 alta prevista → posible estrés hídrico.")
 
     if reales and pred:
-        if reales[-1]["estres_termico_medio"] > 95 and pred[0]["estres_termico_medio"] > reales[-1]["estres_termico_medio"]:
-            riesgo_acumulado_comb.append("🟣🔥 Estrés térmico alto ahora + seguirá subiendo → riesgo severo.")
-
-        if reales[-1]["humedad_media"] > 85 and sum(1 for d in pred if d["precipitacion_diaria"] > 2) >= 2:
-            riesgo_acumulado_comb.append("🟣🔥 Humedad alta ahora + lluvia futura → riesgo de hongos.")
-
-        if reales[-1]["radiacion_diaria"] > 6500 and sum(1 for d in pred if d["viento_medio"] > 20) >= 2:
-            riesgo_acumulado_comb.append("🟣🔥 Radiación alta ahora + viento futuro → riesgo de quemaduras.")
+        if float(reales[-1].get("humedad_media") or 0) > 85 and sum(1 for d in pred if float(d.get("precipitacion_diaria") or 0) > 2) >= 2:
+            riesgo_acumulado_comb.append("🟣🔥 Humedad alta ahora + lluvia prevista → hongos.")
 
     return {
+        "resumen": resumen,
+        "alertas_prioritarias": alertas_prioritarias,
         "alertas_reales": alertas_reales,
         "alertas_prediccion": alertas_pred,
         "alertas_combinadas": alertas_combinadas,
         "riesgo_acumulado": {
-            "real": riesgo_acumulado_real,
-            "prediccion": riesgo_acumulado_pred,
-            "combinado": riesgo_acumulado_comb
-        }
+            "real": _unicos(riesgo_acumulado_real),
+            "prediccion": _unicos(riesgo_acumulado_pred),
+            "combinado": _unicos(riesgo_acumulado_comb),
+        },
     }
 
 

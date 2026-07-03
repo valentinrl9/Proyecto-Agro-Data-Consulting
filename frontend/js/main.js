@@ -652,6 +652,12 @@ function mostrarRiesgo(diario) {
 // ALERTAS (desde API /alertas)
 // ===============================
 
+let alertasLoadId = 0;
+
+function dedupeAlertas(items) {
+    return [...new Set(items || [])];
+}
+
 function colorAlerta(texto) {
     if (texto.includes("🔴")) return "rojo";
     if (texto.includes("🟠")) return "naranja";
@@ -664,10 +670,13 @@ function colorAlerta(texto) {
 
 async function cargarAlertasBackend() {
     const cont = document.getElementById("alertas-container");
+    const loadId = ++alertasLoadId;
     try {
         const data = await getAlertas();
+        if (loadId !== alertasLoadId) return;
         mostrarAlertasBackend(data);
     } catch (err) {
+        if (loadId !== alertasLoadId) return;
         if (cont) {
             cont.innerHTML = `<p class="sin-alertas">No se pudieron cargar las alertas.<br><small>${err.message}</small></p>`;
         }
@@ -676,23 +685,36 @@ async function cargarAlertasBackend() {
 
 function mostrarAlertasBackend(data) {
     const cont = document.getElementById("alertas-container");
+    if (!cont) return;
     cont.innerHTML = "";
 
+    if (data.resumen) {
+        const resumen = document.createElement("p");
+        resumen.className = "alertas-resumen";
+        resumen.textContent = data.resumen;
+        cont.appendChild(resumen);
+    }
+
     const secciones = [
-        { titulo: "📡 Alertas reales (últimos 7 días)", items: data.alertas_reales || [] },
-        { titulo: "🔮 Alertas de predicción (próximos 7 días)", items: data.alertas_prediccion || [] },
-        { titulo: "🔗 Alertas combinadas", items: data.alertas_combinadas || [] },
+        { titulo: "⚡ Atención prioritaria", items: dedupeAlertas(data.alertas_prioritarias) },
+        { titulo: "📡 Histórico (últimos 7 días)", items: dedupeAlertas(data.alertas_reales) },
+        { titulo: "🔮 Predicción (próximos 7 días)", items: dedupeAlertas(data.alertas_prediccion) },
+        { titulo: "🔗 Patrones detectados", items: dedupeAlertas(data.alertas_combinadas) },
     ];
 
     const riesgo = data.riesgo_acumulado || {};
-    const riesgoItems = [
+    const riesgoItems = dedupeAlertas([
         ...(riesgo.real || []),
         ...(riesgo.prediccion || []),
         ...(riesgo.combinado || []),
-    ];
+    ]);
     if (riesgoItems.length) {
-        secciones.push({ titulo: "🔥 Riesgo acumulado", items: riesgoItems });
+        secciones.push({ titulo: "🔥 Riesgo acumulado semanal", items: riesgoItems });
     }
+
+    // Evitar repetir en histórico lo que ya está en prioritaria
+    const prioritaria = new Set(secciones[0].items);
+    secciones[1].items = secciones[1].items.filter(a => !prioritaria.has(a));
 
     let total = 0;
     secciones.forEach(sec => {
@@ -710,7 +732,7 @@ function mostrarAlertasBackend(data) {
         sec.items.forEach(texto => {
             const div = document.createElement("div");
             div.classList.add("alerta", `alerta-${colorAlerta(texto)}`);
-            div.innerHTML = `<strong>${texto}</strong>`;
+            div.textContent = texto;
             grupo.appendChild(div);
         });
 
@@ -718,7 +740,10 @@ function mostrarAlertasBackend(data) {
     });
 
     if (total === 0) {
-        cont.innerHTML = "<p class='sin-alertas'>No hay alertas activas.</p>";
+        const vacio = document.createElement("p");
+        vacio.className = "sin-alertas";
+        vacio.textContent = "No hay alertas activas.";
+        cont.appendChild(vacio);
     }
 }
 
